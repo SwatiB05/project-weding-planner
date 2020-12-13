@@ -22,10 +22,8 @@ public class AdminController {
 		System.out.println("in const admin");
 	}
 	
-
 	// API endpoint or providers
-
-	@GetMapping("/admin/customers") // to set header and body use response entity
+	@GetMapping("/admin/customers") 
 
 	public ResponseEntity<?> listAllCustomers() {
 		List<Customers> allCustomers = service.getAllCustomers();
