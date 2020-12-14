@@ -4,6 +4,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "Venue_Facilities")
@@ -13,15 +17,19 @@ public class Venue_Facilities {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueFacilityId;
 	
+	
+	@JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "venueFacilityId",cascade = CascadeType.ALL)
 	private Set<Booking_Detof_Venue_Facilities> venueFacilityDetails;
 
 	
-	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "facilityId", nullable = false)
 	private Facilities facilityId;

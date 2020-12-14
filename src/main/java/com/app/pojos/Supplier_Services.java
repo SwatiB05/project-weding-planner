@@ -4,6 +4,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "Supplier_Services")
@@ -13,15 +17,18 @@ public class Supplier_Services {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierServiceId;
 	
+	
+	@JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "supplierServiceId",cascade = CascadeType.ALL)
 	private Set<Booking_Detof_Service_Suppliers> supplierserviceDetails;
 	
-	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "supplierId", nullable = false)
 	private Suppliers supplierId;
 	
-	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "serviceId", nullable = false)
 	private Services serviceId;

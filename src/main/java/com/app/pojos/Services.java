@@ -4,6 +4,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "Services")
 public class Services {
@@ -12,6 +15,9 @@ public class Services {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serviceId;
 	
+	
+	@JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "serviceId",cascade = CascadeType.ALL)
 	private Set<Supplier_Services> Supplier_Services;
 	

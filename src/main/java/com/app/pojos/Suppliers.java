@@ -2,13 +2,15 @@ package com.app.pojos;
 
 
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.*;
+
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+
 
 @Entity
 @Table(name="Suppliers")
@@ -18,6 +20,8 @@ public class Suppliers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierId;
 	
+    @JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "supplierId",cascade = CascadeType.ALL)
 	private Set<Supplier_Services> Supplier_Services;
 	
@@ -33,10 +37,10 @@ public class Suppliers {
 	@Column(length = 15)
 	private String phoneNo;
 	
-	
+	@JsonBackReference
     @ManyToOne(optional = false)
 	@JoinColumn(name = "cityId", nullable = false)
-	private Suppliers cityId;
+	private Suppliers scityId;
 	
 	@Column(length = 30)
 	private String email;
@@ -119,15 +123,6 @@ public class Suppliers {
 	}
 
 
-	public Suppliers getCityId() {
-		return cityId;
-	}
-
-
-	public void setCityId(Suppliers cityId) {
-		this.cityId = cityId;
-	}
-
 
 	public String getEmail() {
 		return email;
@@ -169,13 +164,26 @@ public class Suppliers {
 	}
 
 
+	public Suppliers getScityId() {
+		return scityId;
+	}
+
+
+	public void setScityId(Suppliers scityId) {
+		this.scityId = scityId;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Suppliers [supplierId=" + supplierId + ", Supplier_Services=" + Supplier_Services + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", supplierAddress=" + supplierAddress + ", phoneNo=" + phoneNo
-				+ ", cityId=" + cityId + ", email=" + email + ", createdOn=" + createdOn + ", isActive=" + isActive
-				+ "]";
+				+ ", scityId=" + scityId + ", email=" + email + ", password=" + password + ", createdOn=" + createdOn
+				+ ", isActive=" + isActive + "]";
 	}
+
+
+	
 
 
 	

@@ -39,7 +39,7 @@ public class AdminController {
 	// **************************************
 	// *************Customer
 	// **************************************
-	// API endpoint or providers
+	// API end point or providers
 	@GetMapping("/admin/customers")
 
 	public ResponseEntity<?> listAllCustomers() {

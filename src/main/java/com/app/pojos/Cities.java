@@ -5,30 +5,39 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Cities")
+
 public class Cities {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cityId;
 	
-	@OneToMany(mappedBy = "cityId" ,cascade=CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIgnore
+	@OneToMany(mappedBy = "vcityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Venues> venues;
 	
-	@OneToMany(mappedBy = "cityId" ,cascade=CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIgnore
+	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Suppliers> suppliers;
 	
-	@OneToMany(mappedBy = "cityId" ,cascade=CascadeType.ALL)
-	@JsonManagedReference
+	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JsonIgnore
 	private Set<Customers> customers;
 	
 	@Column(length = 30)

@@ -2,6 +2,8 @@ package com.app.pojos;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "Booking_Detof_Service_Suppliers")
@@ -10,10 +12,13 @@ public class Booking_Detof_Service_Suppliers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "bookingId", nullable = false)
 	private Bookings bookingId;
 	
+	
+	@JsonBackReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "supplierServiceId", nullable = false)
 	private Supplier_Services supplierServiceId;

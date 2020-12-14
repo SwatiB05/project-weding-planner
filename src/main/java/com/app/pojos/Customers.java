@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,8 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,7 +35,8 @@ public class Customers {
 	private Integer customerId;
 	
 	@OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL)
-	@JsonManagedReference
+    @JsonManagedReference
+    @JsonIgnore
 	private Set<Bookings> bookings;
 	
 	
@@ -50,10 +54,11 @@ public class Customers {
 	private String phoneNo;
 	
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
 	@JsonBackReference
-	private Customers cityId;
+	private Customers ccityId;
+
 	
 	@Column(length = 30)
 	private String email;
@@ -126,12 +131,15 @@ public class Customers {
 		this.phoneNo = phoneNo;
 	}
 
-	public Customers getCityId() {
-		return cityId;
+
+
+
+	public Customers getCcityId() {
+		return ccityId;
 	}
 
-	public void setCityId(Customers cityId) {
-		this.cityId = cityId;
+	public void setCcityId(Customers ccityId) {
+		this.ccityId = ccityId;
 	}
 
 	public String getEmail() {
@@ -174,16 +182,17 @@ public class Customers {
 		this.isActive = isActive;
 	}
 
+	
+	
+	
+
 	@Override
 	public String toString() {
 		return "Customers [customerId=" + customerId + ", bookings=" + bookings + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", customerAddress=" + customerAddress + ", phoneNo=" + phoneNo
-				+ ", cityId=" + cityId + ", email=" + email + ", createdOn=" + createdOn + ", status=" + status
-				+ ", isActive=" + isActive + "]";
+				+ ", ccityId=" + ccityId + ", email=" + email + ", password=" + password + ", createdOn=" + createdOn
+				+ ", status=" + status + ", isActive=" + isActive + "]";
 	}
-	
-	
-	
 
 
 	

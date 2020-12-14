@@ -9,6 +9,8 @@ import java.util.Set;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -19,9 +21,15 @@ public class Bookings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 	
+	
+	@JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "bookingId",cascade = CascadeType.ALL)
 	private Set<Booking_Detof_Venue_Facilities> venueFacilityDetails;
 	
+	
+	@JsonManagedReference
+    @JsonIgnore
 	@OneToMany(mappedBy = "bookingId",cascade = CascadeType.ALL)
 	private Set<Booking_Detof_Service_Suppliers> serviceSupplierDetails;
 	
