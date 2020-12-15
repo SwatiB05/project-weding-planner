@@ -15,55 +15,50 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
 @Entity
-@Table(name="Venues")
+@Table(name = "Venues")
 public class Venues {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueId;
-	
-	
-    @JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "venueId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+
+	@JsonManagedReference
+	@JsonIgnoreProperties
+	@OneToMany(mappedBy = "venueId", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Set<Venue_Facilities> Venue_Facilities;
-	
-	
-	
+
 	@Column(length = 30)
 	private String venueName;
-	
+
 	@Column(length = 60)
 	private String venueAddress;
-	
-	@JsonBackReference
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+
+	@JsonIgnoreProperties
+	@JsonBackReference(value = "venue")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
 	private Venues vcityId;;
-	
+
 	@Column(length = 10)
 	private String phoneNo;
-	
+
 	@Column(length = 20)
 	private String email;
-	
+
 	@Column(length = 100)
 	private String image;
-	
+
 	@Column(length = 20)
 	private Integer guestCapacity;
-	
+
 	@Column(length = 100)
 	private String description;
 
-	
-	
-	//getters and setters
+	// getters and setters
 	public Integer getVenueId() {
 		return venueId;
 	}
@@ -95,7 +90,6 @@ public class Venues {
 	public void setVenueAddress(String venueAddress) {
 		this.venueAddress = venueAddress;
 	}
-
 
 	public String getPhoneNo() {
 		return phoneNo;
@@ -137,7 +131,6 @@ public class Venues {
 		this.description = description;
 	}
 
-	
 	public Venues getVcityId() {
 		return vcityId;
 	}
@@ -154,10 +147,4 @@ public class Venues {
 				+ "]";
 	}
 
-	
-	
-
-	
-	
-	
 }

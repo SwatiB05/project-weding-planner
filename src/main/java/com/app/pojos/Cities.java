@@ -25,18 +25,18 @@ public class Cities {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cityId;
 	
-    @JsonManagedReference
-    @JsonIgnoreProperties
+   @JsonManagedReference(value = "venue")
+   @JsonIgnoreProperties
 	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<Venues> venues;
 	
-    @JsonManagedReference
-    @JsonIgnoreProperties
+  @JsonManagedReference(value = "supplier")
+  @JsonIgnoreProperties
 	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Suppliers> suppliers;
 	
 	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference(value = "customer")
     @JsonIgnoreProperties
 	private Set<Customers> customers;
 	

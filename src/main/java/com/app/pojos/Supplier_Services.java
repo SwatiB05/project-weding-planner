@@ -19,16 +19,18 @@ public class Supplier_Services {
 	private Integer supplierServiceId;
 	
 	
-	@JsonManagedReference
+	@JsonBackReference(value="serviceSupplierDetails")
     @JsonIgnoreProperties
 	@ManyToMany(mappedBy = "serviceSupplierDetails")
 	private Set<Bookings> bookings;
 	
+  @JsonIgnoreProperties
 	@JsonBackReference
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "supplierId", nullable = false)
 	private Suppliers supplierId;
 	
+    @JsonIgnoreProperties
 	@JsonBackReference
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "serviceId", nullable = false)

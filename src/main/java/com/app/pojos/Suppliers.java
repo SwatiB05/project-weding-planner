@@ -20,7 +20,7 @@ public class Suppliers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierId;
 	
-    @JsonManagedReference
+  @JsonManagedReference
     @JsonIgnoreProperties
 	@OneToMany(mappedBy = "supplierId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private Set<Supplier_Services> Supplier_Services;
@@ -37,7 +37,9 @@ public class Suppliers {
 	@Column(length = 15)
 	private String phoneNo;
 	
-	@JsonBackReference
+	
+	@JsonIgnoreProperties
+	@JsonBackReference(value = "supplier")
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
 	private Suppliers scityId;

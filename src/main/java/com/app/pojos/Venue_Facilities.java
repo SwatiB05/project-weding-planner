@@ -19,17 +19,19 @@ public class Venue_Facilities {
 	private Integer venueFacilityId;
 	
 	
-	@JsonManagedReference
+	@JsonManagedReference(value="venueFacilityDetails")
     @JsonIgnoreProperties
 	@ManyToMany(mappedBy = "venueFacilityDetails")
 	private Set<Bookings> bookings;
 
-	
+    @JsonIgnoreProperties
 	@JsonBackReference
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 	
+    
+    @JsonIgnoreProperties
 	@JsonBackReference
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "facilityId", nullable = false)

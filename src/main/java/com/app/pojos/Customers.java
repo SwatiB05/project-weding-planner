@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="Customers")
+
 public class Customers {
 
 	@Id
@@ -36,7 +37,7 @@ public class Customers {
 	private Integer customerId;
 	
 	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JsonManagedReference
+ @JsonManagedReference
     @JsonIgnoreProperties
 	private Set<Bookings> bookings;
 	
@@ -56,7 +57,7 @@ public class Customers {
 	
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
-	@JsonBackReference
+	@JsonBackReference(value = "customer")
     @JsonIgnoreProperties
 	private Customers ccityId;
 
