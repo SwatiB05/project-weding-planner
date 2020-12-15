@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,24 +22,30 @@ public class Bookings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 	
+	//************
 	
+	  @JsonManagedReference
+	  @JsonIgnoreProperties 
+	  @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
+	  @JoinTable(name =
+	  "Booking_Venue_Facilities",joinColumns=@JoinColumn(name="bookingId"),
+	  inverseJoinColumns = @JoinColumn(name="venueFacilityId"))
+	  private Set<Venue_Facilities> venueFacilityDetails;
+	 
+	
+	//******************
 	@JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "bookingId",cascade = CascadeType.ALL)
-	private Set<Booking_Detof_Venue_Facilities> venueFacilityDetails;
-	
-	
-	@JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "bookingId",cascade = CascadeType.ALL)
-	private Set<Booking_Detof_Service_Suppliers> serviceSupplierDetails;
-	
-	
+    @JsonIgnoreProperties
+    @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
+	@JoinTable(name = "Booking_Service_Suppliers",joinColumns=@JoinColumn(name="bookingId"),inverseJoinColumns = @JoinColumn(name="supplierServiceId"))
+	private Set<Supplier_Services> serviceSupplierDetails;
+    
+    
 	@Column(length = 15)
 	private String bookingName;
 	
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "customerId", nullable = false)
 	@JsonBackReference
 	private Customers customerId;
@@ -70,24 +77,7 @@ public class Bookings {
 	}
 
 
-	public Set<Booking_Detof_Venue_Facilities> getVenueFacilityDetails() {
-		return venueFacilityDetails;
-	}
-
-
-	public void setVenueFacilityDetails(Set<Booking_Detof_Venue_Facilities> venueFacilityDetails) {
-		this.venueFacilityDetails = venueFacilityDetails;
-	}
-
-
-	public Set<Booking_Detof_Service_Suppliers> getServiceSupplierDetails() {
-		return serviceSupplierDetails;
-	}
-
-
-	public void setServiceSupplierDetails(Set<Booking_Detof_Service_Suppliers> serviceSupplierDetails) {
-		this.serviceSupplierDetails = serviceSupplierDetails;
-	}
+	
 
 
 	public String getBookingName() {
@@ -140,6 +130,26 @@ public class Bookings {
 	}
 
 
+	public Set<Supplier_Services> getServiceSupplierDetails() {
+		return serviceSupplierDetails;
+	}
+
+
+	public void setServiceSupplierDetails(Set<Supplier_Services> serviceSupplierDetails) {
+		this.serviceSupplierDetails = serviceSupplierDetails;
+	}
+
+
+	public Set<Venue_Facilities> getVenueFacilityDetails() {
+		return venueFacilityDetails;
+	}
+
+
+	public void setVenueFacilityDetails(Set<Venue_Facilities> venueFacilityDetails) {
+		this.venueFacilityDetails = venueFacilityDetails;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Bookings [bookingId=" + bookingId + ", venueFacilityDetails=" + venueFacilityDetails
@@ -148,8 +158,8 @@ public class Bookings {
 				+ ", dateOfBooking=" + dateOfBooking + "]";
 	}
 
-	
-	
+
+
 	
 	
 	

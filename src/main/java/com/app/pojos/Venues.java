@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Venues {
 	
     @JsonManagedReference
     @JsonIgnore
-	@OneToMany(mappedBy = "venueId",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "venueId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private Set<Venue_Facilities> Venue_Facilities;
 	
 	
@@ -41,7 +42,7 @@ public class Venues {
 	private String venueAddress;
 	
 	@JsonBackReference
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
 	private Venues vcityId;;
 	

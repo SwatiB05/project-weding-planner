@@ -26,18 +26,18 @@ public class Cities {
 	private Integer cityId;
 	
     @JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "vcityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties
+	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<Venues> venues;
 	
     @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties
 	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Suppliers> suppliers;
 	
 	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties
 	private Set<Customers> customers;
 	
 	@Column(length = 30)

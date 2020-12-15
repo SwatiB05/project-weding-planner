@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -17,8 +18,8 @@ public class Services {
 	
 	
 	@JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "serviceId",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties
+	@OneToMany(mappedBy = "serviceId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private Set<Supplier_Services> Supplier_Services;
 	
 	

@@ -22,6 +22,7 @@ import org.springframework.data.annotation.CreatedDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -34,11 +35,10 @@ public class Customers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 	
-	@OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties
 	private Set<Bookings> bookings;
-	
 	
 	
 	@Column(length = 30)
@@ -57,6 +57,7 @@ public class Customers {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "cityId", nullable = false)
 	@JsonBackReference
+    @JsonIgnoreProperties
 	private Customers ccityId;
 
 	

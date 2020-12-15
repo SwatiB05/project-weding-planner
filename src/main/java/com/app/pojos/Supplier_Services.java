@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -19,17 +20,17 @@ public class Supplier_Services {
 	
 	
 	@JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "supplierServiceId",cascade = CascadeType.ALL)
-	private Set<Booking_Detof_Service_Suppliers> supplierserviceDetails;
+    @JsonIgnoreProperties
+	@ManyToMany(mappedBy = "serviceSupplierDetails")
+	private Set<Bookings> bookings;
 	
 	@JsonBackReference
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "supplierId", nullable = false)
 	private Suppliers supplierId;
 	
 	@JsonBackReference
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "serviceId", nullable = false)
 	private Services serviceId;
 	
@@ -47,13 +48,7 @@ public class Supplier_Services {
 		this.supplierServiceId = supplierServiceId;
 	}
 
-	public Set<Booking_Detof_Service_Suppliers> getSupplierserviceDetails() {
-		return supplierserviceDetails;
-	}
 
-	public void setSupplierserviceDetails(Set<Booking_Detof_Service_Suppliers> supplierserviceDetails) {
-		this.supplierserviceDetails = supplierserviceDetails;
-	}
 
 	public Suppliers getSupplierId() {
 		return supplierId;
@@ -79,13 +74,20 @@ public class Supplier_Services {
 		this.charges = charges;
 	}
 
+	public Set<Bookings> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Bookings> bookings) {
+		this.bookings = bookings;
+	}
+
 	@Override
 	public String toString() {
-		return "Supplier_Services [supplierServiceId=" + supplierServiceId + ", supplierserviceDetails="
-				+ supplierserviceDetails + ", supplierId=" + supplierId + ", serviceId=" + serviceId + ", charges="
-				+ charges + "]";
+		return "Supplier_Services [supplierServiceId=" + supplierServiceId + ", bookings=" + bookings + ", supplierId="
+				+ supplierId + ", serviceId=" + serviceId + ", charges=" + charges + "]";
 	}
-	
+
 	
 
 	

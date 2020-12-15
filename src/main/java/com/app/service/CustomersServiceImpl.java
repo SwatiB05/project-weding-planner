@@ -41,7 +41,7 @@ public class CustomersServiceImpl implements ICustomerService {
 			// cityDetachPojo : detached POJO : contains the updates sent by clnt
 			// change state of persistent POJO
 			Customers customer = c.get();
-			customer.setCityId(detachedPOJO.getCityId());
+			customer.setCcityId(detachedPOJO.getCcityId());
 			customer.setFirstName(detachedPOJO.getFirstName());
 			customer.setLastName(detachedPOJO.getLastName());
 			customer.setCustomerAddress(detachedPOJO.getCustomerAddress());

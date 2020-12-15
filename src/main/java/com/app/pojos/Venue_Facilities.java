@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -19,18 +20,18 @@ public class Venue_Facilities {
 	
 	
 	@JsonManagedReference
-    @JsonIgnore
-	@OneToMany(mappedBy = "venueFacilityId",cascade = CascadeType.ALL)
-	private Set<Booking_Detof_Venue_Facilities> venueFacilityDetails;
+    @JsonIgnoreProperties
+	@ManyToMany(mappedBy = "venueFacilityDetails")
+	private Set<Bookings> bookings;
 
 	
 	@JsonBackReference
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 	
 	@JsonBackReference
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "facilityId", nullable = false)
 	private Facilities facilityId;
 	
@@ -46,14 +47,6 @@ public class Venue_Facilities {
 
 	public void setVenueFacilityId(Integer venueFacilityId) {
 		this.venueFacilityId = venueFacilityId;
-	}
-
-	public Set<Booking_Detof_Venue_Facilities> getVenueFacilityDetails() {
-		return venueFacilityDetails;
-	}
-
-	public void setVenueFacilityDetails(Set<Booking_Detof_Venue_Facilities> venueFacilityDetails) {
-		this.venueFacilityDetails = venueFacilityDetails;
 	}
 
 	public Venues getVenueId() {
@@ -80,13 +73,20 @@ public class Venue_Facilities {
 		this.charges = charges;
 	}
 
-	@Override
-	public String toString() {
-		return "Venue_Facilities [venueFacilityId=" + venueFacilityId + ", venueFacilityDetails=" + venueFacilityDetails
-				+ ", venueId=" + venueId + ", facilityId=" + facilityId + ", charges=" + charges + "]";
+	public Set<Bookings> getBookings() {
+		return bookings;
 	}
 
-	
+	public void setBookings(Set<Bookings> bookings) {
+		this.bookings = bookings;
+	}
+
+	@Override
+	public String toString() {
+		return "Venue_Facilities [venueFacilityId=" + venueFacilityId + ", bookings=" + bookings + ", venueId="
+				+ venueId + ", facilityId=" + facilityId + ", charges=" + charges + "]";
+	}
+
 	
 	
 
