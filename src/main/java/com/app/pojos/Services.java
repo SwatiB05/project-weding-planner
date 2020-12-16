@@ -15,22 +15,21 @@ public class Services {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serviceId;
-	
-	
-	@JsonManagedReference
-    @JsonIgnoreProperties
-	@OneToMany(mappedBy = "serviceId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "serviceId", cascade = CascadeType.ALL)
 	private Set<Supplier_Services> Supplier_Services;
-	
-	
+
 	@Column(length = 30)
 	private String serviceName;
 
+	
+	//getter....
 	public Integer getServiceId() {
 		return serviceId;
 	}
 
-	//getter..
+	// getter..
 	public void setServiceId(Integer serviceId) {
 		this.serviceId = serviceId;
 	}
@@ -47,8 +46,5 @@ public class Services {
 	public String toString() {
 		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + "]";
 	}
-	
-	
-	
-	
+
 }

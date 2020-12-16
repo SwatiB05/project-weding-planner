@@ -44,10 +44,9 @@ public class AdminController {
 
 	public ResponseEntity<?> listAllCustomers() {
 		List<Customers> allCustomers = customerService.getAllCustomers();
-
+        
 		if (allCustomers.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(allCustomers);
 	}
 

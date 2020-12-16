@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
 @Entity
 @Table(name = "Supplier_Services")
 public class Supplier_Services {
@@ -17,30 +16,24 @@ public class Supplier_Services {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierServiceId;
-	
-	
-	@JsonBackReference(value="serviceSupplierDetails")
-    @JsonIgnoreProperties
+
+	@JsonIgnore
 	@ManyToMany(mappedBy = "serviceSupplierDetails")
 	private Set<Bookings> bookings;
-	
-  @JsonIgnoreProperties
-	@JsonBackReference
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@JoinColumn(name = "supplierId", nullable = false)
+
+	@ManyToOne
+	@JoinColumn(name = "supplierId")
 	private Suppliers supplierId;
-	
-    @JsonIgnoreProperties
-	@JsonBackReference
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@JoinColumn(name = "serviceId", nullable = false)
+
+	@ManyToOne
+	@JoinColumn(name = "serviceId")
 	private Services serviceId;
-	
-	
-	
-	//getter...
+
 	@Column(length = 20)
 	private double charges;
+
+	
+	// getter...
 
 	public Integer getSupplierServiceId() {
 		return supplierServiceId;
@@ -49,8 +42,6 @@ public class Supplier_Services {
 	public void setSupplierServiceId(Integer supplierServiceId) {
 		this.supplierServiceId = supplierServiceId;
 	}
-
-
 
 	public Suppliers getSupplierId() {
 		return supplierId;
@@ -90,10 +81,4 @@ public class Supplier_Services {
 				+ supplierId + ", serviceId=" + serviceId + ", charges=" + charges + "]";
 	}
 
-	
-
-	
-	
-	
-	
 }

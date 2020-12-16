@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,72 +18,57 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 @Entity
-@Table(name="Customers")
+@Table(name = "Customers")
 
 public class Customers {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
-	
-	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
- @JsonManagedReference
-    @JsonIgnoreProperties
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL)
 	private Set<Bookings> bookings;
-	
-	
+
 	@Column(length = 30)
 	private String firstName;
-	
+
 	@Column(length = 30)
 	private String lastName;
-	
+
 	@Column(length = 60)
 	private String customerAddress;
-	
+
 	@Column(length = 15)
 	private String phoneNo;
-	
-	
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@JoinColumn(name = "cityId", nullable = false)
-	@JsonBackReference(value = "customer")
-    @JsonIgnoreProperties
-	private Customers ccityId;
 
-	
+	@ManyToOne
+	@JoinColumn(name = "cityId",nullable = false)
+	private Cities ccityId;
+
 	@Column(length = 30)
 	private String email;
-	
-	
+
 	@Column(length = 100)
 	private String password;
-	
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(columnDefinition="DATE default (CURRENT_DATE)",updatable = false)
+	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
 	@JsonProperty(value = "Acount-creation-Date")
-	 private Date createdOn;
-	
-	@Column(columnDefinition="tinyint(1) default 0")
+	private Date createdOn;
+
+	@Column(columnDefinition = "tinyint(1) default 0")
 	private Integer status;
-	
-	@Column(columnDefinition="tinyint(1) default 0")
+
+	@Column(columnDefinition = "tinyint(1) default 0")
 	private Integer isActive;
 
-	
-	
-	//getter setters
+	// getter setters
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -133,17 +117,6 @@ public class Customers {
 		this.phoneNo = phoneNo;
 	}
 
-
-
-
-	public Customers getCcityId() {
-		return ccityId;
-	}
-
-	public void setCcityId(Customers ccityId) {
-		this.ccityId = ccityId;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -184,21 +157,20 @@ public class Customers {
 		this.isActive = isActive;
 	}
 
-	
-	
-	
+	public Cities getCcityId() {
+		return ccityId;
+	}
+
+	public void setCcityId(Cities ccityId) {
+		this.ccityId = ccityId;
+	}
 
 	@Override
 	public String toString() {
 		return "Customers [customerId=" + customerId + ", bookings=" + bookings + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", customerAddress=" + customerAddress + ", phoneNo=" + phoneNo
-				+ ", ccityId=" + ccityId + ", email=" + email + ", password=" + password + ", createdOn=" + createdOn
-				+ ", status=" + status + ", isActive=" + isActive + "]";
+				+ ", ccityId=" + ccityId + ", email=" + email + ", createdOn=" + createdOn + ", status=" + status
+				+ ", isActive=" + isActive + "]";
 	}
 
-
-	
-	
-
-	
 }

@@ -12,41 +12,37 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="Cities")
+@Table(name = "Cities")
 
 public class Cities {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cityId;
-	
-   @JsonManagedReference(value = "venue")
-   @JsonIgnoreProperties
-	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "vcityId", cascade = CascadeType.ALL)
 	private Set<Venues> venues;
-	
-  @JsonManagedReference(value = "supplier")
-  @JsonIgnoreProperties
-	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "scityId", cascade = CascadeType.ALL)
 	private Set<Suppliers> suppliers;
-	
-	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "customer")
-    @JsonIgnoreProperties
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "ccityId", cascade = CascadeType.ALL)
 	private Set<Customers> customers;
-	
+
 	@Column(length = 30)
 	private String city;
 
-	
-	
-	//getters...
-	
+	// getters...
+
 	public Integer getCityId() {
 		return cityId;
 	}
@@ -93,8 +89,4 @@ public class Cities {
 				+ customers + ", city=" + city + "]";
 	}
 
-	
-	
-	
-	
 }
