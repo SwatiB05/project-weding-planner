@@ -37,8 +37,8 @@ public class Customers {
 	private Integer customerId;
 	
 	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
- @JsonManagedReference
-    @JsonIgnoreProperties
+ //@JsonManagedReference
+   // @JsonIgnoreProperties
 	private Set<Bookings> bookings;
 	
 	
@@ -55,11 +55,11 @@ public class Customers {
 	private String phoneNo;
 	
 	
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "cityId", nullable = false)
-	@JsonBackReference(value = "customer")
-    @JsonIgnoreProperties
-	private Customers ccityId;
+	//@JsonBackReference(value = "customer")
+   // @JsonIgnoreProperties
+	private Cities ccityId;
 
 	
 	@Column(length = 30)
@@ -136,11 +136,11 @@ public class Customers {
 
 
 
-	public Customers getCcityId() {
+	public Cities getCcityId() {
 		return ccityId;
 	}
 
-	public void setCcityId(Customers ccityId) {
+	public void setCcityId(Cities ccityId) {
 		this.ccityId = ccityId;
 	}
 

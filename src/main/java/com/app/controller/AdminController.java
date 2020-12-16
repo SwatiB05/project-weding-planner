@@ -12,10 +12,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.pojos.Bookings;
 import com.app.pojos.Cities;
 import com.app.pojos.Customers;
+import com.app.pojos.Facilities;
+import com.app.pojos.Services;
+import com.app.pojos.Supplier_Services;
+import com.app.pojos.Suppliers;
+import com.app.pojos.Venue_Facilities;
+import com.app.pojos.Venues;
+import com.app.service.IBookingService;
 import com.app.service.ICityService;
 import com.app.service.ICustomerService;
+import com.app.service.IFacilitesService;
+import com.app.service.IServiceService;
+import com.app.service.ISupplierService;
+import com.app.service.ISupplier_ServiceService;
+import com.app.service.IVenueFacilityService;
+import com.app.service.IVenueService;
 
 @RestController
 public class AdminController {
@@ -24,6 +38,20 @@ public class AdminController {
 	private ICustomerService customerService;
 	@Autowired
 	private ICityService cityService;
+	@Autowired
+	private ISupplierService supplierService;
+	@Autowired
+	private IVenueService venueService;
+	@Autowired
+	private IFacilitesService facilityService;
+	@Autowired
+	private IBookingService bookingService;
+	@Autowired
+	private IVenueFacilityService venueFacilityService;
+	@Autowired
+	private ISupplier_ServiceService supplier_ServiceService;
+	@Autowired
+	private IServiceService serviceService;
 	
 
 
@@ -40,6 +68,7 @@ public class AdminController {
 	// *************Customer
 	// **************************************
 	// API end point or providers
+	
 	@GetMapping("/admin/customers")
 
 	public ResponseEntity<?> listAllCustomers() {
@@ -141,37 +170,226 @@ public class AdminController {
 	// **************************************
 	// *************Supplier
 	// **************************************
+	@GetMapping("/admin/suppliers")
 
+	public ResponseEntity<?> listAllSuppliers() {
+		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
+
+		if (allSuppliers.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(allSuppliers);
+	}
+
+	/*
+	 * @PostMapping("/admin/suppliers/create") public ResponseEntity<?>
+	 * addSupplierDetails(@RequestBody Suppliers s) { try { Suppliers supplier =
+	 * supplierService.addSupplierDetails(s); return ResponseEntity.ok(supplier);
+	 * }catch (Exception e) { e.printStackTrace(); return
+	 * ResponseEntity.badRequest().build(); }
+	 * 
+	 * }
+	 */
+	
+	/*
+	 * @PutMapping("/admin/suppliers/{supplierId}") public ResponseEntity<?>
+	 * updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
+	 * try { Suppliers
+	 * updateSupplier=supplierService.updateSupplierDetails(supplierId, s); return
+	 * ResponseEntity.ok(updateSupplier); } catch (RuntimeException e) {
+	 * e.printStackTrace(); return ResponseEntity.notFound().build(); } }
+	 */
+	
+	
+	@DeleteMapping("/admin/suppliers/{supplierId}")
+	
+	public ResponseEntity<?> deleteSupplier(@PathVariable("supplierId") int id) {
+		try {
+			supplierService.deleteSupplierById(id);
+			return  ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
 	// **************************************
 	// *************Service
 	// **************************************
+	@GetMapping("/admin/service")
 
+	public ResponseEntity<?> listAllServices() {
+		List<Services> allServices = serviceService.getAllServices();
+
+		if (allServices.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(allServices);
+	}
 	// **************************************
 	// *************Supplier-service
 	// **************************************
+	@GetMapping("/admin/supplierService")
 
+	public ResponseEntity<?> listAllSupplierServices() {
+		List<Supplier_Services> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
+
+		if (allSupplierServices.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(allSupplierServices);
+	}
 	// **************************************
 	// *************Venue
 	// **************************************
+	@GetMapping("/admin/venues")
 
+	public ResponseEntity<?> listAllVenues() {
+		List<Venues> allVenues = venueService.getAllVenues();
+
+		if (allVenues.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(allVenues);
+	}
+
+	@PostMapping("/admin/venues/create")
+	public ResponseEntity<?> addVenueDetails(@RequestBody Venues v) {
+		try {
+			Venues venue = venueService.addVenueDetails(v);
+			return ResponseEntity.ok(venue);
+		}catch (Exception e) {
+		e.printStackTrace();
+		return ResponseEntity.badRequest().build();
+		}
+		
+	}
+	
+	@PutMapping("/admin/venues/{venueId}")
+	public ResponseEntity<?> updateVenueDetails(@PathVariable int venueId,@RequestBody Venues v){
+		try {
+			Venues updateVenue=venueService.updateVenueDetails(venueId, v);
+			return ResponseEntity.ok(updateVenue);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
+	@DeleteMapping("/admin/venues/{venueId}")
+	
+	public ResponseEntity<?> deleteVenue(@PathVariable("venueId") int id) {
+		try {
+			venueService.deleteVenueById(id);
+			return  ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+
+	}	
 	// **************************************
 	// *************Facility
 	// **************************************
+	@GetMapping("/admin/facilities")
 
+	public ResponseEntity<?> listAllFacilities() {
+		List<Facilities> AllFacilities = facilityService.getAllFacilities();
+
+		if (AllFacilities.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(AllFacilities);
+	}
+
+	@PostMapping("/admin/facilities/create")
+	public ResponseEntity<?> addFacilityDetails(@RequestBody Facilities f) {
+		try {
+			Facilities facility = facilityService.addFacilityDetails(f);
+			return ResponseEntity.ok(facility);
+		}catch (Exception e) {
+		e.printStackTrace();
+		return ResponseEntity.badRequest().build();
+		}
+		
+	}
+	
+	@PutMapping("/admin/facilities/{facilityId}")
+	public ResponseEntity<?> updateFacilityDetails(@PathVariable int facilityId,@RequestBody Facilities f){
+		try {
+			Facilities updateVenue=facilityService.updateFacilityDetails(facilityId, f);
+			return ResponseEntity.ok(updateVenue);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
+	@DeleteMapping("/admin/facilities/{facilityId}")
+	
+	public ResponseEntity<?> deleteFacility(@PathVariable("facilityId") int id) {
+		try {
+			facilityService.deleteFacilityById(id);
+			return  ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+
+	}	
 	// **************************************
 	// *************Venue-Facilities
 	// **************************************
+	@GetMapping("/admin/venueFacilities")
 
+	public ResponseEntity<?> listAllVenueFacilities() {
+		List<Venue_Facilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
+
+		if (AllVFacilities.isEmpty())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(AllVFacilities);
+	}
+	
+	@DeleteMapping("/admin/venueFacilities/{venueFacilityId}")
+	
+	public ResponseEntity<?> deleteVFacility(@PathVariable("venueFacilityId") int id) {
+		try {
+			venueFacilityService.deleteVFacilityById(id);
+			return  ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+
+	}	
 	// **************************************
 	// *************Booking
 	// **************************************
+	@GetMapping("/admin/bookings")
 
-	// **************************************
-	// *************Booking_venue_facilities
-	// **************************************
+	public ResponseEntity<?> listAllBooking() {
+		List<Bookings> AllBookings = bookingService.getAllBookings();
 
-	// **************************************
-	// *************booking_service_suppliers
-	// **************************************
+		if (AllBookings.isEmpty())
+			return ResponseEntity.notFound().build();
 
+		return ResponseEntity.ok(AllBookings);
+	}
+
+	
+	@DeleteMapping("/admin/bookings/{bookingId}")
+	
+	public ResponseEntity<?> deleteBooking(@PathVariable("bookingId") int id) {
+		try {
+			bookingService.deleteBookingById(id);
+			return  ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+	}	
+	
 }

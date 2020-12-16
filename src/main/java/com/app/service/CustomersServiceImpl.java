@@ -23,7 +23,7 @@ public class CustomersServiceImpl implements ICustomerService {
 
 	@Override
 	public List<Customers> getAllCustomers() {
-		System.out.println("in service get all");
+		System.out.println("in customerservice get all");
 		return dao.findAll();
 	}
 

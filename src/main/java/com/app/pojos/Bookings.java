@@ -2,16 +2,26 @@ package com.app.pojos;
 
 
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -24,7 +34,7 @@ public class Bookings {
 	
 	
 	 @JsonBackReference(value = "venueFacilityDetails")
-	  @JsonIgnoreProperties 
+	  //@JsonIgnoreProperties 
 	  @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
 	  @JoinTable(name =
 	  "Booking_Venue_Facilities",joinColumns=@JoinColumn(name="bookingId"),
@@ -34,7 +44,7 @@ public class Bookings {
 	
 	
 	@JsonBackReference(value="serviceSupplierDetails")
-    @JsonIgnoreProperties
+    //@JsonIgnoreProperties
     @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
 	@JoinTable(name = "Booking_Service_Suppliers",joinColumns=@JoinColumn(name="bookingId"),inverseJoinColumns = @JoinColumn(name="supplierServiceId"))
 	private Set<Supplier_Services> serviceSupplierDetails;
@@ -44,10 +54,10 @@ public class Bookings {
 	private String bookingName;
 	
 	
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "customerId", nullable = false)
 	@JsonBackReference
-	@JsonIgnoreProperties
+	//@JsonIgnoreProperties
 	private Customers customerId;
 	
 	@Column(length = 15)

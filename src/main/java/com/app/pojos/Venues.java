@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -27,7 +25,7 @@ public class Venues {
 	private Integer venueId;
 
 	@JsonManagedReference
-	@JsonIgnoreProperties
+	//@JsonIgnoreProperties
 	@OneToMany(mappedBy = "venueId", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Set<Venue_Facilities> Venue_Facilities;
 
@@ -37,11 +35,11 @@ public class Venues {
 	@Column(length = 60)
 	private String venueAddress;
 
-	@JsonIgnoreProperties
+	//@JsonIgnoreProperties
 	@JsonBackReference(value = "venue")
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "cityId", nullable = false)
-	private Venues vcityId;;
+	private Cities vcityId;;
 
 	@Column(length = 10)
 	private String phoneNo;
@@ -131,11 +129,11 @@ public class Venues {
 		this.description = description;
 	}
 
-	public Venues getVcityId() {
+	public Cities getVcityId() {
 		return vcityId;
 	}
 
-	public void setVcityId(Venues vcityId) {
+	public void setVcityId(Cities vcityId) {
 		this.vcityId = vcityId;
 	}
 

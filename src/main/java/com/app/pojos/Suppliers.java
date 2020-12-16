@@ -21,7 +21,7 @@ public class Suppliers {
 	private Integer supplierId;
 	
   @JsonManagedReference
-    @JsonIgnoreProperties
+    //@JsonIgnoreProperties
 	@OneToMany(mappedBy = "supplierId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private Set<Supplier_Services> Supplier_Services;
 	
@@ -38,11 +38,11 @@ public class Suppliers {
 	private String phoneNo;
 	
 	
-	@JsonIgnoreProperties
+	//@JsonIgnoreProperties
 	@JsonBackReference(value = "supplier")
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
 	@JoinColumn(name = "cityId", nullable = false)
-	private Suppliers scityId;
+	private Cities scityId;
 	
 	@Column(length = 30)
 	private String email;
@@ -166,12 +166,12 @@ public class Suppliers {
 	}
 
 
-	public Suppliers getScityId() {
+	public Cities getScityId() {
 		return scityId;
 	}
 
 
-	public void setScityId(Suppliers scityId) {
+	public void setScityId(Cities scityId) {
 		this.scityId = scityId;
 	}
 
