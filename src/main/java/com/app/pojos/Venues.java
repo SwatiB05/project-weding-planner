@@ -13,8 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Venues")
@@ -24,9 +23,15 @@ public class Venues {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueId;
 
-	@JsonManagedReference
-	//@JsonIgnoreProperties
-	@OneToMany(mappedBy = "venueId", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+
+	/*
+	 * @JsonManagedReference //@JsonIgnoreProperties
+	 * 
+	 * @OneToMany(mappedBy = "venueId", cascade = { CascadeType.MERGE,
+	 * CascadeType.PERSIST }) =======
+	 */
+	@JsonIgnore
+	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL)
 	private Set<Venue_Facilities> Venue_Facilities;
 
 	@Column(length = 30)
@@ -35,11 +40,16 @@ public class Venues {
 	@Column(length = 60)
 	private String venueAddress;
 
-	//@JsonIgnoreProperties
+
+	/*//@JsonIgnoreProperties
 	@JsonBackReference(value = "venue")
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "cityId", nullable = false)
 	private Cities vcityId;;
+=======*/
+	@ManyToOne
+	@JoinColumn(name = "cityId",nullable = false)
+	private Cities vcityId;
 
 	@Column(length = 10)
 	private String phoneNo;
@@ -144,5 +154,7 @@ public class Venues {
 				+ email + ", image=" + image + ", guestCapacity=" + guestCapacity + ", description=" + description
 				+ "]";
 	}
+
+	
 
 }

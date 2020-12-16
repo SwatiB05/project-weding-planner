@@ -2,13 +2,17 @@ package com.app.pojos;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name = "Venue_Facilities")
@@ -17,32 +21,23 @@ public class Venue_Facilities {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueFacilityId;
-	
-	
-	@JsonManagedReference(value="venueFacilityDetails")
-    @JsonIgnoreProperties
+
+	@JsonIgnore
 	@ManyToMany(mappedBy = "venueFacilityDetails")
 	private Set<Bookings> bookings;
 
-    @JsonIgnoreProperties
-	@JsonBackReference
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
-	
-    
-    @JsonIgnoreProperties
-	@JsonBackReference
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+
+	@ManyToOne
 	@JoinColumn(name = "facilityId", nullable = false)
 	private Facilities facilityId;
-	
+
 	@Column(length = 20)
 	private double charges;
 
-	
-	
-	//getter..
+	// getter..
 	public Integer getVenueFacilityId() {
 		return venueFacilityId;
 	}
@@ -89,14 +84,4 @@ public class Venue_Facilities {
 				+ venueId + ", facilityId=" + facilityId + ", charges=" + charges + "]";
 	}
 
-	
-	
-
-	
-	
-
-	
-	
-	
-	
 }

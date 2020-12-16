@@ -11,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Services")
@@ -21,23 +20,20 @@ public class Services {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serviceId;
-	
-	
-	@JsonManagedReference
-    @JsonIgnoreProperties
-	@OneToMany(mappedBy = "serviceId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "serviceId", cascade = CascadeType.ALL)
 	private Set<Supplier_Services> Supplier_Services;
-	
-	
+
 	@Column(length = 30)
 	private String serviceName;
 
-	//getter..
+
 	public Integer getServiceId() {
 		return serviceId;
 	}
 
-	
+
 	public void setServiceId(Integer serviceId) {
 		this.serviceId = serviceId;
 	}
@@ -54,8 +50,5 @@ public class Services {
 	public String toString() {
 		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + "]";
 	}
-	
-	
-	
-	
+
 }

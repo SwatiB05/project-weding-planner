@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,9 +22,10 @@ public class Cities {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnoreProperties
 	private Integer cityId;
 	
-   @JsonManagedReference(value = "venue")
+   //@JsonManagedReference(value = "venue")
   // @JsonIgnoreProperties
 	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<Venues> venues;
@@ -36,7 +36,7 @@ public class Cities {
 	private Set<Suppliers> suppliers;
 	
 	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "customer")
+    //@JsonManagedReference(value = "customer")
     //@JsonIgnoreProperties
 	private Set<Customers> customers;
 	
