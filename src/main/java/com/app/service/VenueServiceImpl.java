@@ -45,7 +45,7 @@ public class VenueServiceImpl implements IVenueService {
 		venue.setVcityId(detachedPOJO.getVcityId());
 		venue.setVenue_Facilities(detachedPOJO.getVenue_Facilities());
 		venue.setVenueAddress(detachedPOJO.getVenueAddress());
-		venue.setVenueName(detachedPOJO.toString());
+		venue.setVenueName(detachedPOJO.getVenueName());
 		return venue;
 	}
 		throw new VenueNotFoundException("No such venue...");
@@ -54,7 +54,7 @@ public class VenueServiceImpl implements IVenueService {
 	@Override
 	public void deleteVenueById(int id) {
 		// TODO Auto-generated method stub
-
+dao.deleteById(id);
 	}
 
 }

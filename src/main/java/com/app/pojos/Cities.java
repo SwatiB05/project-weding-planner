@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,15 +24,15 @@ public class Cities {
 	
 
    @JsonIgnore
-	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(mappedBy = "vcityId" ,cascade= CascadeType.ALL)
 	private Set<Venues> venues;
 	
   
     @JsonIgnore
-	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL)
 	private Set<Suppliers> suppliers;
 	
-	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL)
     @JsonIgnore
 	private Set<Customers> customers;
 	

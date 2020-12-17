@@ -137,16 +137,10 @@ public class Suppliers {
 		this.isActive = isActive;
 	}
 
-	/*
-	 * <<<<<<< HEAD
-	 * 
-	 * ======= >>>>>>> 86581aea8a2bf20c57519149575d3bace409f0d1 public Cities
-	 * getScityId() { return scityId; }
-	 * 
-	 * <<<<<<< HEAD
-	 * 
-	 * ======= >>>>>>> 86581aea8a2bf20c57519149575d3bace409f0d1
-	 */
+	public Cities getScityId() {
+		return scityId;
+	}
+
 	public void setScityId(Cities scityId) {
 		this.scityId = scityId;
 	}
@@ -155,8 +149,10 @@ public class Suppliers {
 	public String toString() {
 		return "Suppliers [supplierId=" + supplierId + ", Supplier_Services=" + Supplier_Services + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", supplierAddress=" + supplierAddress + ", phoneNo=" + phoneNo
-				+ ", scityId=" + scityId + ", email=" + email + ", createdOn=" + createdOn + ", isActive=" + isActive
-				+ "]";
+				+ ", scityId=" + scityId + ", email=" + email + ", password=" + password + ", createdOn=" + createdOn
+				+ ", isActive=" + isActive + "]";
 	}
+
+	
 
 }
