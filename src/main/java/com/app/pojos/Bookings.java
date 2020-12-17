@@ -31,28 +31,6 @@ public class Bookings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 
-	
-	
-	/*
-	 * @JsonBackReference(value = "venueFacilityDetails") //@JsonIgnoreProperties
-	 * 
-	 * @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
-	 * 
-	 * @JoinTable(name
-	 * ="Booking_Venue_Facilities",joinColumns=@JoinColumn(name="bookingId"),
-	 * inverseJoinColumns = @JoinColumn(name="venueFacilityId")) private
-	 * Set<Venue_Facilities> venueFacilityDetails;
-	 * 
-	 * 
-	 * 
-	 * @JsonBackReference(value="serviceSupplierDetails") //@JsonIgnoreProperties
-	 * 
-	 * @ManyToMany(cascade ={CascadeType.MERGE,CascadeType.PERSIST})
-	 * 
-	 * @JoinTable(name =
-	 * "Booking_Service_Suppliers",joinColumns=@JoinColumn(name="bookingId"),
-	 * inverseJoinColumns = @JoinColumn(name="supplierServiceId")) =======
-	 */
 
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -67,14 +45,6 @@ public class Bookings {
 	@Column(length = 15)
 	private String bookingName;
 	
-	
-	/*
-	 * @ManyToOne(optional = false)
-	 * 
-	 * @JoinColumn(name = "customerId", nullable = false)
-	 * 
-	 * @JsonBackReference //@JsonIgnoreProperties
-	 */
 
 	@ManyToOne
 	@JoinColumn(name = "customerId",nullable = false)

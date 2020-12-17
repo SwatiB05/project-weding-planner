@@ -24,12 +24,6 @@ public class Venues {
 	private Integer venueId;
 
 
-	/*
-	 * @JsonManagedReference //@JsonIgnoreProperties
-	 * 
-	 * @OneToMany(mappedBy = "venueId", cascade = { CascadeType.MERGE,
-	 * CascadeType.PERSIST }) =======
-	 */
 	@JsonIgnore
 	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL)
 	private Set<Venue_Facilities> Venue_Facilities;
@@ -41,12 +35,6 @@ public class Venues {
 	private String venueAddress;
 
 
-	/*//@JsonIgnoreProperties
-	@JsonBackReference(value = "venue")
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "cityId", nullable = false)
-	private Cities vcityId;;
-=======*/
 	@ManyToOne
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities vcityId;

@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Cities")
@@ -22,28 +21,24 @@ public class Cities {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnoreProperties
 	private Integer cityId;
 	
-   //@JsonManagedReference(value = "venue")
-  // @JsonIgnoreProperties
+
+   @JsonIgnore
 	@OneToMany(mappedBy = "vcityId" ,cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<Venues> venues;
 	
-  @JsonManagedReference(value = "supplier")
-  //@JsonIgnoreProperties
+  
+    @JsonIgnore
 	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Suppliers> suppliers;
 	
 	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    //@JsonManagedReference(value = "customer")
-    //@JsonIgnoreProperties
+    @JsonIgnore
 	private Set<Customers> customers;
 	
 	@Column(length = 30)
 	private String city;
-
-	
 	
 	//getters...
 	

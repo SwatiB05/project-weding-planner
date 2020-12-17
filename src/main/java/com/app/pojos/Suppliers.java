@@ -17,12 +17,6 @@ public class Suppliers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierId;
 
-	
-  /*@JsonManagedReference
-    //@JsonIgnoreProperties
-	@OneToMany(mappedBy = "supplierId",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-=======*/
-
 	@JsonIgnore
 	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL)
 	private Set<Supplier_Services> Supplier_Services;
@@ -41,13 +35,6 @@ public class Suppliers {
 
 	
 	
-	/*//@JsonIgnoreProperties
-	@JsonBackReference(value = "supplier")
-    @ManyToOne(optional = false)
-	@JoinColumn(name = "cityId", nullable = false)
-	private Cities scityId;*/
-	
-
 	@ManyToOne
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities scityId;

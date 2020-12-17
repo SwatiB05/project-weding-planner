@@ -29,6 +29,7 @@ public class Services {
 	private String serviceName;
 
 
+	//getter setters
 	public Integer getServiceId() {
 		return serviceId;
 	}

@@ -30,12 +30,6 @@ public class Customers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 
-	
-	/*
-	 * @OneToMany(mappedBy = "customerId",cascade =
-	 * {CascadeType.PERSIST,CascadeType.MERGE}) //@JsonManagedReference
-	 * // @JsonIgnoreProperties
-	 */
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL)
@@ -52,16 +46,6 @@ public class Customers {
 
 	@Column(length = 15)
 	private String phoneNo;
-
-	
-	/*
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "cityId", nullable = false)
-	//@JsonBackReference(value = "customer")
-   // @JsonIgnoreProperties
-	private Cities ccityId;*/
-
-	
 
 
 	@ManyToOne
