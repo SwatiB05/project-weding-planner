@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.CustomerNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IBookingDao;
 import com.app.pojos.Bookings;
 @Service
@@ -54,7 +54,7 @@ public class BookingServiceImpl implements IBookingService {
 
 		}
 		// in case of no product found : throw custom exception
-		throw new CustomerNotFoundException("Invalid Customer ID");
+		throw new ResourceNotFoundException("Invalid Customer ID");
 
 	}
 

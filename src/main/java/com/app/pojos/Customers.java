@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "Customers")
-
 public class Customers {
 
 	@Id

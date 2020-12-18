@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Venues")
-@JsonIgnoreProperties("Venue_Facilities")
 public class Venues {
 
 	@Id

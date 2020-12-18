@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.VenueNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueDao;
 import com.app.pojos.Venues;
 
@@ -48,7 +48,7 @@ public class VenueServiceImpl implements IVenueService {
 		venue.setVenueName(detachedPOJO.getVenueName());
 		return venue;
 	}
-		throw new VenueNotFoundException("No such venue...");
+		throw new ResourceNotFoundException("No such venue...");
 		}
 
 	@Override

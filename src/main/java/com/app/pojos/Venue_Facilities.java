@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Venue_Facilities")
-@JsonIgnoreProperties("Venues")
 public class Venue_Facilities {
 
 	@Id
@@ -30,8 +29,8 @@ public class Venue_Facilities {
 	private Set<Bookings> bookings;
 
 	@ManyToOne
-	@JoinColumn(name = "venueId", nullable = false)
 	@JsonBackReference
+	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 
 	@ManyToOne

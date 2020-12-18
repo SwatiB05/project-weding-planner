@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.*;
 
 @Entity
 @Table(name = "Suppliers")
-@JsonIgnoreProperties("Supplier_Services")
 public class Suppliers {
 
 	@Id

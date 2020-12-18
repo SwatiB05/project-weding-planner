@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.CustomerNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ICustomerDao;
 import com.app.pojos.Customers;
 
@@ -51,7 +51,7 @@ public class CustomersServiceImpl implements ICustomerService {
 
 		}
 		// in case of no product found : throw custom exception
-		throw new CustomerNotFoundException("Invalid Customer ID");
+		throw new ResourceNotFoundException("Invalid Customer ID");
 
 	}
 

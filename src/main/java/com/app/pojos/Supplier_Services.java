@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Supplier_Services")
-@JsonIgnoreProperties("Suppliers")
 public class Supplier_Services {
 
 	@Id
@@ -29,12 +28,12 @@ public class Supplier_Services {
 	@ManyToMany(mappedBy = "serviceSupplierDetails")
 	private Set<Bookings> bookings;
 
-	@ManyToOne//(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "supplierId")
 	@JsonBackReference
 	private Suppliers supplierId;
 
-	@ManyToOne//(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "serviceId")
 	private Services serviceId;
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.VenueFacilityNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueFacilitiesDao;
 import com.app.pojos.Venue_Facilities;
 
@@ -48,7 +48,7 @@ dao.deleteById(id);
 			return facility;
 
 		}
-		throw new VenueFacilityNotFoundException("Invalid Venue-Facility...");
+		throw new ResourceNotFoundException("Invalid Venue-Facility...");
 
 	}
 

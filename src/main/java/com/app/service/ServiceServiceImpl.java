@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.SupplierNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IServiceDao;
 import com.app.pojos.Services;
 
@@ -40,7 +40,7 @@ public class ServiceServiceImpl implements IServiceService {
 
 		}
 		// in case of no product found : throw custom exception
-		throw new SupplierNotFoundException("Invalid Supplier...");
+		throw new ResourceNotFoundException("Invalid Supplier...");
 
 	}
 	@Override

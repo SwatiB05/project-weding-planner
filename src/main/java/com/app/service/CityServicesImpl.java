@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.custom_excpt.CityNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ICitiesDao;
 import com.app.pojos.Cities;
 
@@ -44,7 +44,7 @@ public class CityServicesImpl implements ICityService {
 
 		}
 		// in case of no product found : throw custom exception
-		throw new CityNotFoundException("Invalid City ID");
+		throw new ResourceNotFoundException("Invalid City ID");
 
 	}
 

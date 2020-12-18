@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.FacilityNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IFacilityDao;
 import com.app.pojos.Facilities;
 
@@ -39,7 +39,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 			facility.setFacilityName(detachedPOJO.getFacilityName());
 			return facility;
 		}
-		throw new FacilityNotFoundException("No Such Facility...");
+		throw new ResourceNotFoundException("No Such Facility...");
 	}
 
 	@Override

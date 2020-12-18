@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.SupplierNotFoundException;
+import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierDao;
 import com.app.pojos.Suppliers;
 
@@ -46,7 +46,7 @@ public Suppliers updateSupplierDetails(int supplierId, Suppliers detachedPOJO) {
   return supplier;
   
   }
-	throw new SupplierNotFoundException("Invalid Customer..");
+	throw new ResourceNotFoundException("Invalid Customer..");
 	
 }
 
