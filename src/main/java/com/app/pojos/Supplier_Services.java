@@ -12,10 +12,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Supplier_Services")
+@JsonIgnoreProperties("Suppliers")
 public class Supplier_Services {
 
 	@Id
@@ -26,16 +29,17 @@ public class Supplier_Services {
 	@ManyToMany(mappedBy = "serviceSupplierDetails")
 	private Set<Bookings> bookings;
 
-	@ManyToOne
+	@ManyToOne//(fetch=FetchType.LAZY)
 	@JoinColumn(name = "supplierId")
+	@JsonBackReference
 	private Suppliers supplierId;
 
-	@ManyToOne
+	@ManyToOne//(fetch=FetchType.LAZY)
 	@JoinColumn(name = "serviceId")
 	private Services serviceId;
 
 	@Column(length = 20)
-	private double charges;
+	private Double charges;
 
 	
 	// getter...
@@ -64,11 +68,11 @@ public class Supplier_Services {
 		this.serviceId = serviceId;
 	}
 
-	public double getCharges() {
+	public Double getCharges() {
 		return charges;
 	}
 
-	public void setCharges(double charges) {
+	public void setCharges(Double charges) {
 		this.charges = charges;
 	}
 

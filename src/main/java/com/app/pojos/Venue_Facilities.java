@@ -12,10 +12,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Venue_Facilities")
+@JsonIgnoreProperties("Venues")
 public class Venue_Facilities {
 
 	@Id
@@ -28,6 +31,7 @@ public class Venue_Facilities {
 
 	@ManyToOne
 	@JoinColumn(name = "venueId", nullable = false)
+	@JsonBackReference
 	private Venues venueId;
 
 	@ManyToOne
@@ -35,7 +39,7 @@ public class Venue_Facilities {
 	private Facilities facilityId;
 
 	@Column(length = 20)
-	private double charges;
+	private Double charges;
 
 	// getter..
 	public Integer getVenueFacilityId() {
@@ -62,11 +66,11 @@ public class Venue_Facilities {
 		this.facilityId = facilityId;
 	}
 
-	public double getCharges() {
+	public Double getCharges() {
 		return charges;
 	}
 
-	public void setCharges(double charges) {
+	public void setCharges(Double charges) {
 		this.charges = charges;
 	}
 

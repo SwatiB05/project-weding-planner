@@ -14,12 +14,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Venues")
+@JsonIgnoreProperties("Venue_Facilities")
 public class Venues {
 
 	@Id
+	@JsonManagedReference
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueId;
 

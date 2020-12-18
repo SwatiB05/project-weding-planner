@@ -468,7 +468,6 @@ public class AdminController {
 	// *************Booking
 	// **************************************
 	@GetMapping("/admin/bookings")
-
 	public ResponseEntity<?> listAllBooking() {
 		List<Bookings> AllBookings = bookingService.getAllBookings();
 

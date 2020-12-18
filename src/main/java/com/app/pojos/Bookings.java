@@ -51,10 +51,10 @@ public class Bookings {
 	private Customers customerId;
 
 	@Column(length = 15)
-	private double totalAmount;
+	private Double totalAmount;
 
 	@Column(length = 10)
-	private double discount;
+	private Double discount;
 
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)")
@@ -88,19 +88,19 @@ public class Bookings {
 		this.customerId = customerId;
 	}
 
-	public double getTotalAmount() {
+	public Double getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(double totalAmount) {
+	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public double getDiscount() {
+	public Double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(double discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 
