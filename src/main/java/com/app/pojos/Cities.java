@@ -23,15 +23,18 @@ public class Cities {
 	
 
    @JsonIgnore
-	@OneToMany(mappedBy = "vcityId" ,cascade= CascadeType.ALL)
+	@OneToMany(mappedBy = "vcityId" ,cascade = {CascadeType.PERSIST, 
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Venues> venues;
 	
   
     @JsonIgnore
-	@OneToMany(mappedBy = "scityId" ,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "scityId" ,cascade = {CascadeType.PERSIST,
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Suppliers> suppliers;
 	
-	@OneToMany(mappedBy = "ccityId" ,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "ccityId" ,cascade = {CascadeType.PERSIST,
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnore
 	private Set<Customers> customers;
 	

@@ -2,6 +2,7 @@ package com.app.pojos;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,8 @@ public class Venue_Facilities {
 	private Integer venueFacilityId;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "venueFacilityDetails")
+	@ManyToMany(mappedBy = "venueFacilityDetails",targetEntity = Bookings.class,
+	cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Bookings> bookings;
 
 	@ManyToOne

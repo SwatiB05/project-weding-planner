@@ -33,12 +33,14 @@ public class Bookings {
 
 
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.PERSIST, 
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},targetEntity = Venue_Facilities.class)
 	@JoinTable(name = "Booking_Venue_Facilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
 	private Set<Venue_Facilities> venueFacilityDetails;
 
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Supplier_Services.class,cascade = {CascadeType.PERSIST, 
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinTable(name = "Booking_Service_Suppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
 	private Set<Supplier_Services> serviceSupplierDetails;
 
@@ -59,7 +61,7 @@ public class Bookings {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)")
 	@CreatedDate
-	@JsonProperty(value = "Date-Of-Booking")
+	@JsonProperty(value = "DateOfBooking")
 	private Date dateOfBooking;
 
 	// getter setter

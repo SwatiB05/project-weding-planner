@@ -23,7 +23,8 @@ public class Facilities {
 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "facilityId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "facilityId", cascade = {CascadeType.PERSIST,
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Venue_Facilities> Venue_Facilities;
 
 	@Column(length = 30)

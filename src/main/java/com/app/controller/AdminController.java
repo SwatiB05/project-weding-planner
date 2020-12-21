@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.pojos.Bookings;
@@ -32,6 +34,8 @@ import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
 
 @RestController
+@RequestMapping("/admin")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class AdminController {
 
 	@Autowired
@@ -67,7 +71,7 @@ public class AdminController {
 	// **************************************
 	// API end point or providers
 
-	@GetMapping("/admin/customers")
+	@GetMapping("/customers")
 
 	public ResponseEntity<?> listAllCustomers() {
 		List<Customers> allCustomers = customerService.getAllCustomers();
@@ -77,7 +81,7 @@ public class AdminController {
 		return ResponseEntity.ok(allCustomers);
 	}
 
-	@PostMapping("/admin/customers/create")
+	@PostMapping("/customers/create")
 	public ResponseEntity<?> addCustomerDeatils(@RequestBody Customers c) {
 		try {
 			Customers customer = customerService.addCustomerDetails(c);
@@ -89,7 +93,7 @@ public class AdminController {
 
 	}
 
-	@PutMapping("/admin/customers/{customerId}")
+	@PutMapping("/customers/{customerId}")
 	public ResponseEntity<?> updateCustomerDetails(@PathVariable int customerId, @RequestBody Customers c) {
 		try {
 			Customers updateCustomer = customerService.updateCustomerDetails(customerId, c);
@@ -100,7 +104,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping("/admin/customers/{customerId}")
+	@DeleteMapping("/customers/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) {
 		try {
 			customerService.deleteCustomerById(customerId);
@@ -116,7 +120,7 @@ public class AdminController {
 	// *************City
 	// **************************************
 
-	@GetMapping("/admin/cities")
+	@GetMapping("/cities")
 	public ResponseEntity<?> listAllCities() {
 		List<Cities> allCities = cityService.getAllCities();
 		if (allCities.isEmpty())
@@ -124,7 +128,7 @@ public class AdminController {
 		return ResponseEntity.ok(allCities);
 	}
 
-	@PostMapping("/admin/cities/create")
+	@PostMapping("/cities/create")
 	public ResponseEntity<?> addCityDeatils(@RequestBody Cities c) {
 		try {
 			Cities city = cityService.addCityDetails(c);
@@ -136,7 +140,7 @@ public class AdminController {
 
 	}
 
-	@PutMapping("/admin/cities/{cityId}")
+	@PutMapping("/cities/{cityId}")
 	public ResponseEntity<?> updateCityDetails(@PathVariable int cityId, @RequestBody Cities c) {
 		try {
 			Cities updateCity = cityService.updateCityDetails(cityId, c);
@@ -147,7 +151,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping("/admin/cities/{cityId}")
+	@DeleteMapping("/cities/{cityId}")
 
 	public ResponseEntity<?> deleteCity(@PathVariable("cityId") int id) {
 		try {
@@ -163,7 +167,7 @@ public class AdminController {
 	// **************************************
 	// *************Supplier
 	// **************************************
-	@GetMapping("/admin/suppliers")
+	@GetMapping("/suppliers")
 
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
@@ -175,7 +179,7 @@ public class AdminController {
 	}
 
 	//for testing
-	  @PostMapping("/admin/suppliers/create")
+	  @PostMapping("/suppliers/create")
 	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 
 		  try { Suppliers supplier =supplierService.addSupplierDetails(s);
 		  return ResponseEntity.ok(supplier);
@@ -187,7 +191,7 @@ public class AdminController {
 	  
 	  
 	  //for testing
-	  @PutMapping("/admin/suppliers/{supplierId}")
+	  @PutMapping("/suppliers/{supplierId}")
 	  public ResponseEntity<?>updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
 	  try { Suppliers updateSupplier=supplierService.updateSupplierDetails(supplierId, s);
 	  return  ResponseEntity.ok(updateSupplier);
@@ -196,7 +200,7 @@ public class AdminController {
 	  }
 	 
 
-	@DeleteMapping("/admin/suppliers/{supplierId}")
+	@DeleteMapping("/suppliers/{supplierId}")
 
 	public ResponseEntity<?> deleteSupplier(@PathVariable("supplierId") int id) {
 		try {
@@ -212,7 +216,7 @@ public class AdminController {
 	// **************************************
 	// *************Service
 	// **************************************
-	@GetMapping("/admin/services")
+	@GetMapping("/services")
 
 	public ResponseEntity<?> listAllServices() {
 		List<Services> allServices = serviceService.getAllServices();
@@ -224,7 +228,7 @@ public class AdminController {
 	}
 	
 	//for testing
-	@PostMapping("/admin/services/create")
+	@PostMapping("/services/create")
 	public ResponseEntity<?> addServiceDetails(@RequestBody Services s) {
 		try {
 			Services services = serviceService.addServiceDetails(s);
@@ -237,7 +241,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PutMapping("/admin/services/{serviceId}")
+	@PutMapping("/services/{serviceId}")
 	public ResponseEntity<?> updateServiceDetails(@PathVariable int serviceId, @RequestBody Services v) {
 		try {
 			Services updateService = serviceService.updateServiceDetails(serviceId, v);
@@ -249,7 +253,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@DeleteMapping("/admin/services/{serviceId}")
+	@DeleteMapping("/services/{serviceId}")
 
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
 		try {
@@ -265,7 +269,7 @@ public class AdminController {
 	// **************************************
 	// *************Supplier-service
 	// **************************************
-	@GetMapping("/admin/supplierService")
+	@GetMapping("/supplierService")
 
 	public ResponseEntity<?> listAllSupplierServices() {
 		List<Supplier_Services> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
@@ -277,7 +281,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PostMapping("/admin/supplierService/create")
+	@PostMapping("/supplierService/create")
 	public ResponseEntity<?> addSupplierServiceDetails(@RequestBody Supplier_Services v) {
 		try {
 			Supplier_Services service = supplier_ServiceService.addSupplierServiceDetails(v);
@@ -290,7 +294,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PutMapping("/admin/supplierService/{supplierServiceId}")
+	@PutMapping("/supplierService/{supplierServiceId}")
 	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId, @RequestBody Supplier_Services v) {
 		try {
 			Supplier_Services updateVenue = supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
@@ -302,7 +306,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@DeleteMapping("/admin/supplierService/{supplierServiceId}")
+	@DeleteMapping("/supplierService/{supplierServiceId}")
 	public ResponseEntity<?> deleteSupplierServiceById(@PathVariable("supplierServiceId") int id) {
 		try {
 			supplier_ServiceService.deleteSupplierServiceById(id);
@@ -316,7 +320,7 @@ public class AdminController {
 	// **************************************
 	// *************Venue
 	// **************************************
-	@GetMapping("/admin/venues")
+	@GetMapping("/venues")
 
 	public ResponseEntity<?> listAllVenues() {
 		List<Venues> allVenues = venueService.getAllVenues();
@@ -327,7 +331,7 @@ public class AdminController {
 		return ResponseEntity.ok(allVenues);
 	}
 
-	@PostMapping("/admin/venues/create")
+	@PostMapping("/venues/create")
 	public ResponseEntity<?> addVenueDetails(@RequestBody Venues v) {
 		try {
 			Venues venue = venueService.addVenueDetails(v);
@@ -339,7 +343,7 @@ public class AdminController {
 
 	}
 
-	@PutMapping("/admin/venues/{venueId}")
+	@PutMapping("/venues/{venueId}")
 	public ResponseEntity<?> updateVenueDetails(@PathVariable int venueId, @RequestBody Venues v) {
 		try {
 			Venues updateVenue = venueService.updateVenueDetails(venueId, v);
@@ -350,7 +354,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping("/admin/venues/{venueId}")
+	@DeleteMapping("/venues/{venueId}")
 
 	public ResponseEntity<?> deleteVenue(@PathVariable("venueId") int id) {
 		try {
@@ -366,7 +370,7 @@ public class AdminController {
 	// **************************************
 	// *************Facility
 	// **************************************
-	@GetMapping("/admin/facilities")
+	@GetMapping("/facilities")
 
 	public ResponseEntity<?> listAllFacilities() {
 		List<Facilities> AllFacilities = facilityService.getAllFacilities();
@@ -377,7 +381,7 @@ public class AdminController {
 		return ResponseEntity.ok(AllFacilities);
 	}
 
-	@PostMapping("/admin/facilities/create")
+	@PostMapping("/facilities/create")
 	public ResponseEntity<?> addFacilityDetails(@RequestBody Facilities f) {
 		try {
 			Facilities facility = facilityService.addFacilityDetails(f);
@@ -389,7 +393,7 @@ public class AdminController {
 
 	}
 
-	@PutMapping("/admin/facilities/{facilityId}")
+	@PutMapping("/facilities/{facilityId}")
 	public ResponseEntity<?> updateFacilityDetails(@PathVariable int facilityId, @RequestBody Facilities f) {
 		try {
 			Facilities updateVenue = facilityService.updateFacilityDetails(facilityId, f);
@@ -400,7 +404,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping("/admin/facilities/{facilityId}")
+	@DeleteMapping("/facilities/{facilityId}")
 
 	public ResponseEntity<?> deleteFacility(@PathVariable("facilityId") int id) {
 		try {
@@ -416,7 +420,7 @@ public class AdminController {
 	// **************************************
 	// *************Venue-Facilities
 	// **************************************
-	@GetMapping("/admin/venueFacilities")
+	@GetMapping("/venueFacilities")
 
 	public ResponseEntity<?> listAllVenueFacilities() {
 		List<Venue_Facilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
@@ -428,7 +432,7 @@ public class AdminController {
 	}
 	
 	//for testing
-	@PostMapping("/admin/venueFacilities/create")
+	@PostMapping("/venueFacilities/create")
 	public ResponseEntity<?> addVenueFacilityDetails(@RequestBody Venue_Facilities v) {
 		try {
 			Venue_Facilities venueFacilities = venueFacilityService.addVenueFacilityDetails(v);
@@ -441,7 +445,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PutMapping("/admin/venueFacilities/{venueFacilitiesId}")
+	@PutMapping("/venueFacilities/{venueFacilitiesId}")
 	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId, @RequestBody Venue_Facilities v) {
 		try {
 			Venue_Facilities updateVenue = venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
@@ -452,7 +456,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping("/admin/venueFacilities/{venueFacilityId}")
+	@DeleteMapping("/venueFacilities/{venueFacilityId}")
 	public ResponseEntity<?> deleteVFacility(@PathVariable("venueFacilityId") int id) {
 		try {
 			venueFacilityService.deleteVFacilityById(id);
@@ -467,7 +471,7 @@ public class AdminController {
 	// **************************************
 	// *************Booking
 	// **************************************
-	@GetMapping("/admin/bookings")
+	@GetMapping("/bookings")
 	public ResponseEntity<?> listAllBooking() {
 		List<Bookings> AllBookings = bookingService.getAllBookings();
 
@@ -478,7 +482,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PostMapping("/admin/bookings/create")
+	@PostMapping("/bookings/create")
 	public ResponseEntity<?> addBookingDetails(@RequestBody Bookings v) {
 		try {
 			Bookings addBookings = bookingService.addBookingDetails(v);
@@ -491,7 +495,7 @@ public class AdminController {
 	}
 
 	//for testing
-	@PutMapping("/admin/bookings/{bookingId}")
+	@PutMapping("/bookings/{bookingId}")
 	public ResponseEntity<?> updateBookingDetails(@PathVariable int bookingId, @RequestBody Bookings v) {
 		try {
 			Bookings updateBookings = bookingService.updateBookingDetails(bookingId, v);
@@ -501,7 +505,7 @@ public class AdminController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	@DeleteMapping("/admin/bookings/{bookingId}")
+	@DeleteMapping("/bookings/{bookingId}")
 
 	public ResponseEntity<?> deleteBooking(@PathVariable("bookingId") int id) {
 		try {
