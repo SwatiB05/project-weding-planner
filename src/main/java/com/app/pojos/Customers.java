@@ -31,7 +31,8 @@ public class Customers {
 
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST, 
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Bookings> bookings;
 
 	@Column(length = 30)
@@ -45,7 +46,6 @@ public class Customers {
 
 	@Column(length = 15)
 	private String phoneNo;
-
 
 	@ManyToOne
 	@JoinColumn(name = "cityId",nullable = false)

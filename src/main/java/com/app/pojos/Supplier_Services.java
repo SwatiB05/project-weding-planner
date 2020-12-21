@@ -2,6 +2,7 @@ package com.app.pojos;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Supplier_Services")
@@ -25,7 +25,8 @@ public class Supplier_Services {
 	private Integer supplierServiceId;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "serviceSupplierDetails")
+	@ManyToMany(mappedBy = "serviceSupplierDetails",targetEntity = Bookings.class,
+	cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Bookings> bookings;
 
 	@ManyToOne
