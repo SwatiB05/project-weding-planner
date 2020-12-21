@@ -55,4 +55,10 @@ public Suppliers addSupplierDetails(Suppliers s) {
 	// TODO Auto-generated method stub
 	return dao.save(s);
 }
+
+@Override
+public Optional<Suppliers> findById(int supplierId) {
+	// TODO Auto-generated method stub
+	return dao.findById(supplierId);
+}
 }

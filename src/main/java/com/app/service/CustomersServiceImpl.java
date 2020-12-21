@@ -61,6 +61,13 @@ public class CustomersServiceImpl implements ICustomerService {
 			dao.deleteById(customerId);
 			
 	}
+
+	@Override
+	public Optional<Customers> findById(int customerId) {
+		// TODO Auto-generated method stub
+		return dao.findById(customerId);
+	}
+
 	
 	
 	
