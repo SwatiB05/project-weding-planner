@@ -26,7 +26,7 @@ public class BookingServiceImpl implements IBookingService {
 	@Override
 	public void deleteBookingById(int id) {
 		// TODO Auto-generated method stub
-      dao.deleteById(id);;
+      dao.deleteById(id);
 	}
 
 	@Override

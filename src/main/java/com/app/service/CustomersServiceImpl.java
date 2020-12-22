@@ -58,7 +58,14 @@ public class CustomersServiceImpl implements ICustomerService {
 	@Override
 	public void deleteCustomerById(int customerId) {
 			System.out.println("in customer delete");
-			dao.deleteById(customerId);
+			Optional<Customers> c=dao.findById(customerId);
+			if(c.isPresent())
+			{
+				dao.deleteById(customerId);
+			}else {
+				throw new ResourceNotFoundException("Invalid Customer ID");
+			}
+			
 			
 	}
 

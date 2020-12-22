@@ -3,6 +3,7 @@ package com.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.ResponseDTO;
 import com.app.pojos.Bookings;
 import com.app.pojos.Cities;
 import com.app.pojos.Customers;
@@ -86,7 +88,7 @@ public class AdminController {
 		try {
 			Customers customer = customerService.addCustomerDetails(c);
 			return ResponseEntity.ok(customer);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -109,9 +111,10 @@ public class AdminController {
 		try {
 			customerService.deleteCustomerById(customerId);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Customer"), HttpStatus.BAD_REQUEST);
+			//return ResponseEntity.badRequest().build();
 		}
 
 	}
@@ -133,7 +136,7 @@ public class AdminController {
 		try {
 			Cities city = cityService.addCityDetails(c);
 			return ResponseEntity.ok(city);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -157,9 +160,10 @@ public class AdminController {
 		try {
 			cityService.deleteCityById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Customers associated with this City"), HttpStatus.BAD_REQUEST);
+			//return ResponseEntity.badRequest().build();
 		}
 
 	}
@@ -183,7 +187,7 @@ public class AdminController {
 	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 
 		  try { Suppliers supplier =supplierService.addSupplierDetails(s);
 		  return ResponseEntity.ok(supplier);
-	  }catch (Exception e) { 
+	  }catch (RuntimeException e) { 
 		  e.printStackTrace();
 		  return ResponseEntity.badRequest().build(); 
 		  } 
@@ -206,9 +210,10 @@ public class AdminController {
 		try {
 			supplierService.deleteSupplierById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Supplier"), HttpStatus.BAD_REQUEST);
+			//return ResponseEntity.badRequest().build();
 		}
 
 	}
@@ -233,7 +238,7 @@ public class AdminController {
 		try {
 			Services services = serviceService.addServiceDetails(s);
 			return ResponseEntity.ok(services);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -259,9 +264,10 @@ public class AdminController {
 		try {
 			serviceService.deleteServiceById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			//return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This service"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -286,7 +292,7 @@ public class AdminController {
 		try {
 			Supplier_Services service = supplier_ServiceService.addSupplierServiceDetails(v);
 			return ResponseEntity.ok(service);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -311,9 +317,10 @@ public class AdminController {
 		try {
 			supplier_ServiceService.deleteSupplierServiceById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			//return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This SupplierService"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -336,7 +343,7 @@ public class AdminController {
 		try {
 			Venues venue = venueService.addVenueDetails(v);
 			return ResponseEntity.ok(venue);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -360,9 +367,10 @@ public class AdminController {
 		try {
 			venueService.deleteVenueById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			//return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Venue"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -386,7 +394,7 @@ public class AdminController {
 		try {
 			Facilities facility = facilityService.addFacilityDetails(f);
 			return ResponseEntity.ok(facility);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -410,10 +418,12 @@ public class AdminController {
 		try {
 			facilityService.deleteFacilityById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			//return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Venue associated with This facility"), HttpStatus.BAD_REQUEST);
 		}
+		
 
 	}
 
@@ -437,7 +447,7 @@ public class AdminController {
 		try {
 			Venue_Facilities venueFacilities = venueFacilityService.addVenueFacilityDetails(v);
 			return ResponseEntity.ok(venueFacilities);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -461,11 +471,11 @@ public class AdminController {
 		try {
 			venueFacilityService.deleteVFacilityById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
+			//return ResponseEntity.badRequest().build();
+			return new ResponseEntity<>(new ResponseDTO("There are Booking associated with This venueFacility"), HttpStatus.BAD_REQUEST);
 		}
-
 	}
 
 	// **************************************
@@ -487,7 +497,7 @@ public class AdminController {
 		try {
 			Bookings addBookings = bookingService.addBookingDetails(v);
 			return ResponseEntity.ok(addBookings);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
@@ -511,7 +521,7 @@ public class AdminController {
 		try {
 			bookingService.deleteBookingById(id);
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}

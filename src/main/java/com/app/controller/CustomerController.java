@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,54 +27,54 @@ import com.app.service.ISupplier_ServiceService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
 
-@RestController 
-  @RequestMapping("/customers") 
-  public class CustomerController {
-	
+@RestController
+@RequestMapping("/customers")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class CustomerController {
+
 	public CustomerController() {
 		// TODO Auto-generated constructor stub
 		System.out.println("in customer constr");
 	}
-  
-  @Autowired
-  private ICustomerService customerService;
-  
-  @Autowired
-  private ISupplierService supplierService;
-  @Autowired
-  private IVenueService venueService;
+
+	@Autowired
+	private ICustomerService customerService;
+
+	@Autowired
+	private ISupplierService supplierService;
+	@Autowired
+	private IVenueService venueService;
 	@Autowired
 	private IBookingService bookingService;
 	@Autowired
 	private IVenueFacilityService venueFacilityService;
 	@Autowired
 	private ISupplier_ServiceService supplier_ServiceService;
-	
-  
-  
-  @GetMapping("/{customerId}")
+
+	@GetMapping("/{customerId}")
 	public ResponseEntity<?> getCustomerDetails(@PathVariable int customerId) {
-		
+
 		Optional<Customers> optional = customerService.findById(customerId);
 		if (optional.isPresent())
-	//		return new ResponseEntity<>(optional.get(), HttpStatus.OK);
+			// return new ResponseEntity<>(optional.get(), HttpStatus.OK);
 			return ResponseEntity.ok(optional.get());
 		// invalid id
-	
+
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-  
-  @PutMapping("{customerId}")
-  public ResponseEntity<?>updateCustomerDetails(@PathVariable int customerId,@RequestBody Customers c){
-  try {
-	  Customers updateCustomer=customerService.updateCustomerDetails(customerId, c);
-  return  ResponseEntity.ok(updateCustomer);
-  } catch (RuntimeException e) {
-  e.printStackTrace(); return ResponseEntity.notFound().build(); }
-  }
-  
-  
-  @GetMapping("/suppliers")
+
+	@PutMapping("{customerId}")
+	public ResponseEntity<?> updateCustomerDetails(@PathVariable int customerId, @RequestBody Customers c) {
+		try {
+			Customers updateCustomer = customerService.updateCustomerDetails(customerId, c);
+			return ResponseEntity.ok(updateCustomer);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/suppliers")
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
 
@@ -82,8 +83,8 @@ import com.app.service.IVenueService;
 
 		return ResponseEntity.ok(allSuppliers);
 	}
-  
-  @GetMapping("/admin/supplierService")
+
+	@GetMapping("/admin/supplierService")
 
 	public ResponseEntity<?> listAllSupplierServices() {
 		List<Supplier_Services> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
@@ -93,7 +94,7 @@ import com.app.service.IVenueService;
 
 		return ResponseEntity.ok(allSupplierServices);
 	}
-  
+
 	@GetMapping("/venues")
 	public ResponseEntity<?> listAllVenues() {
 		List<Venues> allVenues = venueService.getAllVenues();
@@ -103,7 +104,7 @@ import com.app.service.IVenueService;
 
 		return ResponseEntity.ok(allVenues);
 	}
-	
+
 	@GetMapping("/venueFacilities")
 	public ResponseEntity<?> listAllVenueFacilities() {
 		List<Venue_Facilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
@@ -113,7 +114,7 @@ import com.app.service.IVenueService;
 
 		return ResponseEntity.ok(AllVFacilities);
 	}
-	
+
 	@GetMapping("/bookings")
 	public ResponseEntity<?> listAllBooking() {
 		List<Bookings> AllBookings = bookingService.getAllBookings();
@@ -123,6 +124,5 @@ import com.app.service.IVenueService;
 
 		return ResponseEntity.ok(AllBookings);
 	}
-  
-  }
- 
+
+}
