@@ -2,16 +2,18 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.pojos.Services;
 
 public interface IServiceService {
 
 	List<Services> getAllServices();
 	
-	Services addServiceDetails(Services s);
+	ResponseEntity<?> addServiceDetails(Services s);
 	
-	Services updateServiceDetails(int Id,Services s);
+	ResponseEntity<?> updateServiceDetails(int Id,Services s);
 	
-	void deleteServiceById(int Id);
+	ResponseEntity<?> deleteServiceById(int Id);
 
 }

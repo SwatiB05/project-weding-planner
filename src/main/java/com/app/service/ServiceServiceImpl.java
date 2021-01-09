@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IServiceDao;
-import com.app.pojos.Facilities;
 import com.app.pojos.Services;
 
 @Service
@@ -24,34 +23,47 @@ public class ServiceServiceImpl implements IServiceService {
 		return dao.findAll();
 	}
 	@Override
-	public Services addServiceDetails(Services s) {
+	public ResponseEntity<?> addServiceDetails(Services s) {
 		// TODO Auto-generated method stub
-		return dao.save(s);
+		Optional<Services> c = dao.findById(s.getServiceId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The service is already Present, Failed to create");
+		}
+		dao.save(s);
+		return ResponseEntity.ok("Service added Successfully");
 	}
 	@Override
-	public Services updateServiceDetails(int Id, Services detachedPOJO) {
+	public ResponseEntity<?> updateServiceDetails(int Id, Services detachedPOJO) {
 		Optional<Services> c = dao.findById(Id);
 		if (c.isPresent()) {
 			// c.get() : PERSISTENT
 			// cityDetachPojo : detached POJO : contains the updates sent by clnt
 			// change state of persistent POJO
-			Services service = c.get();
-			service.setServiceName(detachedPOJO.getServiceName());
-			return service;
+			Services s = c.get();
+			s.setServiceName(detachedPOJO.getServiceName());
+			 return  ResponseEntity.accepted().body("Service updated successfully"); 
 
 		}
-		// in case of no product found : throw custom exception
-		throw new ResourceNotFoundException("Invalid Supplier...");
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the Service specified");
 
 	}
+	
 	@Override
-	public void deleteServiceById(int id) {
+	public ResponseEntity<?> deleteServiceById(int id) {
 		Optional<Services> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Services it is associated with other supplier-Services");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified Service");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the Service specified");
 		}
-		throw new ResourceNotFoundException("Invalid service ID");
 	}
+}
 	
 
-}
+

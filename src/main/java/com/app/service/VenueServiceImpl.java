@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueDao;
-import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
 
 @Service
@@ -26,13 +25,19 @@ public class VenueServiceImpl implements IVenueService {
 	}
 
 	@Override
-	public Venues addVenueDetails(Venues v) {
+	public ResponseEntity<?> addVenueDetails(Venues v) {
 		// TODO Auto-generated method stub
-		return dao.save(v);
+		Optional<Venues> c = dao.findById(v.getVenueId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The Venue is already Present, Failed to create");
+		}
+		dao.save(v);
+		return ResponseEntity.ok("Venue added Successfully");
+		
 	}
 
 	@Override
-	public Venues updateVenueDetails(int venueId, Venues detachedPOJO) {
+	public ResponseEntity<?> updateVenueDetails(int venueId, Venues detachedPOJO) {
 		// TODO Auto-generated method stub
 		Optional<Venues>v=dao.findById(venueId);
 		
@@ -47,18 +52,26 @@ public class VenueServiceImpl implements IVenueService {
 		venue.setVenueFacilities(detachedPOJO.getVenueFacilities());
 		venue.setVenueAddress(detachedPOJO.getVenueAddress());
 		venue.setVenueName(detachedPOJO.getVenueName());
-		return venue;
-	}
-		throw new ResourceNotFoundException("No such venue...");
+		return  ResponseEntity.accepted().body("Venue updated successfully"); 
+
 		}
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the Venue specified");
+}
 
 	@Override
-	public void deleteVenueById(int id) {
+	public ResponseEntity<?> deleteVenueById(int id) {
 		Optional<Venues> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Venue it is associated with other venue-facility");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified Venue");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the Venue specified");
 		}
-		throw new ResourceNotFoundException("Invalid Venue ID");
-	}
 
+}
 }

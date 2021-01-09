@@ -2,14 +2,16 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.pojos.Cities;
 
 public interface ICityService {
 	List<Cities> getAllCities();
 
-	Cities addCityDetails(Cities transientpojo);
+	ResponseEntity<?> addCityDetails(Cities transientpojo);
 
-	Cities updateCityDetails(int cityId, Cities detachedPOJO);
+	ResponseEntity<?> updateCityDetails(int cityId, Cities detachedPOJO);
 
-	void deleteCityById(int cityId);
+	ResponseEntity<?> deleteCityById(int cityId);
 }

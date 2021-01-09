@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueFacilitiesDao;
-import com.app.pojos.Suppliers;
 import com.app.pojos.VenueFacilities;
 
 @Service
@@ -25,22 +24,33 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 	}
 
 	@Override
-	public void deleteVenueFacilityById(int id) {
+	public ResponseEntity<?> deleteVenueFacilityById(int id) {
 		Optional<VenueFacilities> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-		}
-		throw new ResourceNotFoundException("Invalid VenueFacility ID");
-	}
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified VenueFacility it is associated with other venue,booking,facility");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified VenueFacility");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the VenueFacility specified");
+		}}
 
 	@Override
-	public VenueFacilities addVenueFacilityDetails(VenueFacilities v) {
+	public ResponseEntity<?> addVenueFacilityDetails(VenueFacilities v) {
 		// TODO Auto-generated method stub
-		return dao.save(v);
+		Optional<VenueFacilities> c = dao.findById(v.getVenueFacilityId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The VenueFacility is already Present, Failed to create");
+		}
+		dao.save(v);
+		return ResponseEntity.ok("VenueFacility added Successfully");
 	}
 
 	@Override
-	public VenueFacilities updateVenueFacilityDetails(int id, VenueFacilities detachedPOJO) {
+	public ResponseEntity<?> updateVenueFacilityDetails(int id, VenueFacilities detachedPOJO) {
 		Optional<VenueFacilities> v = dao.findById(id);
 		if (v.isPresent()) {
 			VenueFacilities facility = v.get();
@@ -49,10 +59,10 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 			facility.setFacilityId(detachedPOJO.getFacilityId());
 			facility.setVenueId(detachedPOJO.getVenueId());
 			
-			return facility;
+			return  ResponseEntity.accepted().body("VenueFacility updated successfully"); 
 
 		}
-		throw new ResourceNotFoundException("Invalid Venue-Facility...");
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the VenueFacility specified");
 
 	}
 

@@ -2,16 +2,18 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.pojos.SupplierServices;
 
 public interface ISupplierServicesService {
 
 	List<SupplierServices> getAllSupplierServices();
 	
-	SupplierServices addSupplierServiceDetails(SupplierServices ss);
+	ResponseEntity<?> addSupplierServiceDetails(SupplierServices ss);
 	
-	SupplierServices updateSupplierServiceDetails(int id,SupplierServices ss);
+	ResponseEntity<?> updateSupplierServiceDetails(int id,SupplierServices ss);
 	
-	void deleteSupplierServiceById(int id);
+	ResponseEntity<?> deleteSupplierServiceById(int id);
 
 }
