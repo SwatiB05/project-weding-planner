@@ -46,7 +46,7 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 			return  ResponseEntity.accepted().body("SupplierService updated successfully"); 
 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the SupplierService specified");
+		else return ResponseEntity.badRequest().body("Cannot find the SupplierService specified");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified SupplierService it is associated with other service,booking,supplier");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified SupplierService it is associated with other service,booking,supplier");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified SupplierService");

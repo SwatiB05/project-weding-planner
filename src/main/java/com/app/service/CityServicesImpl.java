@@ -9,10 +9,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.ICitiesDao;
+import com.app.dto.ResponseDTO;
 import com.app.pojos.Cities;
 
 @Service
@@ -33,6 +35,7 @@ public class CityServicesImpl implements ICityService {
 		Optional<Cities> c = dao.findById(transientpojo.getCityId());
 		if (c.isPresent()) {
 			 return ResponseEntity.badRequest().body("The city is already Present, Fail to create");
+		
 		}
 		dao.save(transientpojo);
 		return ResponseEntity.ok("City Created Successfully");
@@ -47,7 +50,7 @@ public class CityServicesImpl implements ICityService {
 			city.setCity(cityDetachPojo.getCity());
 			 return  ResponseEntity.accepted().body("City updated successfully"); 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the City specified");
+		else return ResponseEntity.badRequest().body("Cannot find the City specified");
 
 	}
 
@@ -57,7 +60,7 @@ public class CityServicesImpl implements ICityService {
 		if (c.isPresent()) {
 			dao.deleteById(cityId);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified City it is associated with other venue,customer,supplier");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified City it is associated with other venue,customer,supplier");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified city");

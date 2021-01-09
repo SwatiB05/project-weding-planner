@@ -45,7 +45,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 			facility.setFacilityName(detachedPOJO.getFacilityName());
 			return ResponseEntity.accepted().body("Facility updated successfully"); 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the specified Facility");
+		else return ResponseEntity.badRequest().body("Cannot find the specified Facility");
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Facility ");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified Facility ");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified Facility");

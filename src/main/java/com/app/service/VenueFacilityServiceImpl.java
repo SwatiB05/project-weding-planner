@@ -29,7 +29,7 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified VenueFacility it is associated with other venue,booking,facility");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified VenueFacility it is associated with other venue,booking,facility");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified VenueFacility");
@@ -62,7 +62,7 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 			return  ResponseEntity.accepted().body("VenueFacility updated successfully"); 
 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the VenueFacility specified");
+		else return ResponseEntity.badRequest().body("Cannot find the VenueFacility specified");
 
 	}
 

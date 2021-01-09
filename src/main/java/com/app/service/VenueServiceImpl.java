@@ -55,7 +55,7 @@ public class VenueServiceImpl implements IVenueService {
 		return  ResponseEntity.accepted().body("Venue updated successfully"); 
 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the Venue specified");
+		else return ResponseEntity.badRequest().body("Cannot find the Venue specified");
 }
 
 	@Override
@@ -64,7 +64,7 @@ public class VenueServiceImpl implements IVenueService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Venue it is associated with other venue-facility");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified Venue it is associated with other venue-facility");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified Venue");

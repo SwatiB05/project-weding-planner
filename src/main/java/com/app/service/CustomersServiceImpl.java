@@ -35,7 +35,7 @@ public class CustomersServiceImpl implements ICustomerService {
 		if (c.isPresent()) {
 			 return  ResponseEntity.ok(c); 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the specified Customer");
+		else return ResponseEntity.badRequest().body("Cannot find the specified Customer");
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CustomersServiceImpl implements ICustomerService {
 			customer.setPhoneNo(detachedPOJO.getPhoneNo());
 			return ResponseEntity.accepted().body("Customer updated successfully"); 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the specified Cusstomer");
+		else return ResponseEntity.badRequest().body("Cannot find the specified Cusstomer");
 
 	}
 
@@ -71,7 +71,7 @@ public class CustomersServiceImpl implements ICustomerService {
 		if (c.isPresent()) {
 			dao.deleteById(customerId);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified City it is associated with Booking");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified City it is associated with Booking");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified Customer");

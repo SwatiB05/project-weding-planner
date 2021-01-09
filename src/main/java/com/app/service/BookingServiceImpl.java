@@ -49,7 +49,7 @@ public class BookingServiceImpl implements IBookingService {
 			booking.setTotalAmount(detachedPOJO.getTotalAmount());
 			 return  ResponseEntity.accepted().body("Booking updated successfully"); 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the Booking specified");
+		else return ResponseEntity.badRequest().body("Cannot find the Booking specified");
 
 	}
 	@Override
@@ -58,7 +58,7 @@ public class BookingServiceImpl implements IBookingService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified booking ");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified booking ");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified Booking");

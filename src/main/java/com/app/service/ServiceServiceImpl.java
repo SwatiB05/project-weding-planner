@@ -44,7 +44,7 @@ public class ServiceServiceImpl implements IServiceService {
 			 return  ResponseEntity.accepted().body("Service updated successfully"); 
 
 		}
-		else return ResponseEntity.unprocessableEntity().body("Cannot find the Service specified");
+		else return ResponseEntity.badRequest().body("Cannot find the Service specified");
 
 	}
 	
@@ -54,7 +54,7 @@ public class ServiceServiceImpl implements IServiceService {
 		if (c.isPresent()) {
 			dao.deleteById(id);
 			if(c.isPresent()) {
-				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Services it is associated with other supplier-Services");	
+				return ResponseEntity.badRequest().body("Failed to Delete the specified Services it is associated with other supplier-Services");	
 			}else
 			{
 			 return ResponseEntity.ok().body("Successfully deleted the specified Service");
