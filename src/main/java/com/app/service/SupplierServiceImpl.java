@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierDao;
+<<<<<<< HEAD
 import com.app.pojos.Customers;
+=======
+import com.app.pojos.Cities;
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 import com.app.pojos.Suppliers;
-import com.app.pojos.VenueFacilities;
 
 @Service
 @Transactional
@@ -30,28 +33,37 @@ public class SupplierServiceImpl implements ISupplierService {
 	}
 
 	@Override
-	public Suppliers updateSupplierDetails(int supplierId, Suppliers detachedPOJO) {
+	public ResponseEntity<?> updateSupplierDetails(int supplierId, Suppliers detachedPOJO) {
 		// TODO Auto-generated method stub
-		Optional<Suppliers> s = dao.findById(supplierId);
-		if (s.isPresent()) {
-			Suppliers supplier = s.get();
-			// supplier.setCcityId(detachedPOJO.getCcityId());
-			supplier.setFirstName(detachedPOJO.getFirstName());
-			supplier.setLastName(detachedPOJO.getLastName());
-			supplier.setSupplierAddress(detachedPOJO.getSupplierAddress());
-			supplier.setEmail(detachedPOJO.getEmail());
-			supplier.setPhoneNo(detachedPOJO.getPhoneNo());
-			return supplier;
+		Optional<Suppliers> c = dao.findById(supplierId);
+		if (c.isPresent()) {
+			// c.get() : PERSISTENT
+			// cityDetachPojo : detached POJO : contains the updates sent by clnt
+			// change state of persistent POJO
+			Suppliers s = c.get();
+			s.setFirstName(detachedPOJO.getFirstName());
+			s.setLastName(detachedPOJO.getLastName());
+			s.setEmail(detachedPOJO.getEmail());
+			s.setPhoneNo(detachedPOJO.getPhoneNo());
+			s.setPassword(detachedPOJO.getPassword());
+			s.setSupplierAddress(detachedPOJO.getSupplierAddress());
+			 return  ResponseEntity.accepted().body("Supplier updated successfully"); 
 
 		}
-		throw new ResourceNotFoundException("Invalid Customer..");
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the Supplier specified");
 
 	}
 
 	@Override
-	public Suppliers addSupplierDetails(Suppliers s) {
+	public ResponseEntity<?> addSupplierDetails(Suppliers s) {
 		// TODO Auto-generated method stub
-		return dao.save(s);
+		Optional<Suppliers> c = dao.findById(s.getSupplierId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The Supplier is already Present, Failed to create");
+		}
+		dao.save(s);
+		return ResponseEntity.ok("Supplier added Successfully");
+	
 	}
 
 	@Override
@@ -61,11 +73,20 @@ public class SupplierServiceImpl implements ISupplierService {
 	}
 
 	@Override
-	public void deleteSupplierById(int id) {
+	public ResponseEntity<?> deleteSupplierById(int id) {
 		Optional<Suppliers> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified Supplier it is associated with other supplier-service,city");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified Supplier");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the Supplier specified");
 		}
+<<<<<<< HEAD
 		throw new ResourceNotFoundException("Invalid Suppliers ID");
 	}
 	
@@ -81,4 +102,8 @@ public class SupplierServiceImpl implements ISupplierService {
 		}
 		return ResponseEntity.badRequest().body("Invalid Credentials...");
 	}
+=======
+
+}
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 }

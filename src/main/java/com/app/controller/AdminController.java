@@ -109,7 +109,11 @@ public class AdminController {
 
 	@PostMapping("/cities/create")
 	public ResponseEntity<?> addCityDeatils(@RequestBody Cities c) {
+<<<<<<< HEAD
 		return cityService.addCityDetails(c);
+=======
+	return cityService.addCityDetails(c);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	@PutMapping("/cities/{cityId}")
@@ -120,7 +124,14 @@ public class AdminController {
 	@DeleteMapping("/cities/{cityId}")
 
 	public ResponseEntity<?> deleteCity(@PathVariable("cityId") int id) {
+<<<<<<< HEAD
 		return cityService.deleteCityById(id);
+=======
+		
+		return	cityService.deleteCityById(id);
+			
+
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	// **************************************
@@ -137,6 +148,7 @@ public class AdminController {
 		return ResponseEntity.ok(allSuppliers);
 	}
 
+<<<<<<< HEAD
 	// for testing
 	@PostMapping("/suppliers/create")
 	public ResponseEntity<?> addSupplierDetails(@RequestBody Suppliers s) {
@@ -160,10 +172,26 @@ public class AdminController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+=======
+	//for testing
+	  @PostMapping("/suppliers/create")
+	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 
+		 return supplierService.addSupplierDetails(s);
+	  }
+	  
+	  
+	  //for testing
+	  @PutMapping("/suppliers/{supplierId}")
+	  public ResponseEntity<?>updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
+	 return supplierService.updateSupplierDetails(supplierId, s);
+	  }
+	 
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 
 	@DeleteMapping("/suppliers/{supplierId}")
 
 	public ResponseEntity<?> deleteSupplier(@PathVariable("supplierId") int id) {
+<<<<<<< HEAD
 		try {
 			supplierService.deleteSupplierById(id);
 			return ResponseEntity.ok().build();
@@ -173,6 +201,9 @@ public class AdminController {
 			// with This Supplier"), HttpStatus.BAD_REQUEST);
 			return ResponseEntity.badRequest().build();
 		}
+=======
+		return supplierService.deleteSupplierById(id);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 
 	}
 
@@ -193,32 +224,20 @@ public class AdminController {
 	// for testing
 	@PostMapping("/services/create")
 	public ResponseEntity<?> addServiceDetails(@RequestBody Services s) {
-		try {
-			Services services = serviceService.addServiceDetails(s);
-			return ResponseEntity.ok(services);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
-
+		return serviceService.addServiceDetails(s);
 	}
 
 	// for testing
 	@PutMapping("/services/{serviceId}")
 	public ResponseEntity<?> updateServiceDetails(@PathVariable int serviceId, @RequestBody Services v) {
-		try {
-			Services updateService = serviceService.updateServiceDetails(serviceId, v);
-			return ResponseEntity.ok(updateService);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
+		return serviceService.updateServiceDetails(serviceId, v);
 	}
 
 	// for testing
 	@DeleteMapping("/services/{serviceId}")
 
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
+<<<<<<< HEAD
 		try {
 			serviceService.deleteServiceById(id);
 			return ResponseEntity.ok().build();
@@ -229,6 +248,9 @@ public class AdminController {
 			// with This service"), HttpStatus.BAD_REQUEST);
 		}
 
+=======
+		return serviceService.deleteServiceById(id);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	// **************************************
@@ -248,18 +270,12 @@ public class AdminController {
 	// for testing
 	@PostMapping("/supplierService/create")
 	public ResponseEntity<?> addSupplierServiceDetails(@RequestBody SupplierServices v) {
-		try {
-			SupplierServices service = supplier_ServiceService.addSupplierServiceDetails(v);
-			return ResponseEntity.ok(service);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
-
+		return supplier_ServiceService.addSupplierServiceDetails(v);
 	}
 
 	// for testing
 	@PutMapping("/supplierService/{supplierServiceId}")
+<<<<<<< HEAD
 	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId,
 			@RequestBody SupplierServices v) {
 		try {
@@ -269,11 +285,16 @@ public class AdminController {
 			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
+=======
+	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId, @RequestBody SupplierServices v) {
+		return supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	// for testing
 	@DeleteMapping("/supplierService/{supplierServiceId}")
 	public ResponseEntity<?> deleteSupplierServiceById(@PathVariable("supplierServiceId") int id) {
+<<<<<<< HEAD
 		try {
 			supplier_ServiceService.deleteSupplierServiceById(id);
 			return ResponseEntity.ok().build();
@@ -283,6 +304,9 @@ public class AdminController {
 			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
 			// with This SupplierService"), HttpStatus.BAD_REQUEST);
 		}
+=======
+		return supplier_ServiceService.deleteSupplierServiceById(id);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 
 	}
 
@@ -302,30 +326,19 @@ public class AdminController {
 
 	@PostMapping("/venues/create")
 	public ResponseEntity<?> addVenueDetails(@RequestBody Venues v) {
-		try {
-			Venues venue = venueService.addVenueDetails(v);
-			return ResponseEntity.ok(venue);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		return venueService.addVenueDetails(v);
 
 	}
 
 	@PutMapping("/venues/{venueId}")
 	public ResponseEntity<?> updateVenueDetails(@PathVariable int venueId, @RequestBody Venues v) {
-		try {
-			Venues updateVenue = venueService.updateVenueDetails(venueId, v);
-			return ResponseEntity.ok(updateVenue);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
+		return venueService.updateVenueDetails(venueId, v);
 	}
 
 	@DeleteMapping("/venues/{venueId}")
 
 	public ResponseEntity<?> deleteVenue(@PathVariable("venueId") int id) {
+<<<<<<< HEAD
 		try {
 			venueService.deleteVenueById(id);
 			return ResponseEntity.ok().build();
@@ -335,6 +348,9 @@ public class AdminController {
 			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
 			// with This Venue"), HttpStatus.BAD_REQUEST);
 		}
+=======
+		return venueService.deleteVenueById(id);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 
 	}
 
@@ -385,18 +401,13 @@ public class AdminController {
 	// for testing
 	@PostMapping("/venueFacilities/create")
 	public ResponseEntity<?> addVenueFacilityDetails(@RequestBody VenueFacilities v) {
-		try {
-			VenueFacilities venueFacilities = venueFacilityService.addVenueFacilityDetails(v);
-			return ResponseEntity.ok(venueFacilities);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		return venueFacilityService.addVenueFacilityDetails(v);
 
 	}
 
 	// for testing
 	@PutMapping("/venueFacilities/{venueFacilitiesId}")
+<<<<<<< HEAD
 	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId,
 			@RequestBody VenueFacilities v) {
 		try {
@@ -406,10 +417,15 @@ public class AdminController {
 			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
+=======
+	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId, @RequestBody VenueFacilities v) {
+		return venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	@DeleteMapping("/venueFacilities/{venueFacilityId}")
 	public ResponseEntity<?> deleteVFacility(@PathVariable("venueFacilityId") int id) {
+<<<<<<< HEAD
 		try {
 			venueFacilityService.deleteVenueFacilityById(id);
 			return ResponseEntity.ok().build();
@@ -419,6 +435,9 @@ public class AdminController {
 			// return new ResponseEntity<>(new ResponseDTO("There are Booking associated
 			// with This venueFacility"), HttpStatus.BAD_REQUEST);
 		}
+=======
+		return venueFacilityService.deleteVenueFacilityById(id);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	// **************************************

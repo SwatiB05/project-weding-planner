@@ -1,3 +1,6 @@
+
+
+
 package com.app.service;
 
 import java.util.List;
@@ -9,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ICitiesDao;
 import com.app.pojos.Cities;
 
@@ -27,12 +29,23 @@ public class CityServicesImpl implements ICityService {
 
 	@Override
 	public ResponseEntity<?> addCityDetails(Cities transientpojo) {
+<<<<<<< HEAD
 		Optional<Cities> c = dao.findById(transientpojo.getCityId());
 		if (c.isPresent()) {
 			 return ResponseEntity.badRequest().body("The city is already Present, Fail to create");
 		}
 		dao.save(transientpojo);
 		return ResponseEntity.ok("City Created Successfully");
+=======
+		// TODO Auto-generated method stub
+		Optional<Cities> c = dao.findById(transientpojo.getCityId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The city is already Present, Failed to create");
+		}
+		dao.save(transientpojo);
+		return ResponseEntity.ok("City added Successfully");
+		//return dao.save(transientpojo);
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	@Override
@@ -43,6 +56,10 @@ public class CityServicesImpl implements ICityService {
 			Cities city = c.get();
 			city.setCity(cityDetachPojo.getCity());
 			 return  ResponseEntity.accepted().body("City updated successfully"); 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 		}
 		else return ResponseEntity.unprocessableEntity().body("Cannot find the City specified");
 

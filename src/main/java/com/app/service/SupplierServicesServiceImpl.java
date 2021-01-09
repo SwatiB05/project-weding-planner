@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierServicesDao;
-import com.app.pojos.Services;
 import com.app.pojos.SupplierServices;
 @Service
 @Transactional
@@ -24,13 +23,19 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 	}
 
 	@Override
-	public SupplierServices addSupplierServiceDetails(SupplierServices ss) {
+	public ResponseEntity<?> addSupplierServiceDetails(SupplierServices ss) {
 		// TODO Auto-generated method stub
-		return dao.save(ss);
+		Optional<SupplierServices> c = dao.findById(ss.getSupplierServiceId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The SupplierService is already Present, Failed to create");
+		}
+		dao.save(ss);
+		return ResponseEntity.ok("SupplierService added Successfully");
+		
 	}
 
 	@Override
-	public SupplierServices updateSupplierServiceDetails(int id,SupplierServices detachedPOJO) {
+	public ResponseEntity<?> updateSupplierServiceDetails(int id,SupplierServices detachedPOJO) {
 		Optional<SupplierServices> s = dao.findById(id);
 		if (s.isPresent()) {
 			SupplierServices service = s.get();
@@ -38,20 +43,26 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 			service.setCharges(detachedPOJO.getCharges());
 			service.setServiceId(detachedPOJO.getServiceId());
 			service.setSupplierId(detachedPOJO.getSupplierId());
-			return service;
-		}
-		// in case of no product found : throw custom exception
-		throw new ResourceNotFoundException("Invalid supplier service..");
+			return  ResponseEntity.accepted().body("SupplierService updated successfully"); 
 
+		}
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the SupplierService specified");
 	}
 
 	@Override
-	public void deleteSupplierServiceById(int id) {
+	public ResponseEntity<?> deleteSupplierServiceById(int id) {
 		Optional<SupplierServices> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified SupplierService it is associated with other service,booking,supplier");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified SupplierService");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the SupplierService specified");
 		}
-		throw new ResourceNotFoundException("Invalid SupplierServices ID");
-	}
 
+}
 }

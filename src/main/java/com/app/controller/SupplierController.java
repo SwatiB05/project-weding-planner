@@ -59,10 +59,7 @@ public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 	  
 	  @PutMapping("/{supplierId}")
 	  public ResponseEntity<?>updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
-	  try { Suppliers updateSupplier=supplierService.updateSupplierDetails(supplierId, s);
-	  return  ResponseEntity.ok(updateSupplier);
-	  } catch (RuntimeException e) {
-	  e.printStackTrace(); return ResponseEntity.notFound().build(); }
+	  return supplierService.updateSupplierDetails(supplierId, s);
 	  }
 	 
 	
@@ -78,38 +75,19 @@ public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 	
 	@PostMapping("/services/create")
 	public ResponseEntity<?> addServiceDetails(@RequestBody Services s) {
-		try {
-			Services services = serviceService.addServiceDetails(s);
-			return ResponseEntity.ok(services);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
-
+		return serviceService.addServiceDetails(s);
 	}
 
 	
 	@PutMapping("/services/{serviceId}")
 	public ResponseEntity<?> updateServiceDetails(@PathVariable int serviceId, @RequestBody Services v) {
-		try {
-			Services updateService = serviceService.updateServiceDetails(serviceId, v);
-			return ResponseEntity.ok(updateService);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
+		return serviceService.updateServiceDetails(serviceId, v);
 	}
 
 	
 	@DeleteMapping("/services/{serviceId}")
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
-		try {
-			serviceService.deleteServiceById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		return serviceService.deleteServiceById(id);
 	}
 	
 	@GetMapping("/venues")
