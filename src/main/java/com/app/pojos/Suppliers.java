@@ -55,7 +55,7 @@ public class Suppliers {
 	private Cities scityId;
 
 
-	@Column(length = 30)
+	@Column(length = 30,unique = true)
 	private String email;
 
 	@Column(length = 100)

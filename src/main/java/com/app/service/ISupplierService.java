@@ -3,6 +3,8 @@ package com.app.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.pojos.Suppliers;
 
 public interface ISupplierService {
@@ -17,6 +19,6 @@ public interface ISupplierService {
 
 	Optional<Suppliers> findById(int supplierId);
 
-	
+	ResponseEntity<?> adminAuthentication(String email, String password);
 
 }

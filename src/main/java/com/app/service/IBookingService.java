@@ -2,16 +2,18 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.pojos.Bookings;
 
 public interface IBookingService {
 
 	List<Bookings> getAllBookings();
 	
-	Bookings addBookingDetails(Bookings b);
+	ResponseEntity<?> addBookingDetails(Bookings b);
 	
-	Bookings updateBookingDetails(int bookingId, Bookings b); 
+	ResponseEntity<?> updateBookingDetails(int bookingId, Bookings b); 
 	
-	void deleteBookingById(int id);
+	ResponseEntity<?> deleteBookingById(int id);
 
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,8 @@ public class VenueFacilities {
 
 	//@JsonIgnore
 		@JsonIgnoreProperties("venueFacilityDetails")
-		@ManyToMany(mappedBy = "venueFacilityDetails",targetEntity = Bookings.class,
+		@ManyToMany( mappedBy = "venueFacilityDetails", 
+		targetEntity = Bookings.class,fetch = FetchType.EAGER,
 		cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 		private Set<Bookings> bookings;
 

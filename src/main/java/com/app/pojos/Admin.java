@@ -24,7 +24,8 @@ public class Admin {
 	@Column(length = 15)
 	private String phoneNo;
 	
-	@Column(length = 30)
+	
+	@Column(length = 30,unique = true)
 	private String email;
 	
 	@Column(length = 100)

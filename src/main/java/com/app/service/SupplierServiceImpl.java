@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierDao;
+import com.app.pojos.Customers;
 import com.app.pojos.Suppliers;
 import com.app.pojos.VenueFacilities;
 
@@ -65,5 +67,18 @@ public class SupplierServiceImpl implements ISupplierService {
 			dao.deleteById(id);
 		}
 		throw new ResourceNotFoundException("Invalid Suppliers ID");
+	}
+	
+	
+	@Override
+	public ResponseEntity<?> adminAuthentication(String email, String password) {
+		Optional<Suppliers> admin = dao.findByEmail(email);
+		if(admin.isPresent()) {
+			if(admin.get().getPassword()==password) {
+				return ResponseEntity.ok("Login Sucessfull");
+			}
+			return ResponseEntity.badRequest().body("Wrong PassWord");
+		}
+		return ResponseEntity.badRequest().body("Invalid Credentials...");
 	}
 }

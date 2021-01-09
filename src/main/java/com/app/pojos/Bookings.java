@@ -1,12 +1,12 @@
 package com.app.pojos;
 
-
 import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,28 +31,29 @@ public class Bookings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 
-
-	//@JsonIgnore
+	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(cascade = {CascadeType.PERSIST, 
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},targetEntity = VenueFacilities.class)
-	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH }, targetEntity = VenueFacilities.class,
+			fetch = FetchType.EAGER)
+	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), 
+	inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
 	private Set<VenueFacilities> venueFacilityDetails;
 
-	//@JsonIgnore
+	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(targetEntity = SupplierServices.class,cascade = {CascadeType.PERSIST, 
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
+	@ManyToMany(targetEntity = SupplierServices.class, cascade = { CascadeType.PERSIST, CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.REFRESH })
+	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"),
+	inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
 	private Set<SupplierServices> serviceSupplierDetails;
 
 	@Column(length = 15)
 	private String bookingName;
-	
 
 	@ManyToOne
 	@JsonIgnoreProperties("bookings")
-	@JoinColumn(name = "customerId",nullable = false)
+	@JoinColumn(name = "customerId", nullable = false)
 	private Customers customerId;
 
 	@Column(length = 15)
@@ -140,9 +141,5 @@ public class Bookings {
 				+ ", customerId=" + customerId + ", totalAmount=" + totalAmount + ", discount=" + discount
 				+ ", dateOfBooking=" + dateOfBooking + "]";
 	}
-
-	
-	
-	
 
 }

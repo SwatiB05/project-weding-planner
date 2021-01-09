@@ -51,42 +51,27 @@ public class CustomerController {
 	@Autowired
 	private ISupplierServicesService supplier_ServiceService;
 
-	@GetMapping("/{customerId}")
-	public ResponseEntity<?> getCustomerDetails(@PathVariable int customerId) {
-
-		Optional<Customers> optional = customerService.findById(customerId);
-		if (optional.isPresent())
-			// return new ResponseEntity<>(optional.get(), HttpStatus.OK);
-			return ResponseEntity.ok(optional.get());
-		// invalid id
-
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	
+	@GetMapping("/customers/{customerId}")
+	public ResponseEntity<?> getCustomer(@PathVariable int customerId){
+		return customerService.findById(customerId);
 	}
 
 	@PutMapping("{customerId}")
 	public ResponseEntity<?> updateCustomerDetails(@PathVariable int customerId, @RequestBody Customers c) {
-		try {
-			Customers updateCustomer = customerService.updateCustomerDetails(customerId, c);
-			return ResponseEntity.ok(updateCustomer);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-			
-		}
+			return customerService.updateCustomerDetails(customerId, c);
 	}
 
 	@GetMapping("/suppliers")
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
-
 		if (allSuppliers.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(allSuppliers);
 	}
 
-	@GetMapping("/admin/supplierService")
-
+	
+	@GetMapping("/supplierService")
 	public ResponseEntity<?> listAllSupplierServices() {
 		List<SupplierServices> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
 
@@ -99,30 +84,24 @@ public class CustomerController {
 	@GetMapping("/venues")
 	public ResponseEntity<?> listAllVenues() {
 		List<Venues> allVenues = venueService.getAllVenues();
-
 		if (allVenues.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(allVenues);
 	}
 
 	@GetMapping("/venueFacilities")
 	public ResponseEntity<?> listAllVenueFacilities() {
 		List<VenueFacilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
-
 		if (AllVFacilities.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(AllVFacilities);
 	}
 
 	@GetMapping("/bookings")
 	public ResponseEntity<?> listAllBooking() {
 		List<Bookings> AllBookings = bookingService.getAllBookings();
-
 		if (AllBookings.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(AllBookings);
 	}
 

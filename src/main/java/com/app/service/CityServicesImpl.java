@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_excpt.ResourceNotFoundException;
@@ -25,36 +26,43 @@ public class CityServicesImpl implements ICityService {
 	}
 
 	@Override
-	public Cities addCityDetails(Cities transientpojo) {
-		// TODO Auto-generated method stub
-		return dao.save(transientpojo);
+	public ResponseEntity<?> addCityDetails(Cities transientpojo) {
+		Optional<Cities> c = dao.findById(transientpojo.getCityId());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The city is already Present, Fail to create");
+		}
+		dao.save(transientpojo);
+		return ResponseEntity.ok("City Created Successfully");
 	}
 
 	@Override
-	public Cities updateCityDetails(int cityId, Cities cityDetachPojo) {
+	public ResponseEntity<?> updateCityDetails(int cityId, Cities cityDetachPojo) {
 		// chk if city exists : findById
 		Optional<Cities> c = dao.findById(cityId);
 		if (c.isPresent()) {
-			// c.get() : PERSISTENT
-			// cityDetachPojo : detached POJO : contains the updates sent by clnt
-			// change state of persistent POJO
 			Cities city = c.get();
 			city.setCity(cityDetachPojo.getCity());
-			return city;
-
+			 return  ResponseEntity.accepted().body("City updated successfully"); 
 		}
-		// in case of no product found : throw custom exception
-		throw new ResourceNotFoundException("Invalid City ID");
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the City specified");
 
 	}
 
 	@Override
-	public void deleteCityById(int cityId) {
+	public ResponseEntity<?> deleteCityById(int cityId) {
 		Optional<Cities> c = dao.findById(cityId);
 		if (c.isPresent()) {
 			dao.deleteById(cityId);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified City it is associated with other venue,customer,supplier");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified city");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the City specified");
 		}
-		throw new ResourceNotFoundException("Invalid City ID");
+
 	
 	}
 

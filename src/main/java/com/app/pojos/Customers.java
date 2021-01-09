@@ -54,7 +54,7 @@ public class Customers {
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities ccityId;
 
-	@Column(length = 30)
+	@Column(length = 30,unique = true)
 	private String email;
 
 	@Column(length = 100)

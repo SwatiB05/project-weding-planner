@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ICustomerDao;
+import com.app.pojos.Admin;
 import com.app.pojos.Cities;
 import com.app.pojos.Customers;
 
@@ -20,25 +22,36 @@ public class CustomersServiceImpl implements ICustomerService {
 	@Autowired
 	private ICustomerDao dao;
 
+
 	@Override
 	public List<Customers> getAllCustomers() {
 		System.out.println("in customerservice get all");
 		return dao.findAll();
 	}
-
+	
 	@Override
-	public Customers addCustomerDetails(Customers transientpojo) {
-		// TODO Auto-generated method stub
-		return dao.save(transientpojo);
+	public ResponseEntity<?> findById(int customerId) {
+		Optional<Customers> c = dao.findById(customerId);
+		if (c.isPresent()) {
+			 return  ResponseEntity.ok(c); 
+		}
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the specified Customer");
 	}
 
 	@Override
-	public Customers updateCustomerDetails(int customerId, Customers detachedPOJO) {
+	public ResponseEntity<?> addCustomerDetails(Customers transientpojo) {
+		Optional<Customers> c = dao.findByEmail(transientpojo.getEmail());
+		if (c.isPresent()) {
+			 return ResponseEntity.badRequest().body("The customer is already Present, Fail to create");
+		}
+		dao.save(transientpojo);
+		return ResponseEntity.ok("Customer Created Successfully");
+	}
+
+	@Override
+	public ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO) {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
-			// c.get() : PERSISTENT
-			// cityDetachPojo : detached POJO : contains the updates sent by clnt
-			// change state of persistent POJO
 			Customers customer = c.get();
 			customer.setCcityId(detachedPOJO.getCcityId());
 			customer.setFirstName(detachedPOJO.getFirstName());
@@ -46,27 +59,43 @@ public class CustomersServiceImpl implements ICustomerService {
 			customer.setCustomerAddress(detachedPOJO.getCustomerAddress());
 			customer.setEmail(detachedPOJO.getEmail());
 			customer.setPhoneNo(detachedPOJO.getPhoneNo());
-			return customer;
-
+			return ResponseEntity.accepted().body("Customer updated successfully"); 
 		}
-		// in case of no product found : throw custom exception
-		throw new ResourceNotFoundException("Invalid Customer ID");
+		else return ResponseEntity.unprocessableEntity().body("Cannot find the specified Cusstomer");
 
 	}
 
 	@Override
-	public void deleteCustomerById(int customerId) {
+	public ResponseEntity<?> deleteCustomerById(int customerId) {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
 			dao.deleteById(customerId);
+			if(c.isPresent()) {
+				return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified City it is associated with Booking");	
+			}else
+			{
+			 return ResponseEntity.ok().body("Successfully deleted the specified Customer");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
 		}
-		throw new ResourceNotFoundException("Invalid Customer ID");
 	}
 
+	
 	@Override
-	public Optional<Customers> findById(int customerId) {
-		// TODO Auto-generated method stub
-		return dao.findById(customerId);
+	public ResponseEntity<?> adminAuthentication(String email, String password) {
+		Optional<Customers> admin = dao.findByEmail(email);
+		if(admin.isPresent()) {
+			if(admin.get().getPassword()==password) {
+				return ResponseEntity.ok("Login Sucessfull");
+			}
+			return ResponseEntity.badRequest().body("Wrong PassWord");
+		}
+		return ResponseEntity.badRequest().body("Invalid Credentials...");
 	}
+
+	
+
+	
 
 }
