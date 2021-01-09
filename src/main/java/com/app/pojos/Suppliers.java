@@ -3,24 +3,38 @@ package com.app.pojos;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "Suppliers")
 public class Suppliers {
 
 	@Id
-	@JsonManagedReference
+	//@JsonManagedReference
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierId;
 
 	@JsonIgnore
+	//@JsonIgnoreProperties("supplierId")
 	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL)
-	private Set<Supplier_Services> Supplier_Services;
+	private Set<SupplierServices> supplierServices;
 
 	@Column(length = 30)
 	private String firstName;
@@ -35,8 +49,8 @@ public class Suppliers {
 	private String phoneNo;
 
 	
-	
 	@ManyToOne
+	@JsonIgnoreProperties("suppliers")
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities scityId;
 
@@ -66,13 +80,7 @@ public class Suppliers {
 		this.supplierId = supplierId;
 	}
 
-	public Set<Supplier_Services> getSupplier_Services() {
-		return Supplier_Services;
-	}
-
-	public void setSupplier_Services(Set<Supplier_Services> supplier_Services) {
-		Supplier_Services = supplier_Services;
-	}
+	
 
 	public String getFirstName() {
 		return firstName;
@@ -146,13 +154,23 @@ public class Suppliers {
 		this.scityId = scityId;
 	}
 
+
+	public Set<SupplierServices> getSupplierServices() {
+		return supplierServices;
+	}
+
+	public void setSupplierServices(Set<SupplierServices> supplierServices) {
+		this.supplierServices = supplierServices;
+	}
+
 	@Override
 	public String toString() {
-		return "Suppliers [supplierId=" + supplierId + ", Supplier_Services=" + Supplier_Services + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", supplierAddress=" + supplierAddress + ", phoneNo=" + phoneNo
-				+ ", scityId=" + scityId + ", email=" + email + ", password=" + password + ", createdOn=" + createdOn
-				+ ", isActive=" + isActive + "]";
+		return "Suppliers [supplierId=" + supplierId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", supplierAddress=" + supplierAddress + ", phoneNo=" + phoneNo + ", scityId=" + scityId + ", email="
+				+ email + ", createdOn=" + createdOn + ", isActive=" + isActive + "]";
 	}
+
+	
 
 	
 

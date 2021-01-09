@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="Cities")
@@ -22,20 +23,27 @@ public class Cities {
 	private Integer cityId;
 	
 
+   
+   //@JsonIgnoreProperties("vcityId")
    @JsonIgnore
 	@OneToMany(mappedBy = "vcityId" ,cascade = {CascadeType.PERSIST, 
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Venues> venues;
 	
   
-    @JsonIgnore
+    
+	//@JsonIgnoreProperties("scityId")
+	@JsonIgnore
 	@OneToMany(mappedBy = "scityId" ,cascade = {CascadeType.PERSIST,
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Suppliers> suppliers;
 	
+	
+	
+	//@JsonIgnoreProperties("ccityId")
 	@OneToMany(mappedBy = "ccityId" ,cascade = {CascadeType.PERSIST,
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-    @JsonIgnore
+   @JsonIgnore
 	private Set<Customers> customers;
 	
 	@Column(length = 30)
@@ -85,10 +93,10 @@ public class Cities {
 
 	@Override
 	public String toString() {
-		return "Cities [cityId=" + cityId + ", venues=" + venues + ", suppliers=" + suppliers + ", customers="
-				+ customers + ", city=" + city + "]";
+		return "Cities [cityId=" + cityId + ", city=" + city + "]";
 	}
 
+	
 	
 	
 	

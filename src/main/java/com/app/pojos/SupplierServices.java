@@ -15,26 +15,30 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "Supplier_Services")
-public class Supplier_Services {
+@Table(name = "SupplierServices")
+public class SupplierServices {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierServiceId;
 
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonIgnoreProperties("serviceSupplierDetails")
 	@ManyToMany(mappedBy = "serviceSupplierDetails",targetEntity = Bookings.class,
 	cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Bookings> bookings;
 
 	@ManyToOne
+	@JsonIgnoreProperties("supplierServices")
 	@JoinColumn(name = "supplierId")
-	@JsonBackReference
+	//@JsonBackReference
 	private Suppliers supplierId;
 
 	@ManyToOne
+	@JsonIgnoreProperties("supplierServices")
 	@JoinColumn(name = "serviceId")
 	private Services serviceId;
 
@@ -86,8 +90,10 @@ public class Supplier_Services {
 
 	@Override
 	public String toString() {
-		return "Supplier_Services [supplierServiceId=" + supplierServiceId + ", bookings=" + bookings + ", supplierId="
-				+ supplierId + ", serviceId=" + serviceId + ", charges=" + charges + "]";
+		return "SupplierServices [supplierServiceId=" + supplierServiceId + ", supplierId=" + supplierId
+				+ ", serviceId=" + serviceId + ", charges=" + charges + "]";
 	}
+
+	
 
 }

@@ -2,16 +2,16 @@ package com.app.service;
 
 import java.util.List;
 
-import com.app.pojos.Venue_Facilities;
+import com.app.pojos.VenueFacilities;
 
 public interface IVenueFacilityService {
 
-	List<Venue_Facilities> getAllVenueFacilities();
+	List<VenueFacilities> getAllVenueFacilities();
 	
-	Venue_Facilities addVenueFacilityDetails(Venue_Facilities v);
+	VenueFacilities addVenueFacilityDetails(VenueFacilities v);
 	
-	Venue_Facilities updateVenueFacilityDetails(int id,Venue_Facilities v);
+	VenueFacilities updateVenueFacilityDetails(int id,VenueFacilities v);
 
-	void deleteVFacilityById(int id);
+	void deleteVenueFacilityById(int id);
 
 }

@@ -13,28 +13,30 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "Venue_Facilities")
-public class Venue_Facilities {
+@Table(name = "VenueFacilities")
+public class VenueFacilities {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueFacilityId;
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "venueFacilityDetails",targetEntity = Bookings.class,
-	cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	private Set<Bookings> bookings;
+	//@JsonIgnore
+		@JsonIgnoreProperties("venueFacilityDetails")
+		@ManyToMany(mappedBy = "venueFacilityDetails",targetEntity = Bookings.class,
+		cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+		private Set<Bookings> bookings;
 
 	@ManyToOne
-	@JsonBackReference
+	//@JsonBackReference
+	@JsonIgnoreProperties("enueFacilities")
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 
 	@ManyToOne
+	@JsonIgnoreProperties("venueFacilities")
 	@JoinColumn(name = "facilityId", nullable = false)
 	private Facilities facilityId;
 
@@ -84,8 +86,9 @@ public class Venue_Facilities {
 
 	@Override
 	public String toString() {
-		return "Venue_Facilities [venueFacilityId=" + venueFacilityId + ", bookings=" + bookings + ", venueId="
-				+ venueId + ", facilityId=" + facilityId + ", charges=" + charges + "]";
+		return "VenueFacilities [venueFacilityId=" + venueFacilityId + ", venueId=" + venueId + ", facilityId="
+				+ facilityId + ", charges=" + charges + "]";
 	}
 
+	
 }

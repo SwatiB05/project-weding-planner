@@ -84,8 +84,9 @@ public class Admin {
 	@Override
 	public String toString() {
 		return "Admin [adminId=" + adminId + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNo="
-				+ phoneNo + ", email=" + email + ", password=" + password + "]";
+				+ phoneNo + ", email=" + email + "]";
 	}
+
 
 	
 	

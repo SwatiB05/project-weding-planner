@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -32,23 +32,26 @@ public class Bookings {
 	private Integer bookingId;
 
 
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonIgnoreProperties("bookings")
 	@ManyToMany(cascade = {CascadeType.PERSIST, 
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},targetEntity = Venue_Facilities.class)
-	@JoinTable(name = "Booking_Venue_Facilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
-	private Set<Venue_Facilities> venueFacilityDetails;
+			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},targetEntity = VenueFacilities.class)
+	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
+	private Set<VenueFacilities> venueFacilityDetails;
 
-	@JsonIgnore
-	@ManyToMany(targetEntity = Supplier_Services.class,cascade = {CascadeType.PERSIST, 
+	//@JsonIgnore
+	@JsonIgnoreProperties("bookings")
+	@ManyToMany(targetEntity = SupplierServices.class,cascade = {CascadeType.PERSIST, 
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinTable(name = "Booking_Service_Suppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
-	private Set<Supplier_Services> serviceSupplierDetails;
+	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
+	private Set<SupplierServices> serviceSupplierDetails;
 
 	@Column(length = 15)
 	private String bookingName;
 	
 
 	@ManyToOne
+	@JsonIgnoreProperties("bookings")
 	@JoinColumn(name = "customerId",nullable = false)
 	private Customers customerId;
 
@@ -114,19 +117,19 @@ public class Bookings {
 		this.dateOfBooking = dateOfBooking;
 	}
 
-	public Set<Supplier_Services> getServiceSupplierDetails() {
+	public Set<SupplierServices> getServiceSupplierDetails() {
 		return serviceSupplierDetails;
 	}
 
-	public void setServiceSupplierDetails(Set<Supplier_Services> serviceSupplierDetails) {
+	public void setServiceSupplierDetails(Set<SupplierServices> serviceSupplierDetails) {
 		this.serviceSupplierDetails = serviceSupplierDetails;
 	}
 
-	public Set<Venue_Facilities> getVenueFacilityDetails() {
+	public Set<VenueFacilities> getVenueFacilityDetails() {
 		return venueFacilityDetails;
 	}
 
-	public void setVenueFacilityDetails(Set<Venue_Facilities> venueFacilityDetails) {
+	public void setVenueFacilityDetails(Set<VenueFacilities> venueFacilityDetails) {
 		this.venueFacilityDetails = venueFacilityDetails;
 	}
 
@@ -137,5 +140,9 @@ public class Bookings {
 				+ ", customerId=" + customerId + ", totalAmount=" + totalAmount + ", discount=" + discount
 				+ ", dateOfBooking=" + dateOfBooking + "]";
 	}
+
+	
+	
+	
 
 }

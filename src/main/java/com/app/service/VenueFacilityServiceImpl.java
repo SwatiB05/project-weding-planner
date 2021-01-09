@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueFacilitiesDao;
-import com.app.pojos.Venue_Facilities;
+import com.app.pojos.Suppliers;
+import com.app.pojos.VenueFacilities;
 
 @Service
 @Transactional
@@ -18,28 +19,31 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 	@Autowired
 	private IVenueFacilitiesDao dao;
 	@Override
-	public List<Venue_Facilities> getAllVenueFacilities() {
+	public List<VenueFacilities> getAllVenueFacilities() {
 		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
 	@Override
-	public void deleteVFacilityById(int id) {
-		// TODO Auto-generated method stub
-dao.deleteById(id);
+	public void deleteVenueFacilityById(int id) {
+		Optional<VenueFacilities> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid VenueFacility ID");
 	}
 
 	@Override
-	public Venue_Facilities addVenueFacilityDetails(Venue_Facilities v) {
+	public VenueFacilities addVenueFacilityDetails(VenueFacilities v) {
 		// TODO Auto-generated method stub
 		return dao.save(v);
 	}
 
 	@Override
-	public Venue_Facilities updateVenueFacilityDetails(int id, Venue_Facilities detachedPOJO) {
-		Optional<Venue_Facilities> v = dao.findById(id);
+	public VenueFacilities updateVenueFacilityDetails(int id, VenueFacilities detachedPOJO) {
+		Optional<VenueFacilities> v = dao.findById(id);
 		if (v.isPresent()) {
-			Venue_Facilities facility = v.get();
+			VenueFacilities facility = v.get();
 			facility.setBookings(detachedPOJO.getBookings());
 			facility.setCharges(detachedPOJO.getCharges());
 			facility.setFacilityId(detachedPOJO.getFacilityId());

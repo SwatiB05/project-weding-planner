@@ -10,55 +10,60 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierDao;
 import com.app.pojos.Suppliers;
+import com.app.pojos.VenueFacilities;
 
-@Service 
+@Service
 @Transactional
 public class SupplierServiceImpl implements ISupplierService {
 
-	//dependency 
-		@Autowired
-		private ISupplierDao dao;
+	// dependency
+	@Autowired
+	private ISupplierDao dao;
+
 	@Override
 	public List<Suppliers> getAllSuppliers() {
 		System.out.println("in suppliers get all");
 		return dao.findAll();
-		
+
+	}
+
+	@Override
+	public Suppliers updateSupplierDetails(int supplierId, Suppliers detachedPOJO) {
+		// TODO Auto-generated method stub
+		Optional<Suppliers> s = dao.findById(supplierId);
+		if (s.isPresent()) {
+			Suppliers supplier = s.get();
+			// supplier.setCcityId(detachedPOJO.getCcityId());
+			supplier.setFirstName(detachedPOJO.getFirstName());
+			supplier.setLastName(detachedPOJO.getLastName());
+			supplier.setSupplierAddress(detachedPOJO.getSupplierAddress());
+			supplier.setEmail(detachedPOJO.getEmail());
+			supplier.setPhoneNo(detachedPOJO.getPhoneNo());
+			return supplier;
+
+		}
+		throw new ResourceNotFoundException("Invalid Customer..");
+
+	}
+
+	@Override
+	public Suppliers addSupplierDetails(Suppliers s) {
+		// TODO Auto-generated method stub
+		return dao.save(s);
+	}
+
+	@Override
+	public Optional<Suppliers> findById(int supplierId) {
+		// TODO Auto-generated method stub
+		return dao.findById(supplierId);
 	}
 
 	@Override
 	public void deleteSupplierById(int id) {
-		// TODO Auto-generated method stub
-		dao.deleteById(id);
+		Optional<Suppliers> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid Suppliers ID");
 	}
-
-@Override
-public Suppliers updateSupplierDetails(int supplierId, Suppliers detachedPOJO) {
-	// TODO Auto-generated method stub 
-	Optional<Suppliers> s =dao.findById(supplierId);
-	if (s.isPresent()) {
-  Suppliers supplier = s.get();
-  //supplier.setCcityId(detachedPOJO.getCcityId());
-  supplier.setFirstName(detachedPOJO.getFirstName());
-  supplier.setLastName(detachedPOJO.getLastName());
-  supplier.setSupplierAddress(detachedPOJO.getSupplierAddress());
-  supplier.setEmail(detachedPOJO.getEmail());
-  supplier.setPhoneNo(detachedPOJO.getPhoneNo());
-  return supplier;
-  
-  }
-	throw new ResourceNotFoundException("Invalid Customer..");
-	
-}
-
-@Override
-public Suppliers addSupplierDetails(Suppliers s) {
-	// TODO Auto-generated method stub
-	return dao.save(s);
-}
-
-@Override
-public Optional<Suppliers> findById(int supplierId) {
-	// TODO Auto-generated method stub
-	return dao.findById(supplierId);
-}
 }

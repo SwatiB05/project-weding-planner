@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -31,6 +32,7 @@ public class Customers {
 
 
 	@JsonIgnore
+	//@JsonIgnoreProperties("customerId")
 	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST, 
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Bookings> bookings;
@@ -48,6 +50,7 @@ public class Customers {
 	private String phoneNo;
 
 	@ManyToOne
+	@JsonIgnoreProperties("customers")
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities ccityId;
 
@@ -169,10 +172,10 @@ public class Customers {
 
 	@Override
 	public String toString() {
-		return "Customers [customerId=" + customerId + ", bookings=" + bookings + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", customerAddress=" + customerAddress + ", phoneNo=" + phoneNo
-				+ ", ccityId=" + ccityId + ", email=" + email + ", createdOn=" + createdOn + ", status=" + status
-				+ ", isActive=" + isActive + "]";
+		return "Customers [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", customerAddress=" + customerAddress + ", phoneNo=" + phoneNo + ", ccityId=" + ccityId + ", email="
+				+ email + ", createdOn=" + createdOn + ", status=" + status + ", isActive=" + isActive + "]";
 	}
 
+	
 }

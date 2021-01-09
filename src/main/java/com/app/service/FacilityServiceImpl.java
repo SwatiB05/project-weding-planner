@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IFacilityDao;
+import com.app.pojos.Customers;
 import com.app.pojos.Facilities;
-
 
 @Service
 @Transactional
@@ -18,6 +18,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 
 	@Autowired
 	private IFacilityDao dao;
+
 	@Override
 	public List<Facilities> getAllFacilities() {
 		// TODO Auto-generated method stub
@@ -33,9 +34,9 @@ public class FacilityServiceImpl implements IFacilitesService {
 	@Override
 	public Facilities updateFacilityDetails(int facilityId, Facilities detachedPOJO) {
 		// TODO Auto-generated method stub
-		Optional<Facilities> f=dao.findById(facilityId);
-		if(f.isPresent()) {
-			Facilities facility=f.get();
+		Optional<Facilities> f = dao.findById(facilityId);
+		if (f.isPresent()) {
+			Facilities facility = f.get();
 			facility.setFacilityName(detachedPOJO.getFacilityName());
 			return facility;
 		}
@@ -44,8 +45,11 @@ public class FacilityServiceImpl implements IFacilitesService {
 
 	@Override
 	public void deleteFacilityById(int id) {
-		// TODO Auto-generated method stub
-		dao.deleteById(id);
+		Optional<Facilities> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid Facility ID");
 
 	}
 

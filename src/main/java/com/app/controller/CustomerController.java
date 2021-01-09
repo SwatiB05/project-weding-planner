@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.pojos.Bookings;
 import com.app.pojos.Customers;
-import com.app.pojos.Supplier_Services;
+import com.app.pojos.SupplierServices;
 import com.app.pojos.Suppliers;
-import com.app.pojos.Venue_Facilities;
+import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
 import com.app.service.IBookingService;
 import com.app.service.ICustomerService;
 import com.app.service.ISupplierService;
-import com.app.service.ISupplier_ServiceService;
+import com.app.service.ISupplierServicesService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
 
@@ -49,7 +49,7 @@ public class CustomerController {
 	@Autowired
 	private IVenueFacilityService venueFacilityService;
 	@Autowired
-	private ISupplier_ServiceService supplier_ServiceService;
+	private ISupplierServicesService supplier_ServiceService;
 
 	@GetMapping("/{customerId}")
 	public ResponseEntity<?> getCustomerDetails(@PathVariable int customerId) {
@@ -71,6 +71,7 @@ public class CustomerController {
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return ResponseEntity.notFound().build();
+			
 		}
 	}
 
@@ -87,7 +88,7 @@ public class CustomerController {
 	@GetMapping("/admin/supplierService")
 
 	public ResponseEntity<?> listAllSupplierServices() {
-		List<Supplier_Services> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
+		List<SupplierServices> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
 
 		if (allSupplierServices.isEmpty())
 			return ResponseEntity.notFound().build();
@@ -107,7 +108,7 @@ public class CustomerController {
 
 	@GetMapping("/venueFacilities")
 	public ResponseEntity<?> listAllVenueFacilities() {
-		List<Venue_Facilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
+		List<VenueFacilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
 
 		if (AllVFacilities.isEmpty())
 			return ResponseEntity.notFound().build();

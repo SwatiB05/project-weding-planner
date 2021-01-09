@@ -21,9 +21,9 @@ import com.app.pojos.Cities;
 import com.app.pojos.Customers;
 import com.app.pojos.Facilities;
 import com.app.pojos.Services;
-import com.app.pojos.Supplier_Services;
+import com.app.pojos.SupplierServices;
 import com.app.pojos.Suppliers;
-import com.app.pojos.Venue_Facilities;
+import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
 import com.app.service.IBookingService;
 import com.app.service.ICityService;
@@ -31,7 +31,7 @@ import com.app.service.ICustomerService;
 import com.app.service.IFacilitesService;
 import com.app.service.IServiceService;
 import com.app.service.ISupplierService;
-import com.app.service.ISupplier_ServiceService;
+import com.app.service.ISupplierServicesService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
 
@@ -55,7 +55,7 @@ public class AdminController {
 	@Autowired
 	private IVenueFacilityService venueFacilityService;
 	@Autowired
-	private ISupplier_ServiceService supplier_ServiceService;
+	private ISupplierServicesService supplier_ServiceService;
 	@Autowired
 	private IServiceService serviceService;
 
@@ -113,9 +113,9 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Customer"), HttpStatus.BAD_REQUEST);
 			//return ResponseEntity.badRequest().build();
 		}
+		return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Customer"), HttpStatus.BAD_REQUEST);
 
 	}
 
@@ -162,7 +162,7 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new ResponseDTO("There are Customers associated with this City"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ResponseDTO("There are Customers or supplier or venue associated with this City"), HttpStatus.BAD_REQUEST);
 			//return ResponseEntity.badRequest().build();
 		}
 
@@ -212,8 +212,8 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Supplier"), HttpStatus.BAD_REQUEST);
-			//return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Supplier"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
 		}
 
 	}
@@ -266,8 +266,8 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			//return ResponseEntity.badRequest().build();
-			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This service"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This service"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -278,7 +278,7 @@ public class AdminController {
 	@GetMapping("/supplierService")
 
 	public ResponseEntity<?> listAllSupplierServices() {
-		List<Supplier_Services> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
+		List<SupplierServices> allSupplierServices = supplier_ServiceService.getAllSupplierServices();
 
 		if (allSupplierServices.isEmpty())
 			return ResponseEntity.notFound().build();
@@ -288,9 +288,9 @@ public class AdminController {
 
 	//for testing
 	@PostMapping("/supplierService/create")
-	public ResponseEntity<?> addSupplierServiceDetails(@RequestBody Supplier_Services v) {
+	public ResponseEntity<?> addSupplierServiceDetails(@RequestBody SupplierServices v) {
 		try {
-			Supplier_Services service = supplier_ServiceService.addSupplierServiceDetails(v);
+			SupplierServices service = supplier_ServiceService.addSupplierServiceDetails(v);
 			return ResponseEntity.ok(service);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -301,9 +301,9 @@ public class AdminController {
 
 	//for testing
 	@PutMapping("/supplierService/{supplierServiceId}")
-	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId, @RequestBody Supplier_Services v) {
+	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId, @RequestBody SupplierServices v) {
 		try {
-			Supplier_Services updateVenue = supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
+			SupplierServices updateVenue = supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
 			return ResponseEntity.ok(updateVenue);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -319,8 +319,8 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			//return ResponseEntity.badRequest().build();
-			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This SupplierService"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This SupplierService"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -369,8 +369,8 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			//return ResponseEntity.badRequest().build();
-			return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Venue"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Bookings associated with This Venue"), HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -420,8 +420,8 @@ public class AdminController {
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			//return ResponseEntity.badRequest().build();
-			return new ResponseEntity<>(new ResponseDTO("There are Venue associated with This facility"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Venue associated with This facility"), HttpStatus.BAD_REQUEST);
 		}
 		
 
@@ -433,7 +433,7 @@ public class AdminController {
 	@GetMapping("/venueFacilities")
 
 	public ResponseEntity<?> listAllVenueFacilities() {
-		List<Venue_Facilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
+		List<VenueFacilities> AllVFacilities = venueFacilityService.getAllVenueFacilities();
 
 		if (AllVFacilities.isEmpty())
 			return ResponseEntity.notFound().build();
@@ -443,9 +443,9 @@ public class AdminController {
 	
 	//for testing
 	@PostMapping("/venueFacilities/create")
-	public ResponseEntity<?> addVenueFacilityDetails(@RequestBody Venue_Facilities v) {
+	public ResponseEntity<?> addVenueFacilityDetails(@RequestBody VenueFacilities v) {
 		try {
-			Venue_Facilities venueFacilities = venueFacilityService.addVenueFacilityDetails(v);
+			VenueFacilities venueFacilities = venueFacilityService.addVenueFacilityDetails(v);
 			return ResponseEntity.ok(venueFacilities);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -456,9 +456,9 @@ public class AdminController {
 
 	//for testing
 	@PutMapping("/venueFacilities/{venueFacilitiesId}")
-	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId, @RequestBody Venue_Facilities v) {
+	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId, @RequestBody VenueFacilities v) {
 		try {
-			Venue_Facilities updateVenue = venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
+			VenueFacilities updateVenue = venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
 			return ResponseEntity.ok(updateVenue);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -469,12 +469,12 @@ public class AdminController {
 	@DeleteMapping("/venueFacilities/{venueFacilityId}")
 	public ResponseEntity<?> deleteVFacility(@PathVariable("venueFacilityId") int id) {
 		try {
-			venueFacilityService.deleteVFacilityById(id);
+			venueFacilityService.deleteVenueFacilityById(id);
 			return ResponseEntity.ok().build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			//return ResponseEntity.badRequest().build();
-			return new ResponseEntity<>(new ResponseDTO("There are Booking associated with This venueFacility"), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().build();
+			//return new ResponseEntity<>(new ResponseDTO("There are Booking associated with This venueFacility"), HttpStatus.BAD_REQUEST);
 		}
 	}
 

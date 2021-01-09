@@ -14,21 +14,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Venues")
 public class Venues {
 
 	@Id
-	@JsonManagedReference
+	//@JsonManagedReference
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueId;
 
 
 	@JsonIgnore
+	//@JsonIgnoreProperties("venueId")
 	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL)
-	private Set<Venue_Facilities> Venue_Facilities;
+	private Set<VenueFacilities> venueFacilities;
 
 	@Column(length = 30)
 	private String venueName;
@@ -38,6 +39,7 @@ public class Venues {
 
 
 	@ManyToOne
+	@JsonIgnoreProperties("venues")
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities vcityId;
 
@@ -65,13 +67,7 @@ public class Venues {
 		this.venueId = venueId;
 	}
 
-	public Set<Venue_Facilities> getVenue_Facilities() {
-		return Venue_Facilities;
-	}
-
-	public void setVenue_Facilities(Set<Venue_Facilities> venue_Facilities) {
-		Venue_Facilities = venue_Facilities;
-	}
+	
 
 	public String getVenueName() {
 		return venueName;
@@ -137,14 +133,22 @@ public class Venues {
 		this.vcityId = vcityId;
 	}
 
-	@Override
-	public String toString() {
-		return "Venues [venueId=" + venueId + ", Venue_Facilities=" + Venue_Facilities + ", venueName=" + venueName
-				+ ", venueAddress=" + venueAddress + ", vcityId=" + vcityId + ", phoneNo=" + phoneNo + ", email="
-				+ email + ", image=" + image + ", guestCapacity=" + guestCapacity + ", description=" + description
-				+ "]";
+	public Set<VenueFacilities> getVenueFacilities() {
+		return venueFacilities;
 	}
 
+	public void setVenueFacilities(Set<VenueFacilities> venueFacilities) {
+		this.venueFacilities = venueFacilities;
+	}
+
+	@Override
+	public String toString() {
+		return "Venues [venueId=" + venueId + ", venueName=" + venueName + ", venueAddress=" + venueAddress
+				+ ", vcityId=" + vcityId + ", phoneNo=" + phoneNo + ", email=" + email + ", image=" + image
+				+ ", guestCapacity=" + guestCapacity + ", description=" + description + "]";
+	}
+
+	
 	
 
 }

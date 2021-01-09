@@ -9,30 +9,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierServicesDao;
-import com.app.pojos.Supplier_Services;
+import com.app.pojos.Services;
+import com.app.pojos.SupplierServices;
 @Service
 @Transactional
-public class Suplier_ServiceServiceImpl implements ISupplier_ServiceService {
+public class SupplierServicesServiceImpl implements ISupplierServicesService {
 
 	@Autowired
 	private ISupplierServicesDao dao;
 	@Override
-	public List<Supplier_Services> getAllSupplierServices() {
+	public List<SupplierServices> getAllSupplierServices() {
 		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
 	@Override
-	public Supplier_Services addSupplierServiceDetails(Supplier_Services ss) {
+	public SupplierServices addSupplierServiceDetails(SupplierServices ss) {
 		// TODO Auto-generated method stub
 		return dao.save(ss);
 	}
 
 	@Override
-	public Supplier_Services updateSupplierServiceDetails(int id,Supplier_Services detachedPOJO) {
-		Optional<Supplier_Services> s = dao.findById(id);
+	public SupplierServices updateSupplierServiceDetails(int id,SupplierServices detachedPOJO) {
+		Optional<SupplierServices> s = dao.findById(id);
 		if (s.isPresent()) {
-			Supplier_Services service = s.get();
+			SupplierServices service = s.get();
 			service.setBookings(detachedPOJO.getBookings());
 			service.setCharges(detachedPOJO.getCharges());
 			service.setServiceId(detachedPOJO.getServiceId());
@@ -46,8 +47,11 @@ public class Suplier_ServiceServiceImpl implements ISupplier_ServiceService {
 
 	@Override
 	public void deleteSupplierServiceById(int id) {
-		// TODO Auto-generated method stub
-dao.deleteById(id);
+		Optional<SupplierServices> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid SupplierServices ID");
 	}
 
 }

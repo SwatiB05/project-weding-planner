@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Services")
@@ -22,9 +23,10 @@ public class Services {
 	private Integer serviceId;
 
 	@JsonIgnore
+	//@JsonIgnoreProperties("serviceId")
 	@OneToMany(mappedBy = "serviceId", cascade = {CascadeType.PERSIST,
 			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-	private Set<Supplier_Services> Supplier_Services;
+	private Set<SupplierServices> supplierServices;
 
 	@Column(length = 30)
 	private String serviceName;
@@ -48,9 +50,24 @@ public class Services {
 		this.serviceName = serviceName;
 	}
 
+
+	public Set<SupplierServices> getSupplierServices() {
+		return supplierServices;
+	}
+
+
+	public void setSupplierServices(Set<SupplierServices> supplierServices) {
+		this.supplierServices = supplierServices;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + "]";
 	}
+
+
+	
+
 
 }

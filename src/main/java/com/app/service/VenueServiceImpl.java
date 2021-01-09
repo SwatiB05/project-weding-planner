@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IVenueDao;
+import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
 
 @Service
@@ -43,7 +44,7 @@ public class VenueServiceImpl implements IVenueService {
 		venue.setImage(detachedPOJO.getImage());
 		venue.setPhoneNo(detachedPOJO.getPhoneNo());
 		venue.setVcityId(detachedPOJO.getVcityId());
-		venue.setVenue_Facilities(detachedPOJO.getVenue_Facilities());
+		venue.setVenueFacilities(detachedPOJO.getVenueFacilities());
 		venue.setVenueAddress(detachedPOJO.getVenueAddress());
 		venue.setVenueName(detachedPOJO.getVenueName());
 		return venue;
@@ -53,8 +54,11 @@ public class VenueServiceImpl implements IVenueService {
 
 	@Override
 	public void deleteVenueById(int id) {
-		// TODO Auto-generated method stub
-dao.deleteById(id);
+		Optional<Venues> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid Venue ID");
 	}
 
 }

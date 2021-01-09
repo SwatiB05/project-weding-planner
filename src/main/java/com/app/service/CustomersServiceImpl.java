@@ -1,6 +1,5 @@
 package com.app.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -10,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ICustomerDao;
+import com.app.pojos.Cities;
 import com.app.pojos.Customers;
 
-@Service 
+@Service
 @Transactional
 public class CustomersServiceImpl implements ICustomerService {
 
-	
-	//dependency 
+	// dependency
 	@Autowired
 	private ICustomerDao dao;
 
@@ -57,16 +56,11 @@ public class CustomersServiceImpl implements ICustomerService {
 
 	@Override
 	public void deleteCustomerById(int customerId) {
-			System.out.println("in customer delete");
-			Optional<Customers> c=dao.findById(customerId);
-			if(c.isPresent())
-			{
-				dao.deleteById(customerId);
-			}else {
-				throw new ResourceNotFoundException("Invalid Customer ID");
-			}
-			
-			
+		Optional<Customers> c = dao.findById(customerId);
+		if (c.isPresent()) {
+			dao.deleteById(customerId);
+		}
+		throw new ResourceNotFoundException("Invalid Customer ID");
 	}
 
 	@Override
@@ -75,7 +69,4 @@ public class CustomersServiceImpl implements ICustomerService {
 		return dao.findById(customerId);
 	}
 
-	
-	
-	
 }

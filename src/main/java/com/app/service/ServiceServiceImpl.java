@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IServiceDao;
+import com.app.pojos.Facilities;
 import com.app.pojos.Services;
 
 @Service
@@ -44,9 +45,12 @@ public class ServiceServiceImpl implements IServiceService {
 
 	}
 	@Override
-	public void deleteServiceById(int Id) {
-		// TODO Auto-generated method stub
-		dao.deleteById(Id);
+	public void deleteServiceById(int id) {
+		Optional<Services> c = dao.findById(id);
+		if (c.isPresent()) {
+			dao.deleteById(id);
+		}
+		throw new ResourceNotFoundException("Invalid service ID");
 	}
 	
 

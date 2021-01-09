@@ -50,8 +50,11 @@ public class CityServicesImpl implements ICityService {
 
 	@Override
 	public void deleteCityById(int cityId) {
-		
+		Optional<Cities> c = dao.findById(cityId);
+		if (c.isPresent()) {
 			dao.deleteById(cityId);
+		}
+		throw new ResourceNotFoundException("Invalid City ID");
 	
 	}
 
