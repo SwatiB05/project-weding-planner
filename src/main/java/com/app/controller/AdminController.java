@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.pojos.Admin;
 import com.app.pojos.Bookings;
 import com.app.pojos.Cities;
 import com.app.pojos.Customers;
@@ -23,6 +24,7 @@ import com.app.pojos.SupplierServices;
 import com.app.pojos.Suppliers;
 import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
+import com.app.service.IAdminService;
 import com.app.service.IBookingService;
 import com.app.service.ICityService;
 import com.app.service.ICustomerService;
@@ -32,12 +34,17 @@ import com.app.service.ISupplierService;
 import com.app.service.ISupplierServicesService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AdminController {
 
+	@Autowired
+	private IAdminService adminService;
 	@Autowired
 	private ICustomerService customerService;
 	@Autowired
@@ -65,7 +72,19 @@ public class AdminController {
 	// **************************************
 	// *************Admin
 	// **************************************
-
+@PostMapping("/login")
+public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
+	Admin u = null;
+	try {
+		 u = new ObjectMapper().readValue(details, Admin.class);
+		 System.out.println("name  "+u.getEmail()+" password  "+u.getPassword());
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return adminService.adminAuthentication(u.getEmail(), u.getPassword());
+	
+}
 	// **************************************
 	// *************Customer
 	// **************************************
@@ -109,11 +128,7 @@ public class AdminController {
 
 	@PostMapping("/cities/create")
 	public ResponseEntity<?> addCityDeatils(@RequestBody Cities c) {
-<<<<<<< HEAD
 		return cityService.addCityDetails(c);
-=======
-	return cityService.addCityDetails(c);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	@PutMapping("/cities/{cityId}")
@@ -124,14 +139,7 @@ public class AdminController {
 	@DeleteMapping("/cities/{cityId}")
 
 	public ResponseEntity<?> deleteCity(@PathVariable("cityId") int id) {
-<<<<<<< HEAD
 		return cityService.deleteCityById(id);
-=======
-		
-		return	cityService.deleteCityById(id);
-			
-
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	// **************************************
@@ -148,31 +156,7 @@ public class AdminController {
 		return ResponseEntity.ok(allSuppliers);
 	}
 
-<<<<<<< HEAD
-	// for testing
-	@PostMapping("/suppliers/create")
-	public ResponseEntity<?> addSupplierDetails(@RequestBody Suppliers s) {
-		try {
-			Suppliers supplier = supplierService.addSupplierDetails(s);
-			return ResponseEntity.ok(supplier);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
-	}
 
-	// for testing
-	@PutMapping("/suppliers/{supplierId}")
-	public ResponseEntity<?> updateSupplierDetails(@PathVariable int supplierId, @RequestBody Suppliers s) {
-		try {
-			Suppliers updateSupplier = supplierService.updateSupplierDetails(supplierId, s);
-			return ResponseEntity.ok(updateSupplier);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
-	}
-=======
 	//for testing
 	  @PostMapping("/suppliers/create")
 	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 
@@ -185,26 +169,12 @@ public class AdminController {
 	  public ResponseEntity<?>updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
 	 return supplierService.updateSupplierDetails(supplierId, s);
 	  }
-	 
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
+
 
 	@DeleteMapping("/suppliers/{supplierId}")
 
 	public ResponseEntity<?> deleteSupplier(@PathVariable("supplierId") int id) {
-<<<<<<< HEAD
-		try {
-			supplierService.deleteSupplierById(id);
-			return ResponseEntity.ok().build();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
-			// with This Supplier"), HttpStatus.BAD_REQUEST);
-			return ResponseEntity.badRequest().build();
-		}
-=======
 		return supplierService.deleteSupplierById(id);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
-
 	}
 
 	// **************************************
@@ -237,20 +207,8 @@ public class AdminController {
 	@DeleteMapping("/services/{serviceId}")
 
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
-<<<<<<< HEAD
-		try {
-			serviceService.deleteServiceById(id);
-			return ResponseEntity.ok().build();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
-			// with This service"), HttpStatus.BAD_REQUEST);
-		}
-
-=======
 		return serviceService.deleteServiceById(id);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
+
 	}
 
 	// **************************************
@@ -275,39 +233,15 @@ public class AdminController {
 
 	// for testing
 	@PutMapping("/supplierService/{supplierServiceId}")
-<<<<<<< HEAD
-	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId,
-			@RequestBody SupplierServices v) {
-		try {
-			SupplierServices updateVenue = supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
-			return ResponseEntity.ok(updateVenue);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
-=======
 	public ResponseEntity<?> updateSupplierService(@PathVariable int supplierServiceId, @RequestBody SupplierServices v) {
 		return supplier_ServiceService.updateSupplierServiceDetails(supplierServiceId, v);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
+
 	}
 
 	// for testing
 	@DeleteMapping("/supplierService/{supplierServiceId}")
 	public ResponseEntity<?> deleteSupplierServiceById(@PathVariable("supplierServiceId") int id) {
-<<<<<<< HEAD
-		try {
-			supplier_ServiceService.deleteSupplierServiceById(id);
-			return ResponseEntity.ok().build();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
-			// with This SupplierService"), HttpStatus.BAD_REQUEST);
-		}
-=======
 		return supplier_ServiceService.deleteSupplierServiceById(id);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
-
 	}
 
 	// **************************************
@@ -338,20 +272,7 @@ public class AdminController {
 	@DeleteMapping("/venues/{venueId}")
 
 	public ResponseEntity<?> deleteVenue(@PathVariable("venueId") int id) {
-<<<<<<< HEAD
-		try {
-			venueService.deleteVenueById(id);
-			return ResponseEntity.ok().build();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-			// return new ResponseEntity<>(new ResponseDTO("There are Bookings associated
-			// with This Venue"), HttpStatus.BAD_REQUEST);
-		}
-=======
 		return venueService.deleteVenueById(id);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
-
 	}
 
 	// **************************************
@@ -407,37 +328,14 @@ public class AdminController {
 
 	// for testing
 	@PutMapping("/venueFacilities/{venueFacilitiesId}")
-<<<<<<< HEAD
-	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId,
-			@RequestBody VenueFacilities v) {
-		try {
-			VenueFacilities updateVenue = venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
-			return ResponseEntity.ok(updateVenue);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
-=======
 	public ResponseEntity<?> updateVenueFacilityDetails(@PathVariable int venueFacilitiesId, @RequestBody VenueFacilities v) {
 		return venueFacilityService.updateVenueFacilityDetails(venueFacilitiesId, v);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 	}
 
 	@DeleteMapping("/venueFacilities/{venueFacilityId}")
 	public ResponseEntity<?> deleteVFacility(@PathVariable("venueFacilityId") int id) {
-<<<<<<< HEAD
-		try {
-			venueFacilityService.deleteVenueFacilityById(id);
-			return ResponseEntity.ok().build();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-			// return new ResponseEntity<>(new ResponseDTO("There are Booking associated
-			// with This venueFacility"), HttpStatus.BAD_REQUEST);
-		}
-=======
 		return venueFacilityService.deleteVenueFacilityById(id);
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
+
 	}
 
 	// **************************************

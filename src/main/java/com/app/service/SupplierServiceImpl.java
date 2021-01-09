@@ -8,13 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.ISupplierDao;
-<<<<<<< HEAD
-import com.app.pojos.Customers;
-=======
-import com.app.pojos.Cities;
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
 import com.app.pojos.Suppliers;
 
 @Service
@@ -57,7 +51,7 @@ public class SupplierServiceImpl implements ISupplierService {
 	@Override
 	public ResponseEntity<?> addSupplierDetails(Suppliers s) {
 		// TODO Auto-generated method stub
-		Optional<Suppliers> c = dao.findById(s.getSupplierId());
+		Optional<Suppliers> c = dao.findByEmail(s.getEmail());
 		if (c.isPresent()) {
 			 return ResponseEntity.badRequest().body("The Supplier is already Present, Failed to create");
 		}
@@ -86,8 +80,6 @@ public class SupplierServiceImpl implements ISupplierService {
 		}else {
 			return ResponseEntity.badRequest().body("Cannot find the Supplier specified");
 		}
-<<<<<<< HEAD
-		throw new ResourceNotFoundException("Invalid Suppliers ID");
 	}
 	
 	
@@ -102,8 +94,7 @@ public class SupplierServiceImpl implements ISupplierService {
 		}
 		return ResponseEntity.badRequest().body("Invalid Credentials...");
 	}
-=======
+
 
 }
->>>>>>> bc7bf36ab920bc640b138d28ff60915c348694b3
-}
+
