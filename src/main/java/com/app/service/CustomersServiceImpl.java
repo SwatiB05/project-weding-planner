@@ -22,30 +22,30 @@ public class CustomersServiceImpl implements ICustomerService {
 	@Autowired
 	private ICustomerDao dao;
 
-
 	@Override
 	public List<Customers> getAllCustomers() {
 		System.out.println("in customerservice get all");
 		return dao.findAll();
 	}
-	
+
 	@Override
 	public ResponseEntity<?> findById(int customerId) {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
-			 return  ResponseEntity.ok(c); 
-		}
-		else return ResponseEntity.badRequest().body("Cannot find the specified Customer");
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
 	}
 
 	@Override
 	public ResponseEntity<?> addCustomerDetails(Customers transientpojo) {
 		Optional<Customers> c = dao.findByEmail(transientpojo.getEmail());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The customer is already Present, Fail to create");
+			return ResponseEntity.badRequest().body("The Customer is already Present, Fail to create");
+		} else {
+			dao.save(transientpojo);
+			return ResponseEntity.ok("Customer Created Successfully");
 		}
-		dao.save(transientpojo);
-		return ResponseEntity.ok("Customer Created Successfully");
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class CustomersServiceImpl implements ICustomerService {
 			customer.setCustomerAddress(detachedPOJO.getCustomerAddress());
 			customer.setEmail(detachedPOJO.getEmail());
 			customer.setPhoneNo(detachedPOJO.getPhoneNo());
-			return ResponseEntity.accepted().body("Customer updated successfully"); 
-		}
-		else return ResponseEntity.badRequest().body("Cannot find the specified Cusstomer");
+			return ResponseEntity.accepted().body("Customer updated successfully");
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Cusstomer");
 
 	}
 
@@ -70,32 +70,25 @@ public class CustomersServiceImpl implements ICustomerService {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
 			dao.deleteById(customerId);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified City it is associated with Booking");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified Customer");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
+			return ResponseEntity.ok().body("Successfully deleted the specified Customer");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the Customer specified");
 		}
 	}
 
-	
 	@Override
 	public ResponseEntity<?> adminAuthentication(String email, String password) {
 		Optional<Customers> admin = dao.findByEmail(email);
-		if(admin.isPresent()) {
-			if(admin.get().getPassword()==password) {
+		if (admin.isPresent()) {
+			if (admin.get().getPassword() == password) {
 				return ResponseEntity.ok("Login Sucessfull");
+			} else {
+				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}
-			return ResponseEntity.badRequest().body("Wrong PassWord");
+		} else {
+			return ResponseEntity.badRequest().body("Invalid Credentials...");
 		}
-		return ResponseEntity.badRequest().body("Invalid Credentials...");
+
 	}
-
-	
-
-	
 
 }

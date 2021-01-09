@@ -25,8 +25,7 @@ public class Facilities {
 	
 	@JsonIgnore
 	//@JsonIgnoreProperties("facilityId")
-	@OneToMany(mappedBy = "facilityId", cascade = {CascadeType.PERSIST,
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToMany(mappedBy = "facilityId", cascade = CascadeType.ALL)
 	private Set<VenueFacilities> venueFacilities;
 
 	@Column(length = 30)

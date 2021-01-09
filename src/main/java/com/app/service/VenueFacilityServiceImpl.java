@@ -28,25 +28,22 @@ public class VenueFacilityServiceImpl implements IVenueFacilityService {
 		Optional<VenueFacilities> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified VenueFacility it is associated with other venue,booking,facility");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified VenueFacility");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the VenueFacility specified");
-		}}
+			return ResponseEntity.ok().body("Successfully deleted the specified VenueFacilitie");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the specified VenueFacilitie");
+		}
+		}
 
 	@Override
 	public ResponseEntity<?> addVenueFacilityDetails(VenueFacilities v) {
 		// TODO Auto-generated method stub
 		Optional<VenueFacilities> c = dao.findById(v.getVenueFacilityId());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The VenueFacility is already Present, Failed to create");
+			return ResponseEntity.badRequest().body("The VenueFacilitie is already Present, Fail to create");
+		} else {
+			dao.save(v);
+			return ResponseEntity.ok("VenueFacilitie Created Successfully");
 		}
-		dao.save(v);
-		return ResponseEntity.ok("VenueFacility added Successfully");
 	}
 
 	@Override

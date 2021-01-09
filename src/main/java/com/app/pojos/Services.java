@@ -23,8 +23,7 @@ public class Services {
 
 	@JsonIgnore
 	//@JsonIgnoreProperties("serviceId")
-	@OneToMany(mappedBy = "serviceId", cascade = {CascadeType.PERSIST,
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToMany(mappedBy = "serviceId", cascade = CascadeType.ALL)
 	private Set<SupplierServices> supplierServices;
 
 	@Column(length = 30)

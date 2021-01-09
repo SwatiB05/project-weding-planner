@@ -25,15 +25,25 @@ public class FacilityServiceImpl implements IFacilitesService {
 	public List<Facilities> getAllFacilities() {
 		return dao.findAll();
 	}
+	
+	@Override
+	public ResponseEntity<?> findById(int id) {
+		Optional<Facilities> c = dao.findById(id);
+		if (c.isPresent()) {
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Facility");
+	}
 
 	@Override
 	public ResponseEntity<?> addFacilityDetails(Facilities f) {
-		Optional<Facilities> c = dao.findById(f.getFacilityId());
+		Optional<Facilities> c = dao.findByFacilityName(f.getFacilityName());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The Facility is already Present, Fail to create");
+			return ResponseEntity.badRequest().body("The Facility is already Present, Fail to create");
+		} else {
+			dao.save(f);
+			return ResponseEntity.ok("Facility Created Successfully");
 		}
-		dao.save(f);
-		return ResponseEntity.ok("Facility Created Successfully");
 	}
 
 	@Override
@@ -53,16 +63,10 @@ public class FacilityServiceImpl implements IFacilitesService {
 		Optional<Facilities> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified Facility ");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified Facility");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the specified Facility");
+			return ResponseEntity.ok().body("Successfully deleted the specified facility");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the facility specified");
 		}
-
 	}
 
 }

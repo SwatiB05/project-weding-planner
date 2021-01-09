@@ -15,5 +15,6 @@ public interface IFacilitesService {
 	ResponseEntity<?> updateFacilityDetails(int facilityId, Facilities f);
 
 	ResponseEntity<?> deleteFacilityById(int id);
+	ResponseEntity<?> findById(int id);
 
 }

@@ -42,7 +42,6 @@ public class SupplierServiceImpl implements ISupplierService {
 			s.setPassword(detachedPOJO.getPassword());
 			s.setSupplierAddress(detachedPOJO.getSupplierAddress());
 			 return  ResponseEntity.accepted().body("Supplier updated successfully"); 
-
 		}
 		else return ResponseEntity.badRequest().body("Cannot find the Supplier specified");
 
@@ -53,16 +52,16 @@ public class SupplierServiceImpl implements ISupplierService {
 		// TODO Auto-generated method stub
 		Optional<Suppliers> c = dao.findByEmail(s.getEmail());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The Supplier is already Present, Failed to create");
+			return ResponseEntity.badRequest().body("The Supplier is already Present, Fail to create");
+		} else {
+			dao.save(s);
+			return ResponseEntity.ok("Supplier Created Successfully");
 		}
-		dao.save(s);
-		return ResponseEntity.ok("Supplier added Successfully");
-	
 	}
+	
 
 	@Override
 	public Optional<Suppliers> findById(int supplierId) {
-		// TODO Auto-generated method stub
 		return dao.findById(supplierId);
 	}
 
@@ -71,14 +70,9 @@ public class SupplierServiceImpl implements ISupplierService {
 		Optional<Suppliers> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified Supplier it is associated with other supplier-service,city");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified Supplier");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the Supplier specified");
+			return ResponseEntity.ok().body("Successfully deleted the specified Supplier");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the specified Supplier");
 		}
 	}
 	
@@ -89,10 +83,12 @@ public class SupplierServiceImpl implements ISupplierService {
 		if(admin.isPresent()) {
 			if(admin.get().getPassword()==password) {
 				return ResponseEntity.ok("Login Sucessfull");
+			}else {
+				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}
-			return ResponseEntity.badRequest().body("Wrong PassWord");
+		}else {
+			return ResponseEntity.badRequest().body("Invalid Credentials...");
 		}
-		return ResponseEntity.badRequest().body("Invalid Credentials...");
 	}
 
 

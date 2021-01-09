@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dao.IAdminDao;
 import com.app.pojos.Admin;
 @Service
-//@Transactional
+@Transactional
 public class AdminServiceImpl implements IAdminService {
 
 	@Autowired
@@ -22,8 +22,12 @@ public class AdminServiceImpl implements IAdminService {
 		if(admin.isPresent()) {
 			if(admin.get().getPassword()==password) {
 				return ResponseEntity.ok("Login Sucessfull");
-			}else return ResponseEntity.badRequest().body("Wrong PassWord");
-		}else return ResponseEntity.badRequest().body("Invalid Credentials...");
+			}else {
+				return ResponseEntity.badRequest().body("Wrong PassWord");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Invalid Credentials...");
+		}
 	}
 
 }

@@ -15,5 +15,6 @@ public interface IServiceService {
 	ResponseEntity<?> updateServiceDetails(int Id,Services s);
 	
 	ResponseEntity<?> deleteServiceById(int Id);
+	ResponseEntity<?> findById(int id);
 
 }

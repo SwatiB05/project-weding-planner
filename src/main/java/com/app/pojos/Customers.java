@@ -33,8 +33,7 @@ public class Customers {
 
 	@JsonIgnore
 	//@JsonIgnoreProperties("customerId")
-	@OneToMany(mappedBy = "customerId",cascade = {CascadeType.PERSIST, 
-			CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL)
 	private Set<Bookings> bookings;
 
 	@Column(length = 30)

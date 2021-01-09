@@ -15,5 +15,6 @@ public interface IVenueService {
 	ResponseEntity<?> updateVenueDetails(int venueId, Venues v);
 
 	ResponseEntity<?> deleteVenueById(int id);
+	ResponseEntity<?> findById(int id);
 
 }

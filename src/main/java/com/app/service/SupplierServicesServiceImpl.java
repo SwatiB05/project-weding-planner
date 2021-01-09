@@ -27,10 +27,11 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 		// TODO Auto-generated method stub
 		Optional<SupplierServices> c = dao.findById(ss.getSupplierServiceId());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The SupplierService is already Present, Failed to create");
+			return ResponseEntity.badRequest().body("The SupplierService is already Present, Fail to create");
+		} else {
+			dao.save(ss);
+			return ResponseEntity.ok("SupplierService Created Successfully");
 		}
-		dao.save(ss);
-		return ResponseEntity.ok("SupplierService added Successfully");
 		
 	}
 
@@ -44,7 +45,6 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 			service.setServiceId(detachedPOJO.getServiceId());
 			service.setSupplierId(detachedPOJO.getSupplierId());
 			return  ResponseEntity.accepted().body("SupplierService updated successfully"); 
-
 		}
 		else return ResponseEntity.badRequest().body("Cannot find the SupplierService specified");
 	}
@@ -54,15 +54,9 @@ public class SupplierServicesServiceImpl implements ISupplierServicesService {
 		Optional<SupplierServices> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified SupplierService it is associated with other service,booking,supplier");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified SupplierService");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the SupplierService specified");
+			return ResponseEntity.ok().body("Successfully deleted the specified SupplierService");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the specified SupplierService");
 		}
-
 }
 }

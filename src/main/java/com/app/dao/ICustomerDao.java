@@ -8,4 +8,5 @@ import com.app.pojos.Customers;
 
 public interface ICustomerDao extends JpaRepository<Customers,Integer> { 
 	Optional<Customers> findByEmail(String email);
+	
 }
