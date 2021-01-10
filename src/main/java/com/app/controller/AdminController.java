@@ -34,8 +34,6 @@ import com.app.service.ISupplierService;
 import com.app.service.ISupplierServicesService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
