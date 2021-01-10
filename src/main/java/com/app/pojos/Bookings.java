@@ -19,6 +19,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,17 +43,14 @@ public class Bookings {
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(cascade = CascadeType.ALL, targetEntity = VenueFacilities.class,
-			fetch = FetchType.EAGER)
-	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), 
-	inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
+	@ManyToMany(cascade = CascadeType.ALL, targetEntity = VenueFacilities.class, fetch = FetchType.EAGER)
+	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
 	private Set<VenueFacilities> venueFacilityDetails;
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
 	@ManyToMany(targetEntity = SupplierServices.class, cascade = CascadeType.ALL)
-	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"),
-	inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
+	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
 	private Set<SupplierServices> serviceSupplierDetails;
 
 	@Column(length = 15)
@@ -63,6 +70,7 @@ public class Bookings {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)")
 	@CreatedDate
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonProperty(value = "DateOfBooking")
 	private Date dateOfBooking;
 

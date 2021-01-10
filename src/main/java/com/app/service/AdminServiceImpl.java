@@ -20,7 +20,7 @@ public class AdminServiceImpl implements IAdminService {
 	public ResponseEntity<?> adminAuthentication(String email, String password) {
 		Optional<Admin> admin = dao.findByEmail(email);
 		if(admin.isPresent()) {
-			if(admin.get().getPassword()==password) {
+			if(admin.get().getPassword().contentEquals(password)) {
 				return ResponseEntity.ok("Login Sucessfull");
 			}else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");

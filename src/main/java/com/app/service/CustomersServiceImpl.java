@@ -78,9 +78,9 @@ public class CustomersServiceImpl implements ICustomerService {
 
 	@Override
 	public ResponseEntity<?> adminAuthentication(String email, String password) {
-		Optional<Customers> admin = dao.findByEmail(email);
-		if (admin.isPresent()) {
-			if (admin.get().getPassword() == password) {
+		Optional<Customers> c = dao.findByEmail(email);
+		if (c.isPresent()) {
+			if (c.get().getPassword().contentEquals(password)) {
 				return ResponseEntity.ok("Login Sucessfull");
 			} else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");

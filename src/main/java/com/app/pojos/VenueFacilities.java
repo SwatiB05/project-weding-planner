@@ -24,15 +24,13 @@ public class VenueFacilities {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer venueFacilityId;
 
-	//@JsonIgnore
-		@JsonIgnoreProperties("venueFacilityDetails")
-		@ManyToMany( mappedBy = "venueFacilityDetails", 
-		targetEntity = Bookings.class,fetch = FetchType.EAGER,
-		cascade = CascadeType.ALL)
-		private Set<Bookings> bookings;
+	// @JsonIgnore
+	@JsonIgnoreProperties("venueFacilityDetails")
+	@ManyToMany(mappedBy = "venueFacilityDetails", targetEntity = Bookings.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Bookings> bookings;
 
 	@ManyToOne
-	//@JsonBackReference
+	// @JsonBackReference
 	@JsonIgnoreProperties("enueFacilities")
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
@@ -92,5 +90,4 @@ public class VenueFacilities {
 				+ facilityId + ", charges=" + charges + "]";
 	}
 
-	
 }

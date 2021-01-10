@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,16 +24,15 @@ public class SupplierServices {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierServiceId;
 
-	//@JsonIgnore
+	// @JsonIgnore
 	@JsonIgnoreProperties("serviceSupplierDetails")
-	@ManyToMany(mappedBy = "serviceSupplierDetails",targetEntity = Bookings.class,
-	cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "serviceSupplierDetails", targetEntity = Bookings.class, cascade = CascadeType.ALL)
 	private Set<Bookings> bookings;
 
 	@ManyToOne
 	@JsonIgnoreProperties("supplierServices")
 	@JoinColumn(name = "supplierId")
-	//@JsonBackReference
+	// @JsonBackReference
 	private Suppliers supplierId;
 
 	@ManyToOne
@@ -43,7 +43,6 @@ public class SupplierServices {
 	@Column(length = 20)
 	private Double charges;
 
-	
 	// getter...
 
 	public Integer getSupplierServiceId() {
@@ -91,7 +90,5 @@ public class SupplierServices {
 		return "SupplierServices [supplierServiceId=" + supplierServiceId + ", supplierId=" + supplierId
 				+ ", serviceId=" + serviceId + ", charges=" + charges + "]";
 	}
-
-	
 
 }
