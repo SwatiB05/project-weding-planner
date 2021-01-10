@@ -26,7 +26,7 @@ public class SupplierServices {
 	//@JsonIgnore
 	@JsonIgnoreProperties("serviceSupplierDetails")
 	@ManyToMany(mappedBy = "serviceSupplierDetails",targetEntity = Bookings.class,
-	cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	cascade = CascadeType.ALL)
 	private Set<Bookings> bookings;
 
 	@ManyToOne

@@ -97,12 +97,20 @@ public class CustomerController {
 		return ResponseEntity.ok(AllVFacilities);
 	}
 
-	@GetMapping("/bookings")
-	public ResponseEntity<?> listAllBooking() {
-		List<Bookings> AllBookings = bookingService.getAllBookings();
-		if (AllBookings.isEmpty())
-			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok(AllBookings);
-	}
+	
+	  @GetMapping("/bookings") public ResponseEntity<?> listAllBooking() {
+	  List<Bookings> AllBookings = bookingService.getAllBookings(); if
+	  (AllBookings.isEmpty()) return ResponseEntity.notFound().build(); return
+	  ResponseEntity.ok(AllBookings); }
+	 
+	
+	
+//	@GetMapping("/bookings/{customerId}")
+//	public ResponseEntity<?> listAllBooking(@PathVariable int customerId) {
+//		List<Bookings> AllBookings = bookingService.getAllBookings(customerId);
+//		if (AllBookings.isEmpty())
+//			return ResponseEntity.notFound().build();
+//		return ResponseEntity.ok(AllBookings);
+//	}
 
 }

@@ -33,8 +33,7 @@ public class Bookings {
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.REFRESH }, targetEntity = VenueFacilities.class,
+	@ManyToMany(cascade = CascadeType.ALL, targetEntity = VenueFacilities.class,
 			fetch = FetchType.EAGER)
 	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), 
 	inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
@@ -42,8 +41,7 @@ public class Bookings {
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(targetEntity = SupplierServices.class, cascade = { CascadeType.PERSIST, CascadeType.DETACH,
-			CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToMany(targetEntity = SupplierServices.class, cascade = CascadeType.ALL)
 	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"),
 	inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
 	private Set<SupplierServices> serviceSupplierDetails;

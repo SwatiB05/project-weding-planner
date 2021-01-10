@@ -123,6 +123,11 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(allCities);
 	}
+	
+	@GetMapping("/cities/{cityId}")
+	public ResponseEntity<?> getCity(@PathVariable("cityId") int id) {
+		return cityService.findById(id);
+	}
 
 	@PostMapping("/cities/create")
 	public ResponseEntity<?> addCityDeatils(@RequestBody Cities c) {
@@ -135,7 +140,6 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 	}
 
 	@DeleteMapping("/cities/{cityId}")
-
 	public ResponseEntity<?> deleteCity(@PathVariable("cityId") int id) {
 		return cityService.deleteCityById(id);
 	}
@@ -182,11 +186,14 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 
 	public ResponseEntity<?> listAllServices() {
 		List<Services> allServices = serviceService.getAllServices();
-
 		if (allServices.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(allServices);
+	}
+	
+	@GetMapping("/services/{serviceId}")
+	public ResponseEntity<?> getService(@PathVariable("serviceId") int id) {
+		return serviceService.findById(id);
 	}
 
 	// for testing
@@ -203,7 +210,6 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 
 	// for testing
 	@DeleteMapping("/services/{serviceId}")
-
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
 		return serviceService.deleteServiceById(id);
 
@@ -280,11 +286,14 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 
 	public ResponseEntity<?> listAllFacilities() {
 		List<Facilities> AllFacilities = facilityService.getAllFacilities();
-
 		if (AllFacilities.isEmpty())
 			return ResponseEntity.notFound().build();
-
 		return ResponseEntity.ok(AllFacilities);
+	}
+	
+	@GetMapping("/facilities/{facilityId}")
+	public ResponseEntity<?> getFacility(@PathVariable("facilityId") int id) {
+		return facilityService.findById(id);
 	}
 
 	@PostMapping("/facilities/create")

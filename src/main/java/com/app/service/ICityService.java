@@ -15,4 +15,5 @@ public interface ICityService {
 	ResponseEntity<?> updateCityDetails(int cityId, Cities detachedPOJO);
 
 	ResponseEntity<?> deleteCityById(int cityId);
+	ResponseEntity<?> findById(int id); 
 }

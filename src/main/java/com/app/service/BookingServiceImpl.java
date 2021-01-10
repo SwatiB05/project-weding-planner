@@ -8,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IBookingDao;
 import com.app.pojos.Bookings;
-import com.app.pojos.Cities;
 @Service
 @Transactional
 public class BookingServiceImpl implements IBookingService {
@@ -25,14 +23,30 @@ public class BookingServiceImpl implements IBookingService {
 	}
 	
 	
+	
+//	///Testig needed
+//	@Override
+//	public List<Bookings> getAllBookings(int id) {
+//		Optional<Customers> c=da
+//		List<Bookings> b=dao.findByCustomerId();
+//		if(b.isEmpty()) {
+//			System.out.println("empty");
+//		}
+//		
+//		System.out.println(b);
+//		return null;
+//	}
+	
+	
 	@Override
 	public ResponseEntity<?> addBookingDetails(Bookings b) {
 		Optional<Bookings> c = dao.findById(b.getBookingId());
 		if (c.isPresent()) {
-			 return ResponseEntity.badRequest().body("The bookings is already Present, Fail to create");
+			return ResponseEntity.badRequest().body("The Booking is already Present, Fail to create");
+		} else {
+			dao.save(b);
+			return ResponseEntity.ok("Booking Created Successfully");
 		}
-		dao.save(b);
-		return ResponseEntity.ok("Booking Created Successfully");
 	}
 
 	@Override
@@ -57,14 +71,9 @@ public class BookingServiceImpl implements IBookingService {
 		Optional<Bookings> c = dao.findById(id);
 		if (c.isPresent()) {
 			dao.deleteById(id);
-			if(c.isPresent()) {
-				return ResponseEntity.badRequest().body("Failed to Delete the specified booking ");	
-			}else
-			{
-			 return ResponseEntity.ok().body("Successfully deleted the specified Booking");
-			}
-		}else {
-			return ResponseEntity.badRequest().body("Cannot find the Booking specified");
+			return ResponseEntity.ok().body("Successfully deleted the specified Booking");
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the specified Booking");
 		}
 
 	

@@ -22,8 +22,12 @@ public class AdminServiceImpl implements IAdminService {
 		if(admin.isPresent()) {
 			if(admin.get().getPassword()==password) {
 				return ResponseEntity.ok("Login Sucessfull");
-			}else return ResponseEntity.badRequest().body("Wrong PassWord");
-		}else return ResponseEntity.badRequest().body("Invalid Credentials...");
+			}else {
+				return ResponseEntity.badRequest().body("Wrong PassWord");
+			}
+		}else {
+			return ResponseEntity.badRequest().body("Invalid Credentials...");
+		}
 	}
 
 }
