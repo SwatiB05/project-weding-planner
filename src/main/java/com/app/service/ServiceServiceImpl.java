@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.IServiceDao;
-import com.app.pojos.Cities;
-import com.app.pojos.Facilities;
 import com.app.pojos.Services;
 
 @Service
@@ -47,8 +45,8 @@ public class ServiceServiceImpl implements IServiceService {
 		}
 	}
 	@Override
-	public ResponseEntity<?> updateServiceDetails(int Id, Services detachedPOJO) {
-		Optional<Services> c = dao.findById(Id);
+	public ResponseEntity<?> updateServiceDetails(String service, Services detachedPOJO) {
+		Optional<Services> c = dao.findByServiceName(service);
 		if (c.isPresent()) {
 			// c.get() : PERSISTENT
 			// cityDetachPojo : detached POJO : contains the updates sent by clnt
@@ -70,6 +68,17 @@ public class ServiceServiceImpl implements IServiceService {
 		} else {
 			return ResponseEntity.badRequest().body("Cannot find the City specified");
 		}
+	}
+
+
+	@Override
+	public ResponseEntity<?> findByName(String service) {
+		Optional<Services> c = dao.findByServiceName(service);
+		if (c.isPresent()) {
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Service");
+	
 	}
 }
 	
