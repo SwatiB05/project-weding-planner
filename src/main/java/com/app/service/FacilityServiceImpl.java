@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.IFacilityDao;
+import com.app.dto.ResponseDTO;
 import com.app.pojos.Facilities;
 
 @Service
@@ -44,9 +46,9 @@ public class FacilityServiceImpl implements IFacilitesService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateFacilityDetails(String facility, Facilities detachedPOJO) {
+	public ResponseEntity<?> updateFacilityDetails(int facility, Facilities detachedPOJO) {
 		// TODO Auto-generated method stub
-		Optional<Facilities> f = dao.findByFacilityName(facility);
+		Optional<Facilities> f = dao.findById(facility);
 		if (f.isPresent()) {
 			Facilities fac = f.get();
 			fac.setFacilityName(detachedPOJO.getFacilityName());
@@ -67,14 +69,5 @@ public class FacilityServiceImpl implements IFacilitesService {
 		}
 	}
 
-	@Override
-	public ResponseEntity<?> findByName(String facility) {
-		Optional<Facilities> c = dao.findByFacilityName(facility);
-		if (c.isPresent()) {
-			return ResponseEntity.ok(c);
-		} else
-			return ResponseEntity.badRequest().body("Cannot find the specified Facility");
 	
-	}
-
 }

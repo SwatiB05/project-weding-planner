@@ -82,7 +82,7 @@ public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 
 	
 	@PutMapping("/services/{service}")
-	public ResponseEntity<?> updateServiceDetails(@PathVariable String service, @RequestBody Services v) {
+	public ResponseEntity<?> updateServiceDetails(@PathVariable int service, @RequestBody Services v) {
 		return serviceService.updateServiceDetails(service, v);
 	}
 

@@ -47,12 +47,12 @@ public class CityServicesImpl implements ICityService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateCityDetails(String cityName, Cities cityDetachPojo) {
+	public ResponseEntity<?> updateCityDetails(int city, Cities cityDetachPojo) {
 		// chk if city exists : findById
-		Optional<Cities> c = dao.findByCity(cityName);
+		Optional<Cities> c = dao.findById(city);
 		if (c.isPresent()) {
-			Cities city = c.get();
-			city.setCity(cityDetachPojo.getCity());
+			Cities city1 = c.get();
+			city1.setCity(cityDetachPojo.getCity());
 			return ResponseEntity.accepted().body("City updated successfully");
 		} else
 			return ResponseEntity.badRequest().body("Cannot find the City specified");
@@ -69,14 +69,5 @@ public class CityServicesImpl implements ICityService {
 		}
 	}
 
-	@Override
-	public ResponseEntity<?> findByName(String name) {
-		// TODO Auto-generated method stub
-		Optional<Cities> c=dao.findByCity(name);
-		if (c.isPresent()) {
-			return ResponseEntity.ok(c);
-		} else
-			return ResponseEntity.badRequest().body("Cannot find the specified City");
 	
-	}
 }

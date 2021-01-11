@@ -12,11 +12,11 @@ public interface IFacilitesService {
 
 	ResponseEntity<?> addFacilityDetails(Facilities f);
 
-	ResponseEntity<?> updateFacilityDetails(String facility, Facilities f);
+	ResponseEntity<?> updateFacilityDetails(int facility, Facilities f);
 
 	ResponseEntity<?> deleteFacilityById(int id);
 
 	ResponseEntity<?> findById(int id);
-	ResponseEntity<?> findByName(String facility);
+	
 
 }

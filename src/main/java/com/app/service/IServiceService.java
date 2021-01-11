@@ -12,11 +12,11 @@ public interface IServiceService {
 	
 	ResponseEntity<?> addServiceDetails(Services s);
 	
-	ResponseEntity<?> updateServiceDetails(String service,Services s);
+	ResponseEntity<?> updateServiceDetails(int service,Services s);
 	
 	ResponseEntity<?> deleteServiceById(int Id);
 	ResponseEntity<?> findById(int id);
-	ResponseEntity<?> findByName(String service);
+	
 	
 
 }

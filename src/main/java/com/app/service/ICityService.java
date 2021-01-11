@@ -12,9 +12,9 @@ public interface ICityService {
 
 	ResponseEntity<?> addCityDetails(Cities transientpojo);
 
-	ResponseEntity<?> updateCityDetails(String city, Cities detachedPOJO);
+	ResponseEntity<?> updateCityDetails(int city, Cities detachedPOJO);
 
 	ResponseEntity<?> deleteCityById(int cityId);
 	ResponseEntity<?> findById(int id); 
-	ResponseEntity<?> findByName(String name); 
+	
 }

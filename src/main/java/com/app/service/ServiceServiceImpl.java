@@ -45,8 +45,8 @@ public class ServiceServiceImpl implements IServiceService {
 		}
 	}
 	@Override
-	public ResponseEntity<?> updateServiceDetails(String service, Services detachedPOJO) {
-		Optional<Services> c = dao.findByServiceName(service);
+	public ResponseEntity<?> updateServiceDetails(int service, Services detachedPOJO) {
+		Optional<Services> c = dao.findById(service);
 		if (c.isPresent()) {
 			// c.get() : PERSISTENT
 			// cityDetachPojo : detached POJO : contains the updates sent by clnt
@@ -71,15 +71,7 @@ public class ServiceServiceImpl implements IServiceService {
 	}
 
 
-	@Override
-	public ResponseEntity<?> findByName(String service) {
-		Optional<Services> c = dao.findByServiceName(service);
-		if (c.isPresent()) {
-			return ResponseEntity.ok(c);
-		} else
-			return ResponseEntity.badRequest().body("Cannot find the specified Service");
 	
-	}
 }
 	
 
