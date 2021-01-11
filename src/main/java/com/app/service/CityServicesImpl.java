@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.ICitiesDao;
 import com.app.pojos.Cities;
-import com.app.pojos.Customers;
 
 @Service
 @Transactional
@@ -48,9 +47,9 @@ public class CityServicesImpl implements ICityService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateCityDetails(int cityId, Cities cityDetachPojo) {
+	public ResponseEntity<?> updateCityDetails(String cityName, Cities cityDetachPojo) {
 		// chk if city exists : findById
-		Optional<Cities> c = dao.findById(cityId);
+		Optional<Cities> c = dao.findByCity(cityName);
 		if (c.isPresent()) {
 			Cities city = c.get();
 			city.setCity(cityDetachPojo.getCity());
@@ -68,5 +67,16 @@ public class CityServicesImpl implements ICityService {
 		} else {
 			return ResponseEntity.badRequest().body("Cannot find the City specified");
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> findByName(String name) {
+		// TODO Auto-generated method stub
+		Optional<Cities> c=dao.findByCity(name);
+		if (c.isPresent()) {
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified City");
+	
 	}
 }

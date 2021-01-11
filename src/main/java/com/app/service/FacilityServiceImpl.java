@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
 import com.app.dao.IFacilityDao;
-import com.app.pojos.Cities;
-import com.app.pojos.Customers;
 import com.app.pojos.Facilities;
 
 @Service
@@ -47,12 +44,12 @@ public class FacilityServiceImpl implements IFacilitesService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateFacilityDetails(int facilityId, Facilities detachedPOJO) {
+	public ResponseEntity<?> updateFacilityDetails(String facility, Facilities detachedPOJO) {
 		// TODO Auto-generated method stub
-		Optional<Facilities> f = dao.findById(facilityId);
+		Optional<Facilities> f = dao.findByFacilityName(facility);
 		if (f.isPresent()) {
-			Facilities facility = f.get();
-			facility.setFacilityName(detachedPOJO.getFacilityName());
+			Facilities fac = f.get();
+			fac.setFacilityName(detachedPOJO.getFacilityName());
 			return ResponseEntity.accepted().body("Facility updated successfully"); 
 		}
 		else return ResponseEntity.badRequest().body("Cannot find the specified Facility");
@@ -68,6 +65,16 @@ public class FacilityServiceImpl implements IFacilitesService {
 		} else {
 			return ResponseEntity.badRequest().body("Cannot find the facility specified");
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> findByName(String facility) {
+		Optional<Facilities> c = dao.findByFacilityName(facility);
+		if (c.isPresent()) {
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Facility");
+	
 	}
 
 }

@@ -134,9 +134,9 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return cityService.addCityDetails(c);
 	}
 
-	@PutMapping("/cities/{cityId}")
-	public ResponseEntity<?> updateCityDetails(@PathVariable int cityId, @RequestBody Cities c) {
-		return cityService.updateCityDetails(cityId, c);
+	@PutMapping("/cities/{city}")
+	public ResponseEntity<?> updateCityDetails(@PathVariable String city, @RequestBody Cities c) {
+		return cityService.updateCityDetails(city, c);
 	}
 
 	@DeleteMapping("/cities/{cityId}")
@@ -203,9 +203,9 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 	}
 
 	// for testing
-	@PutMapping("/services/{serviceId}")
-	public ResponseEntity<?> updateServiceDetails(@PathVariable int serviceId, @RequestBody Services v) {
-		return serviceService.updateServiceDetails(serviceId, v);
+	@PutMapping("/services/{service}")
+	public ResponseEntity<?> updateServiceDetails(@PathVariable String service, @RequestBody Services v) {
+		return serviceService.updateServiceDetails(service, v);
 	}
 
 	// for testing
@@ -301,9 +301,9 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return facilityService.addFacilityDetails(f);
 	}
 
-	@PutMapping("/facilities/{facilityId}")
-	public ResponseEntity<?> updateFacilityDetails(@PathVariable int facilityId, @RequestBody Facilities f) {
-		return facilityService.updateFacilityDetails(facilityId, f);
+	@PutMapping("/facilities/{facility}")
+	public ResponseEntity<?> updateFacilityDetails(@PathVariable String facility, @RequestBody Facilities f) {
+		return facilityService.updateFacilityDetails(facility, f);
 	}
 
 	
