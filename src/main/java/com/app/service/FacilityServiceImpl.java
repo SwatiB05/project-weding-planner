@@ -58,6 +58,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 		else return ResponseEntity.badRequest().body("Cannot find the specified Facility");
 	}
 
+	
 	@Override
 	public ResponseEntity<?> deleteFacilityById(int id) {
 		Optional<Facilities> c = dao.findById(id);

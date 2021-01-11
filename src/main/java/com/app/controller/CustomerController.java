@@ -29,7 +29,7 @@ import com.app.service.IVenueService;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
 
 	public CustomerController() {

@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
 
 	@Autowired
@@ -306,6 +306,8 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return facilityService.updateFacilityDetails(facilityId, f);
 	}
 
+	
+	
 	@DeleteMapping("/facilities/{facilityId}")
 
 	public ResponseEntity<?> deleteFacility(@PathVariable("facilityId") int id) {
