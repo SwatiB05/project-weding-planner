@@ -1,6 +1,7 @@
 package com.app.pojos;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,18 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -43,15 +38,16 @@ public class Bookings {
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(cascade = CascadeType.ALL, targetEntity = VenueFacilities.class, fetch = FetchType.EAGER)
+	@ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity = VenueFacilities.class)
+	@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
-	private Set<VenueFacilities> venueFacilityDetails;
+	private Set<VenueFacilities> venueFacilityDetails=new HashSet<VenueFacilities>();
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(targetEntity = SupplierServices.class, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = SupplierServices.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
-	private Set<SupplierServices> serviceSupplierDetails;
+	private Set<SupplierServices> serviceSupplierDetails=new HashSet<SupplierServices>();
 
 	@Column(length = 15)
 	private String bookingName;
@@ -71,6 +67,7 @@ public class Bookings {
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)")
 	@CreatedDate
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@JsonProperty(value = "DateOfBooking")
 	private Date dateOfBooking;
 

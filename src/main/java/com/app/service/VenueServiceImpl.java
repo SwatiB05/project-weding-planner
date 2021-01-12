@@ -36,13 +36,8 @@ public class VenueServiceImpl implements IVenueService {
 
 	@Override
 	public ResponseEntity<?> addVenueDetails(Venues v) {
-		Optional<Venues> c = dao.findById(v.getVenueId());
-		if (c.isPresent()) {
-			return ResponseEntity.badRequest().body("The Venue is already Present, Fail to create");
-		} else {
-			dao.save(v);
-			return ResponseEntity.ok("Venue Created Successfully");
-		}
+		dao.save(v);
+		return ResponseEntity.ok("Venue Created Successfully");
 	}
 
 	@Override
