@@ -24,7 +24,7 @@ public class FacilityServiceImpl implements IFacilitesService {
 	public List<Facilities> getAllFacilities() {
 		return dao.findAll();
 	}
-	
+
 	@Override
 	public ResponseEntity<?> findById(int id) {
 		Optional<Facilities> c = dao.findById(id);
@@ -52,12 +52,11 @@ public class FacilityServiceImpl implements IFacilitesService {
 		if (f.isPresent()) {
 			Facilities fac = f.get();
 			fac.setFacilityName(detachedPOJO.getFacilityName());
-			return ResponseEntity.accepted().body("Facility updated successfully"); 
-		}
-		else return ResponseEntity.badRequest().body("Cannot find the specified Facility");
+			return ResponseEntity.accepted().body("Facility updated successfully");
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the specified Facility");
 	}
 
-	
 	@Override
 	public ResponseEntity<?> deleteFacilityById(int id) {
 		Optional<Facilities> c = dao.findById(id);
@@ -69,5 +68,4 @@ public class FacilityServiceImpl implements IFacilitesService {
 		}
 	}
 
-	
 }

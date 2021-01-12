@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,10 +17,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,7 +39,7 @@ public class Suppliers {
 
 	@JsonIgnore
 	//@JsonIgnoreProperties("supplierId")
-	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)@Fetch(FetchMode.JOIN)
 	private Set<SupplierServices> supplierServices;
 
 	@Column(length = 30)
@@ -66,7 +70,7 @@ public class Suppliers {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@JsonProperty(value = "Acount-creation-Date")
 	private Date createdOn;
 

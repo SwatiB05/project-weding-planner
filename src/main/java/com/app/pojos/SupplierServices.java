@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -26,7 +29,8 @@ public class SupplierServices {
 
 	// @JsonIgnore
 	@JsonIgnoreProperties("serviceSupplierDetails")
-	@ManyToMany(mappedBy = "serviceSupplierDetails", targetEntity = Bookings.class, cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "serviceSupplierDetails", fetch = FetchType.LAZY,
+	targetEntity = Bookings.class, cascade = CascadeType.ALL)@Fetch(FetchMode.JOIN)
 	private Set<Bookings> bookings;
 
 	@ManyToOne
