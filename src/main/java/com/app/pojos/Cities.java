@@ -41,7 +41,7 @@ public class Cities {
 	//@JsonIgnoreProperties("ccityId")
 	@OneToMany(mappedBy = "ccityId" ,cascade = CascadeType.ALL)
    @JsonIgnore
-	private Set<Customers> customers;
+	private  Set<Customers> customers;
 	
 	@Column(length = 30)
 	private String city;

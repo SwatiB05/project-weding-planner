@@ -9,7 +9,7 @@ import com.app.pojos.Bookings;
 public interface IBookingService {
 
 	List<Bookings> getAllBookings();
-//	List<Bookings> getAllBookings(int customerId);
+	Bookings getBooking(int id);
 	ResponseEntity<?> addBookingDetails(Bookings b);
 	
 	ResponseEntity<?> updateBookingDetails(int bookingId, Bookings b); 

@@ -3,6 +3,7 @@ package com.app.pojos;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,9 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -53,9 +51,11 @@ public class Customers {
 	private String phoneNo;
 
 	@ManyToOne
+	@Basic(optional = true)
 	@JsonIgnoreProperties("customers")
 	@JoinColumn(name = "cityId",nullable = false)
-	private Cities ccityId;
+	private  Cities ccityId;
+	
 
 	@Column(length = 30,unique = true)
 	private String email;
@@ -66,14 +66,14 @@ public class Customers {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
-	@JsonFormat(pattern="yyyy-MM-dd")
-	@JsonProperty(value = "Acount-creation-Date")
+	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonProperty(value = "DateOfCreation")
 	private Date createdOn;
 
-	@Column(columnDefinition = "tinyint(1) default 0")
+	@Column(columnDefinition = "tinyint(1) default 1")
 	private Integer status;
 
-	@Column(columnDefinition = "tinyint(1) default 0")
+	@Column(columnDefinition = "tinyint(1) default 1")
 	private Integer isActive;
 
 	// getter setters

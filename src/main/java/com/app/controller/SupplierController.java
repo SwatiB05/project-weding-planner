@@ -27,7 +27,7 @@ import com.app.service.IVenueService;
 
 @RestController 
 @RequestMapping("/suppliers") 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class SupplierController {
 
 	public SupplierController() {

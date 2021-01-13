@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.bcel.ExceptionRange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,21 +30,26 @@ public class CustomersServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public ResponseEntity<?> findById(int customerId) {
+	public ResponseEntity<?> getCustomer(int customerId) {
 		Optional<Customers> c = dao.findById(customerId);
+		
 		if (c.isPresent()) {
-			return ResponseEntity.ok(c);
+			System.out.println(c);
+			return ResponseEntity.ok(c);	
 		} else
 			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
-	}
+		}
 
 	@Override
 	public ResponseEntity<?> addCustomerDetails(Customers transientpojo) {
+		
 		Optional<Customers> c = dao.findByEmail(transientpojo.getEmail());
 		if (c.isPresent()) {
+			System.out.println(c);
 			return ResponseEntity.badRequest().body("The Customer is already Present, Fail to create");
 		} else {
 			dao.save(transientpojo);
+			System.out.println(transientpojo);
 			return ResponseEntity.ok("Customer Created Successfully");
 		}
 	}
@@ -89,6 +95,25 @@ public class CustomersServiceImpl implements ICustomerService {
 			return ResponseEntity.badRequest().body("Invalid Credentials...");
 		}
 
+	}
+
+	@Override
+	public ResponseEntity<?> updateCustomerStatus(int id) {
+		Optional<Customers> c = dao.findById(id);
+		if (c.isPresent()) {
+			int num = c.get().getStatus();
+			if (num == 1) {
+				c.get().setStatus(0);
+				System.out.println(c.get().getStatus());
+				return ResponseEntity.ok().body("Status Updated");
+			} else {
+				c.get().setStatus(1);
+				System.out.println(c.get().getStatus());
+				return ResponseEntity.ok().body("Status Updated");
+			}
+		} else {
+			return ResponseEntity.badRequest().body("Cannot find the Customer specified");
+		}
 	}
 
 }

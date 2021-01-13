@@ -66,8 +66,7 @@ public class Bookings {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)")
 	@CreatedDate
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@JsonProperty(value = "DateOfBooking")
 	private Date dateOfBooking;
 

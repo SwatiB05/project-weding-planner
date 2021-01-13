@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class AdminController {
 
 	@Autowired
@@ -96,9 +96,10 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return ResponseEntity.ok(allCustomers);
 	}
 
-	@PostMapping("/customers/create")
-	public ResponseEntity<?> addCustomerDeatils(@RequestBody Customers c) {
-		return customerService.addCustomerDetails(c);
+	
+	@PutMapping("/customers/status/{customerId}")
+	public ResponseEntity<?> updateStatus(@PathVariable int customerId){
+		return customerService.updateCustomerStatus(customerId);
 	}
 
 	@PutMapping("/customers/{customerId}")
@@ -370,9 +371,6 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return bookingService.updateBookingDetails(bookingId, v);
 	}
 
-	@DeleteMapping("/bookings/{bookingId}")
-	public ResponseEntity<?> deleteBooking(@PathVariable("bookingId") int id) {
-		return bookingService.deleteBookingById(id);
-	}
+	
 
 }
