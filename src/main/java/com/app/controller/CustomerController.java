@@ -63,7 +63,8 @@ public class CustomerController {
 	}
 	@PostMapping("/create")
 	public ResponseEntity<?> addCustomerDeatils(@RequestBody Customers c) {
-		return customerService.addCustomerDetails(c);
+		int cityid=c.getCcityId().getCityId();
+		return customerService.addCustomerDetails(c,cityid);
 	}
 	
 	@GetMapping("/suppliers")

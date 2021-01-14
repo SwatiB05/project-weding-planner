@@ -1,7 +1,6 @@
 package com.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -11,7 +10,7 @@ public interface ICustomerService {
 	List<Customers> getAllCustomers();
 	
 
-	ResponseEntity<?> addCustomerDetails(Customers transientpojo);
+	ResponseEntity<?> addCustomerDetails(Customers transientpojo,int cityid);
 
 	ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO);
 

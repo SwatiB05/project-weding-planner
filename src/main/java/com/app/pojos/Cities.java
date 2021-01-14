@@ -2,14 +2,19 @@ package com.app.pojos;
 
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -38,9 +43,11 @@ public class Cities {
 	
 	
 	
-	//@JsonIgnoreProperties("ccityId")
-	@OneToMany(mappedBy = "ccityId" ,cascade = CascadeType.ALL)
+//@JsonIgnoreProperties("ccityId")
+	@OneToMany(mappedBy = "ccityId" ,cascade = CascadeType.ALL,fetch =FetchType.LAZY)
    @JsonIgnore
+   @Fetch(FetchMode.JOIN)
+	@Basic(optional = true)
 	private  Set<Customers> customers;
 	
 	@Column(length = 30)

@@ -96,7 +96,7 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		return ResponseEntity.ok(allCustomers);
 	}
 
-	
+	//isActive or not
 	@PutMapping("/customers/status/{customerId}")
 	public ResponseEntity<?> updateStatus(@PathVariable int customerId){
 		return customerService.updateCustomerStatus(customerId);

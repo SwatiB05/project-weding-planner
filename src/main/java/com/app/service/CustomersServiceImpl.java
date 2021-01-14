@@ -3,16 +3,13 @@ package com.app.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.aspectj.weaver.bcel.ExceptionRange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.custom_excpt.ResourceNotFoundException;
+import com.app.dao.ICitiesDao;
 import com.app.dao.ICustomerDao;
-import com.app.pojos.Admin;
-import com.app.pojos.Cities;
 import com.app.pojos.Customers;
 
 @Service
@@ -22,6 +19,8 @@ public class CustomersServiceImpl implements ICustomerService {
 	// dependency
 	@Autowired
 	private ICustomerDao dao;
+	@Autowired
+	private ICitiesDao cityDao;
 
 	@Override
 	public List<Customers> getAllCustomers() {
@@ -40,19 +39,10 @@ public class CustomersServiceImpl implements ICustomerService {
 			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
 		}
 
-	@Override
-	public ResponseEntity<?> addCustomerDetails(Customers transientpojo) {
-		
-		Optional<Customers> c = dao.findByEmail(transientpojo.getEmail());
-		if (c.isPresent()) {
-			System.out.println(c);
-			return ResponseEntity.badRequest().body("The Customer is already Present, Fail to create");
-		} else {
-			dao.save(transientpojo);
-			System.out.println(transientpojo);
-			return ResponseEntity.ok("Customer Created Successfully");
-		}
-	}
+//	@Override
+//	public ResponseEntity<?> addCustomertDetails(Customers transientpojo,int cityid) {
+//		
+//	}
 
 	@Override
 	public ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO) {
@@ -101,18 +91,36 @@ public class CustomersServiceImpl implements ICustomerService {
 	public ResponseEntity<?> updateCustomerStatus(int id) {
 		Optional<Customers> c = dao.findById(id);
 		if (c.isPresent()) {
-			int num = c.get().getStatus();
+			int num = c.get().getIsActive().intValue();
+			System.out.println(num);
 			if (num == 1) {
-				c.get().setStatus(0);
-				System.out.println(c.get().getStatus());
-				return ResponseEntity.ok().body("Status Updated");
+				int n=0;
+				c.get().setIsActive(n);
+				System.out.println(c.get().getIsActive().intValue());
+				return ResponseEntity.ok().body("suspend Customer");
 			} else {
-				c.get().setStatus(1);
-				System.out.println(c.get().getStatus());
-				return ResponseEntity.ok().body("Status Updated");
+				int n=1;
+				c.get().setIsActive(n);
+				System.out.println(c.get().getIsActive().intValue());
+				return ResponseEntity.ok().body("Activate Customer");
 			}
 		} else {
 			return ResponseEntity.badRequest().body("Cannot find the Customer specified");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> addCustomerDetails(Customers transientpojo, int cityid) {
+
+		Optional<Customers> c = dao.findByEmail(transientpojo.getEmail());
+		if (c.isPresent()) {
+			System.out.println(c);
+			return ResponseEntity.badRequest().body("The Customer is already Present, Fail to create");
+		} else {
+			transientpojo.setCcityId(cityDao.getOne(cityid));
+			dao.save(transientpojo);
+			System.out.println(transientpojo);
+			return ResponseEntity.ok("Account Created");
 		}
 	}
 
