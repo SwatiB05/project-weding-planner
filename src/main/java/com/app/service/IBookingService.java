@@ -15,5 +15,6 @@ public interface IBookingService {
 	ResponseEntity<?> updateBookingDetails(int bookingId, Bookings b); 
 	
 	ResponseEntity<?> deleteBookingById(int id);
+	
 
 }

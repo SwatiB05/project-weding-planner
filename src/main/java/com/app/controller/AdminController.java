@@ -261,6 +261,12 @@ public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 
 		return ResponseEntity.ok(allVenues);
 	}
+	
+	@GetMapping("/venues/{venueId}")
+	public ResponseEntity<?> findById(@PathVariable("venueId") int id) {
+		return venueService.findById(id);
+	}
+	
 
 	@PostMapping("/venues/create")
 	public ResponseEntity<?> addVenueDetails(@RequestBody Venues v) {
