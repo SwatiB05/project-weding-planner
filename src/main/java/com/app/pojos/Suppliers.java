@@ -70,8 +70,13 @@ public class Suppliers {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
+<<<<<<< HEAD
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@JsonProperty(value = "AccountCreationDate")
+=======
+	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonProperty(value = "DateOfBooking")
+>>>>>>> ee4d772684fc3023266108f1fe5a58eb4550c09b
 	private Date createdOn;
 
 	@Column(columnDefinition = "tinyint(1) default 0")

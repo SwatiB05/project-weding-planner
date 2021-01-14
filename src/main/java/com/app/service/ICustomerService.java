@@ -16,8 +16,8 @@ public interface ICustomerService {
 	ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO);
 
 	ResponseEntity<?> deleteCustomerById(int customerId);
-
+	ResponseEntity<?> updateCustomerStatus(int id);
 	
-	ResponseEntity<?> findById(int customerId);
+	ResponseEntity<?> getCustomer(int customerId);
 	 ResponseEntity<?> adminAuthentication(String email, String password);
 }

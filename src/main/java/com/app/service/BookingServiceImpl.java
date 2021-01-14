@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.IBookingDao;
 import com.app.pojos.Bookings;
+import com.app.pojos.Customers;
 @Service
 @Transactional
 public class BookingServiceImpl implements IBookingService {
@@ -24,18 +25,10 @@ public class BookingServiceImpl implements IBookingService {
 	
 	
 	
-//	///Testig needed
-//	@Override
-//	public List<Bookings> getAllBookings(int id) {
-//		Optional<Customers> c=da
-//		List<Bookings> b=dao.findByCustomerId();
-//		if(b.isEmpty()) {
-//			System.out.println("empty");
-//		}
-//		
-//		System.out.println(b);
-//		return null;
-//	}
+	@Override
+	public Bookings getBooking(int id) {
+			return 	dao.findById(id).get();
+	}
 	
 	
 	@Override
