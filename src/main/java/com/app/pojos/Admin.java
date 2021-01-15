@@ -8,32 +8,30 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Admin")
+@Table(name = "Admin")
 public class Admin {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer adminId;
-	
+
 	@Column(length = 30)
 	private String firstName;
-	
+
 	@Column(length = 30)
 	private String lastName;
-	
+
 	@Column(length = 15)
 	private String phoneNo;
-	
-	
-	@Column(length = 30,unique = true)
+
+	@Column(length = 30, unique = true)
 	private String email;
+	
 	
 	@Column(length = 100)
 	private String password;
 
-	
-	
-	//getter and setters
+	// getter and setters
 	public Integer getAdminId() {
 		return adminId;
 	}
@@ -119,6 +117,4 @@ public class Admin {
 		return true;
 	}
 
-	
-	
 }

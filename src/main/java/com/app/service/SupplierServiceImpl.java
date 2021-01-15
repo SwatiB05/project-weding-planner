@@ -78,11 +78,11 @@ public class SupplierServiceImpl implements ISupplierService {
 	
 	
 	@Override
-	public ResponseEntity<?> adminAuthentication(String email, String password) {
+	public ResponseEntity<?> supplierAuthentication(String email, String password) {
 		Optional<Suppliers> s = dao.findByEmail(email);
 		if(s.isPresent()) {
 			if(s.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok("Login Sucessfull");
+				return ResponseEntity.ok(s);
 			}else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}

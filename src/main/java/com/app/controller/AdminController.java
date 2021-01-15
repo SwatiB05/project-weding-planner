@@ -70,19 +70,19 @@ public class AdminController {
 	// **************************************
 	// *************Admin
 	// **************************************
-@PostMapping("/login")
-public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
-	Admin u = null;
-	try {
-		 u = new ObjectMapper().readValue(details, Admin.class);
-		 System.out.println("name  "+u.getEmail()+" password  "+u.getPassword());
-		
-	} catch (Exception e) {
-		e.printStackTrace();
+	@PostMapping("/login")
+	public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
+		Admin u = null;
+		try {
+			u = new ObjectMapper().readValue(details, Admin.class);
+			System.out.println("name  " + u.getEmail() + " password  " + u.getPassword());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return adminService.adminAuthentication(u.getEmail(), u.getPassword());
+
 	}
-	return adminService.adminAuthentication(u.getEmail(), u.getPassword());
-	
-}
 	// **************************************
 	// *************Customer
 	// **************************************

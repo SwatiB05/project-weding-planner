@@ -19,6 +19,6 @@ public interface ISupplierService {
 
 	Optional<Suppliers> findById(int supplierId);
 
-	ResponseEntity<?> adminAuthentication(String email, String password);
+	ResponseEntity<?> supplierAuthentication(String email, String password);
 
 }
