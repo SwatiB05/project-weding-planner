@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.SupplierDTO;
 import com.app.pojos.Bookings;
 import com.app.pojos.Customers;
 import com.app.pojos.Services;
@@ -46,7 +47,6 @@ public class SupplierController {
 	@Autowired
 	private IVenueService venueService;
 
-	
 	@PostMapping("/login")
 	public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
 		Suppliers u = null;
@@ -59,17 +59,15 @@ public class SupplierController {
 		}
 		return supplierService.supplierAuthentication(u.getEmail(), u.getPassword());
 	}
-	
-	
+
 	@GetMapping("{supplierId}")
 	public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 
-		Optional<Suppliers> optional = supplierService.findById(supplierId);
-		if (optional.isPresent())
+		SupplierDTO s = supplierService.findById(supplierId);
+		if (s != null)
 			// return new ResponseEntity<>(optional.get(), HttpStatus.OK);
-			return ResponseEntity.ok(optional.get());
+			return ResponseEntity.ok(s);
 		// invalid id
-
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 

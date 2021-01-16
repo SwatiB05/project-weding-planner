@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.pojos.Admin;
 import com.app.pojos.Bookings;
 import com.app.pojos.Customers;
 import com.app.pojos.SupplierServices;
@@ -40,6 +39,8 @@ public class CustomerController {
 		System.out.println("in customer constr");
 	}
 
+	
+	
 	@Autowired
 	private ICustomerService customerService;
 

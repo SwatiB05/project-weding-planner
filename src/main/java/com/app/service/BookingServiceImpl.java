@@ -23,8 +23,6 @@ public class BookingServiceImpl implements IBookingService {
 		return dao.findAll();
 	}
 	
-	
-	
 	@Override
 	public Bookings getBooking(int id) {
 			return 	dao.findById(id).get();
@@ -57,8 +55,8 @@ public class BookingServiceImpl implements IBookingService {
 			 return  ResponseEntity.accepted().body("Booking updated successfully"); 
 		}
 		else return ResponseEntity.badRequest().body("Cannot find the Booking specified");
-
 	}
+	
 	@Override
 	public ResponseEntity<?> deleteBookingById(int id) {
 		Optional<Bookings> c = dao.findById(id);
