@@ -18,7 +18,7 @@ public interface ISupplierService {
 	ResponseEntity<?> deleteSupplierById(int id);
 
 	SupplierDTO findById(int supplierId);
-
+	ResponseEntity<?> updateSupplierStatus(int id);
 	ResponseEntity<?> supplierAuthentication(String email, String password);
 
 }

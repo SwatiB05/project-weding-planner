@@ -20,41 +20,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="Cities")
+@Table(name = "Cities")
 public class Cities {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cityId;
-	
 
-   
-   //@JsonIgnoreProperties("vcityId")
-   @JsonIgnore
-	@OneToMany(mappedBy = "vcityId" ,cascade = CascadeType.ALL)
-	private Set<Venues> venues;
-	
-  
-    
-	//@JsonIgnoreProperties("scityId")
+	// @JsonIgnoreProperties("vcityId")
 	@JsonIgnore
-	@OneToMany(mappedBy = "scityId" ,cascade = CascadeType.ALL)
-	private Set<Suppliers> suppliers;
-	
-	
-	
-//@JsonIgnoreProperties("ccityId")
-	@OneToMany(mappedBy = "ccityId" ,cascade = CascadeType.ALL,fetch =FetchType.LAZY)
-   @JsonIgnore
-   @Fetch(FetchMode.JOIN)
+	@Fetch(FetchMode.JOIN)
 	@Basic(optional = true)
-	private  Set<Customers> customers;
-	
+	@OneToMany(mappedBy = "vcityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Venues> venues;
+
+	// @JsonIgnoreProperties("scityId")
+	@JsonIgnore
+	@Fetch(FetchMode.JOIN)
+	@Basic(optional = true)
+	@OneToMany(mappedBy = "scityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Suppliers> suppliers;
+
+//@JsonIgnoreProperties("ccityId")
+	@OneToMany(mappedBy = "ccityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	@Fetch(FetchMode.JOIN)
+	@Basic(optional = true)
+	private Set<Customers> customers;
+
 	@Column(length = 30)
 	private String city;
-	
-	//getters...
-	
+
+	// getters...
+
 	public Integer getCityId() {
 		return cityId;
 	}
@@ -100,9 +98,4 @@ public class Cities {
 		return "Cities [cityId=" + cityId + ", city=" + city + "]";
 	}
 
-	
-	
-	
-	
-	
 }

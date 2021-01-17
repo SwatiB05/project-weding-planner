@@ -3,6 +3,7 @@ package com.app.pojos;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,9 +36,10 @@ public class Suppliers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplierId;
 
-	@JsonIgnore
-	//@JsonIgnoreProperties("supplierId")
-	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)@Fetch(FetchMode.JOIN)
+	//@JsonIgnore
+	@JsonIgnoreProperties("supplierId")
+	@OneToMany(mappedBy = "supplierId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private Set<SupplierServices> supplierServices;
 
 	@Column(length = 30)
@@ -53,7 +55,9 @@ public class Suppliers {
 	private String phoneNo;
 
 	
+	
 	@ManyToOne
+	@Basic(optional = true)
 	@JsonIgnoreProperties("suppliers")
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities scityId;
@@ -69,7 +73,7 @@ public class Suppliers {
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
 	@JsonFormat(pattern="dd-MM-yyyy")
-	@JsonProperty(value = "DateOfBooking")
+	@JsonProperty(value = "AccountCreationDate")
 	private Date createdOn;
 
 	@Column(columnDefinition = "tinyint(1) default 0")

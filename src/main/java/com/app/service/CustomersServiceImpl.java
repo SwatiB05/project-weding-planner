@@ -48,6 +48,7 @@ public class CustomersServiceImpl implements ICustomerService {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
 			Customers customer = c.get();
+			detachedPOJO.setCcityId(cityDao.getOne(detachedPOJO.getCcityId().getCityId()));
 			customer.setCcityId(detachedPOJO.getCcityId());
 			customer.setFirstName(detachedPOJO.getFirstName());
 			customer.setLastName(detachedPOJO.getLastName());

@@ -2,6 +2,7 @@ package com.app.pojos;
 
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -32,7 +32,8 @@ public class Venues {
 
 	//@JsonIgnore
 	@JsonIgnoreProperties("venueId")
-	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private Set<VenueFacilities> venueFacilities;
 
 	@Column(length = 30)
@@ -43,6 +44,7 @@ public class Venues {
 
 
 	@ManyToOne
+	@Basic(optional = true)
 	@JsonIgnoreProperties("venues")
 	@JoinColumn(name = "cityId",nullable = false)
 	private Cities vcityId;

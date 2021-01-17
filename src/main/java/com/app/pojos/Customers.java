@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,8 +38,10 @@ public class Customers {
 
 	@JsonIgnore
 	//@JsonIgnoreProperties("customerId")
-	@OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private Set<Bookings> bookings;
+	
 
 	@Column(length = 30)
 	private String firstName;

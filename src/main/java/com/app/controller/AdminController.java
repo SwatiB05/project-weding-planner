@@ -98,7 +98,7 @@ public class AdminController {
 
 	//isActive or not
 	@PutMapping("/customers/status/{customerId}")
-	public ResponseEntity<?> updateStatus(@PathVariable int customerId){
+	public ResponseEntity<?> updateStatusCustomer(@PathVariable int customerId){
 		return customerService.updateCustomerStatus(customerId);
 	}
 
@@ -149,7 +149,6 @@ public class AdminController {
 	// *************Supplier
 	// **************************************
 	@GetMapping("/suppliers")
-
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
 
@@ -159,7 +158,12 @@ public class AdminController {
 		return ResponseEntity.ok(allSuppliers);
 	}
 
-
+	//isActive or not
+		@PutMapping("/suppliers/status/{supplierId}")
+		public ResponseEntity<?> updateStatusSupplier(@PathVariable int supplierId){
+			return supplierService.updateSupplierStatus(supplierId);
+		}
+	
 	//for testing
 	  @PostMapping("/suppliers/create")
 	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 
