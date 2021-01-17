@@ -20,8 +20,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,13 +68,10 @@ public class Suppliers {
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
-<<<<<<< HEAD
+
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@JsonProperty(value = "AccountCreationDate")
-=======
-	@JsonFormat(pattern="dd-MM-yyyy")
-	@JsonProperty(value = "DateOfBooking")
->>>>>>> ee4d772684fc3023266108f1fe5a58eb4550c09b
+
 	private Date createdOn;
 
 	@Column(columnDefinition = "tinyint(1) default 0")

@@ -35,7 +35,7 @@ public class VenueFacilities {
 
 	@ManyToOne
 	// @JsonBackReference
-	@JsonIgnoreProperties("enueFacilities")
+	@JsonIgnoreProperties("venueFacilities")
 	@JoinColumn(name = "venueId", nullable = false)
 	private Venues venueId;
 

@@ -30,8 +30,8 @@ public class Venues {
 	private Integer venueId;
 
 
-	@JsonIgnore
-	//@JsonIgnoreProperties("venueId")
+	//@JsonIgnore
+	@JsonIgnoreProperties("venueId")
 	@OneToMany(mappedBy = "venueId", cascade = CascadeType.ALL,fetch = FetchType.LAZY)@Fetch(FetchMode.JOIN)
 	private Set<VenueFacilities> venueFacilities;
 

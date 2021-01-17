@@ -48,7 +48,7 @@ public class VenueServiceImpl implements IVenueService {
 		if (v.isPresent()) {
 			Venues venue = v.get();
 			venue.setDescription(detachedPOJO.getDescription());
-			venue.setEmail(detachedPOJO.getDescription());
+			venue.setEmail(detachedPOJO.getEmail());
 			venue.setGuestCapacity(detachedPOJO.getGuestCapacity());
 			venue.setImage(detachedPOJO.getImage());
 			venue.setPhoneNo(detachedPOJO.getPhoneNo());
