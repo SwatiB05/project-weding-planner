@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.ICitiesDao;
 import com.app.dao.ICustomerDao;
+import com.app.dto.CustomerDTO;
+import com.app.dto.SupplierDTO;
 import com.app.pojos.Customers;
+import com.app.pojos.Suppliers;
 
 @Service
 @Transactional
@@ -22,6 +25,7 @@ public class CustomersServiceImpl implements ICustomerService {
 	@Autowired
 	private ICitiesDao cityDao;
 
+	
 	@Override
 	public List<Customers> getAllCustomers() {
 		System.out.println("in customerservice get all");
@@ -31,18 +35,13 @@ public class CustomersServiceImpl implements ICustomerService {
 	@Override
 	public ResponseEntity<?> getCustomer(int customerId) {
 		Optional<Customers> c = dao.findById(customerId);
-		
 		if (c.isPresent()) {
 			System.out.println(c);
-			return ResponseEntity.ok(c);	
+			return ResponseEntity.ok(new CustomerDTO(c.get()));	
 		} else
 			return ResponseEntity.badRequest().body("Cannot find the specified Customer");
 		}
 
-//	@Override
-//	public ResponseEntity<?> addCustomertDetails(Customers transientpojo,int cityid) {
-//		
-//	}
 
 	@Override
 	public ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO) {
@@ -73,11 +72,11 @@ public class CustomersServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public ResponseEntity<?> adminAuthentication(String email, String password) {
+	public ResponseEntity<?> customerAuthentication(String email, String password) {
 		Optional<Customers> c = dao.findByEmail(email);
 		if (c.isPresent()) {
 			if (c.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok("Login Sucessfull");
+				return ResponseEntity.ok(new CustomerDTO(c.get()));
 			} else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}

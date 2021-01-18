@@ -8,15 +8,16 @@ import com.app.pojos.Customers;
 
 public interface ICustomerService {
 	List<Customers> getAllCustomers();
-	
 
-	ResponseEntity<?> addCustomerDetails(Customers transientpojo,int cityid);
+	ResponseEntity<?> addCustomerDetails(Customers transientpojo, int cityid);
 
 	ResponseEntity<?> updateCustomerDetails(int customerId, Customers detachedPOJO);
 
 	ResponseEntity<?> deleteCustomerById(int customerId);
+
 	ResponseEntity<?> updateCustomerStatus(int id);
-	
+
 	ResponseEntity<?> getCustomer(int customerId);
-	 ResponseEntity<?> adminAuthentication(String email, String password);
+
+	ResponseEntity<?> customerAuthentication(String email, String password);
 }

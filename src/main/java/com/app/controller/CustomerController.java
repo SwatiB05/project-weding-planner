@@ -27,10 +27,11 @@ import com.app.service.ISupplierService;
 import com.app.service.ISupplierServicesService;
 import com.app.service.IVenueFacilityService;
 import com.app.service.IVenueService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomerController {
 
 	public CustomerController() {
@@ -38,6 +39,8 @@ public class CustomerController {
 		System.out.println("in customer constr");
 	}
 
+	
+	
 	@Autowired
 	private ICustomerService customerService;
 
@@ -52,6 +55,19 @@ public class CustomerController {
 	@Autowired
 	private ISupplierServicesService supplier_ServiceService;
 
+	@PostMapping("/login")
+	public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
+		Customers u = null;
+		try {
+			u = new ObjectMapper().readValue(details, Customers.class);
+			System.out.println("name  " + u.getEmail() + " password  " + u.getPassword());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customerService.customerAuthentication(u.getEmail(), u.getPassword());
+	}
+
 	@GetMapping("/{customerId}")
 	public ResponseEntity<?> getCustomer(@PathVariable int customerId) {
 		return customerService.getCustomer(customerId);
@@ -61,12 +77,13 @@ public class CustomerController {
 	public ResponseEntity<?> updateCustomerDetails(@PathVariable int customerId, @RequestBody Customers c) {
 		return customerService.updateCustomerDetails(customerId, c);
 	}
+
 	@PostMapping("/create")
 	public ResponseEntity<?> addCustomerDeatils(@RequestBody Customers c) {
-		int cityid=c.getCcityId().getCityId();
-		return customerService.addCustomerDetails(c,cityid);
+		int cityid = c.getCcityId().getCityId();
+		return customerService.addCustomerDetails(c, cityid);
 	}
-	
+
 	@GetMapping("/suppliers")
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
@@ -111,12 +128,13 @@ public class CustomerController {
 
 	@GetMapping("/bookings/{bookingId}")
 	public ResponseEntity<?> getBookingDetail(@PathVariable int bookingId) {
-		Optional<Bookings> b=Optional.of((bookingService.getBooking(bookingId)));
-		if(b.isPresent()) {
-		return ResponseEntity.ok(b);
+		Optional<Bookings> b = Optional.of((bookingService.getBooking(bookingId)));
+		if (b.isPresent()) {
+			return ResponseEntity.ok(b);
 		}
-		return	ResponseEntity.badRequest().body("Cannot find the specified Booking");
+		return ResponseEntity.badRequest().body("Cannot find the specified Booking");
 	}
+
 	@DeleteMapping("/bookings/{bookingId}")
 	public ResponseEntity<?> deleteBooking(@PathVariable("bookingId") int id) {
 		return bookingService.deleteBookingById(id);

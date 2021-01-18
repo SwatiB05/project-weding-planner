@@ -36,6 +36,7 @@ public class VenueServiceImpl implements IVenueService {
 
 	@Override
 	public ResponseEntity<?> addVenueDetails(Venues v) {
+	
 		dao.save(v);
 		return ResponseEntity.ok("Venue Created Successfully");
 	}

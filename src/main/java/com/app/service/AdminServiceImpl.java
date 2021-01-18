@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.IAdminDao;
+import com.app.dto.AdminDTO;
 import com.app.pojos.Admin;
 @Service
 @Transactional
@@ -21,7 +22,7 @@ public class AdminServiceImpl implements IAdminService {
 		Optional<Admin> admin = dao.findByEmail(email);
 		if(admin.isPresent()) {
 			if(admin.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok("Login Sucessfull");
+				return ResponseEntity.ok(new AdminDTO(admin.get()));
 			}else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}

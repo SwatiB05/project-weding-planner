@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.ISupplierDao;
+import com.app.dto.SupplierDTO;
 import com.app.pojos.Suppliers;
 
 @Service
@@ -31,9 +32,6 @@ public class SupplierServiceImpl implements ISupplierService {
 		// TODO Auto-generated method stub
 		Optional<Suppliers> c = dao.findById(supplierId);
 		if (c.isPresent()) {
-			// c.get() : PERSISTENT
-			// cityDetachPojo : detached POJO : contains the updates sent by clnt
-			// change state of persistent POJO
 			Suppliers s = c.get();
 			s.setFirstName(detachedPOJO.getFirstName());
 			s.setLastName(detachedPOJO.getLastName());
@@ -61,8 +59,9 @@ public class SupplierServiceImpl implements ISupplierService {
 	
 
 	@Override
-	public Optional<Suppliers> findById(int supplierId) {
-		return dao.findById(supplierId);
+	public SupplierDTO findById(int supplierId) {
+			Optional<Suppliers>s=dao.findById(supplierId);
+			return new SupplierDTO(s.get());
 	}
 
 	@Override
@@ -78,11 +77,11 @@ public class SupplierServiceImpl implements ISupplierService {
 	
 	
 	@Override
-	public ResponseEntity<?> adminAuthentication(String email, String password) {
+	public ResponseEntity<?> supplierAuthentication(String email, String password) {
 		Optional<Suppliers> s = dao.findByEmail(email);
 		if(s.isPresent()) {
 			if(s.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok("Login Sucessfull");
+				return ResponseEntity.ok(new SupplierDTO(s.get()));
 			}else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}

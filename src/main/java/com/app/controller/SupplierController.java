@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.SupplierDTO;
 import com.app.pojos.Bookings;
+import com.app.pojos.Customers;
 import com.app.pojos.Services;
 import com.app.pojos.Suppliers;
 import com.app.pojos.Venues;
@@ -24,18 +26,18 @@ import com.app.service.IBookingService;
 import com.app.service.IServiceService;
 import com.app.service.ISupplierService;
 import com.app.service.IVenueService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RestController 
-@RequestMapping("/suppliers") 
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@RestController
+@RequestMapping("/suppliers")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SupplierController {
 
 	public SupplierController() {
 		// TODO Auto-generated constructor stub
 		System.out.println("in supplier constr");
 	}
-	
-	
+
 	@Autowired
 	private IBookingService bookingService;
 	@Autowired
@@ -44,27 +46,36 @@ public class SupplierController {
 	private ISupplierService supplierService;
 	@Autowired
 	private IVenueService venueService;
-	
-	
+
+	@PostMapping("/login")
+	public ResponseEntity<?> adminauthenticate(@RequestBody String details) {
+		Suppliers u = null;
+		try {
+			u = new ObjectMapper().readValue(details, Suppliers.class);
+			System.out.println("name  " + u.getEmail() + " password  " + u.getPassword());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return supplierService.supplierAuthentication(u.getEmail(), u.getPassword());
+	}
+
 	@GetMapping("{supplierId}")
-public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
-		
-		Optional<Suppliers> optional = supplierService.findById(supplierId);
-		if (optional.isPresent())
-	//		return new ResponseEntity<>(optional.get(), HttpStatus.OK);
-			return ResponseEntity.ok(optional.get());
+	public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
+
+		SupplierDTO s = supplierService.findById(supplierId);
+		if (s != null)
+			// return new ResponseEntity<>(optional.get(), HttpStatus.OK);
+			return ResponseEntity.ok(s);
 		// invalid id
-	
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	  
-	  
-	  @PutMapping("/{supplierId}")
-	  public ResponseEntity<?>updateSupplierDetails(@PathVariable int supplierId,@RequestBody Suppliers s){
-	  return supplierService.updateSupplierDetails(supplierId, s);
-	  }
-	 
-	
+
+	@PutMapping("/{supplierId}")
+	public ResponseEntity<?> updateSupplierDetails(@PathVariable int supplierId, @RequestBody Suppliers s) {
+		return supplierService.updateSupplierDetails(supplierId, s);
+	}
+
 	@GetMapping("/services")
 	public ResponseEntity<?> listAllServices() {
 		List<Services> allServices = serviceService.getAllServices();
@@ -74,24 +85,22 @@ public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 
 		return ResponseEntity.ok(allServices);
 	}
-	
+
 	@PostMapping("/services/create")
 	public ResponseEntity<?> addServiceDetails(@RequestBody Services s) {
 		return serviceService.addServiceDetails(s);
 	}
 
-	
 	@PutMapping("/services/{service}")
 	public ResponseEntity<?> updateServiceDetails(@PathVariable int service, @RequestBody Services v) {
 		return serviceService.updateServiceDetails(service, v);
 	}
 
-	
 	@DeleteMapping("/services/{serviceId}")
 	public ResponseEntity<?> deleteService(@PathVariable("serviceId") int id) {
 		return serviceService.deleteServiceById(id);
 	}
-	
+
 	@GetMapping("/venues")
 	public ResponseEntity<?> listAllVenues() {
 		List<Venues> allVenues = venueService.getAllVenues();
@@ -102,7 +111,6 @@ public ResponseEntity<?> getSupplierDetails(@PathVariable int supplierId) {
 		return ResponseEntity.ok(allVenues);
 	}
 
-	
 	@GetMapping("/bookings")
 	public ResponseEntity<?> listAllBooking() {
 		List<Bookings> AllBookings = bookingService.getAllBookings();

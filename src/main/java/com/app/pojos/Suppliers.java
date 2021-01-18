@@ -69,9 +69,9 @@ public class Suppliers {
 	@Column(columnDefinition = "DATE default (CURRENT_DATE)", updatable = false)
 	@CreatedDate
 
+
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@JsonProperty(value = "AccountCreationDate")
-
 	private Date createdOn;
 
 	@Column(columnDefinition = "tinyint(1) default 0")
