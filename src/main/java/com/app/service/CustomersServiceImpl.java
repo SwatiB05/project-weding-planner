@@ -77,7 +77,7 @@ public class CustomersServiceImpl implements ICustomerService {
 		Optional<Customers> c = dao.findByEmail(email);
 		if (c.isPresent()) {
 			if (c.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok(new CustomerDTO(c.get()));
+				return ResponseEntity.ok(c.get().getCustomerId());
 			} else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}
