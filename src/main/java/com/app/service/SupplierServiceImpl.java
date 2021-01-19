@@ -91,7 +91,7 @@ public class SupplierServiceImpl implements ISupplierService {
 		Optional<Suppliers> s = dao.findByEmail(email);
 		if(s.isPresent()) {
 			if(s.get().getPassword().contentEquals(password)) {
-				return ResponseEntity.ok(new SupplierDTO(s.get()));
+				return ResponseEntity.ok(s.get().getSupplierId());
 			}else {
 				return ResponseEntity.badRequest().body("Wrong PassWord");
 			}
