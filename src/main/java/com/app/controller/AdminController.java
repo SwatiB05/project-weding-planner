@@ -24,6 +24,7 @@ import com.app.pojos.SupplierServices;
 import com.app.pojos.Suppliers;
 import com.app.pojos.VenueFacilities;
 import com.app.pojos.Venues;
+import com.app.service.EmailService;
 import com.app.service.IAdminService;
 import com.app.service.IBookingService;
 import com.app.service.ICityService;
@@ -61,12 +62,15 @@ public class AdminController {
 	private ISupplierServicesService supplier_ServiceService;
 	@Autowired
 	private IServiceService serviceService;
+	
 
 	public AdminController() {
 		// TODO Auto-generated constructor stub
 		System.out.println("in const admin");
 	}
 
+	
+	
 	// **************************************
 	// *************Admin
 	// **************************************
@@ -83,6 +87,8 @@ public class AdminController {
 		return adminService.adminAuthentication(u.getEmail(), u.getPassword());
 
 	}
+	
+	
 	// **************************************
 	// *************Customer
 	// **************************************
@@ -98,7 +104,7 @@ public class AdminController {
 
 	//isActive or not
 	@PutMapping("/customers/status/{customerId}")
-	public ResponseEntity<?> updateStatus(@PathVariable int customerId){
+	public ResponseEntity<?> updateStatusCustomer(@PathVariable int customerId){
 		return customerService.updateCustomerStatus(customerId);
 	}
 
@@ -149,7 +155,6 @@ public class AdminController {
 	// *************Supplier
 	// **************************************
 	@GetMapping("/suppliers")
-
 	public ResponseEntity<?> listAllSuppliers() {
 		List<Suppliers> allSuppliers = supplierService.getAllSuppliers();
 
@@ -159,7 +164,12 @@ public class AdminController {
 		return ResponseEntity.ok(allSuppliers);
 	}
 
-
+	//isActive or not
+		@PutMapping("/suppliers/status/{supplierId}")
+		public ResponseEntity<?> updateStatusSupplier(@PathVariable int supplierId){
+			return supplierService.updateSupplierStatus(supplierId);
+		}
+	
 	//for testing
 	  @PostMapping("/suppliers/create")
 	  public ResponseEntity<?>addSupplierDetails(@RequestBody Suppliers s) { 

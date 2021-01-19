@@ -20,4 +20,6 @@ public interface ICustomerService {
 	ResponseEntity<?> getCustomer(int customerId);
 
 	ResponseEntity<?> customerAuthentication(String email, String password);
+	
+	 //ResponseEntity<?> sendCustomerEmail(int customerId) ;
 }

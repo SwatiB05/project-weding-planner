@@ -41,13 +41,14 @@ public class Bookings {
 	@ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity = VenueFacilities.class)
 	@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "BookingVenueFacilities", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "venueFacilityId"))
-	private Set<VenueFacilities> venueFacilityDetails=new HashSet<VenueFacilities>();
-
+	private Set<VenueFacilities> venueFacilityDetails;
+	
 	// @JsonIgnore
 	@JsonIgnoreProperties("bookings")
-	@ManyToMany(targetEntity = SupplierServices.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)@Fetch(FetchMode.JOIN)
+	@ManyToMany(targetEntity = SupplierServices.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
 	@JoinTable(name = "BookingServiceSuppliers", joinColumns = @JoinColumn(name = "bookingId"), inverseJoinColumns = @JoinColumn(name = "supplierServiceId"))
-	private Set<SupplierServices> serviceSupplierDetails=new HashSet<SupplierServices>();
+	private Set<SupplierServices> serviceSupplierDetails;
 
 	@Column(length = 15)
 	private String bookingName;

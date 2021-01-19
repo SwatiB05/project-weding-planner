@@ -2,6 +2,7 @@ package com.app.pojos;
 
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,18 +31,21 @@ public class SupplierServices {
 	// @JsonIgnore
 	@JsonIgnoreProperties("serviceSupplierDetails")
 	@ManyToMany(mappedBy = "serviceSupplierDetails", fetch = FetchType.LAZY,
-	targetEntity = Bookings.class, cascade = CascadeType.ALL)@Fetch(FetchMode.JOIN)
+	targetEntity = Bookings.class, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
 	private Set<Bookings> bookings;
 
 	@ManyToOne
 	@JsonIgnoreProperties("supplierServices")
 	@JoinColumn(name = "supplierId")
+	@Basic(optional = true)
 	// @JsonBackReference
 	private Suppliers supplierId;
 
 	@ManyToOne
 	@JsonIgnoreProperties("supplierServices")
 	@JoinColumn(name = "serviceId")
+	@Basic(optional = true)
 	private Services serviceId;
 
 	@Column(length = 20)

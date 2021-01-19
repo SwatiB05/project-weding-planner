@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dao.ICitiesDao;
 import com.app.dao.ICustomerDao;
 import com.app.dto.CustomerDTO;
-import com.app.dto.SupplierDTO;
 import com.app.pojos.Customers;
-import com.app.pojos.Suppliers;
 
 @Service
 @Transactional
@@ -24,6 +22,8 @@ public class CustomersServiceImpl implements ICustomerService {
 	private ICustomerDao dao;
 	@Autowired
 	private ICitiesDao cityDao;
+	@Autowired
+	private EmailService notificationService;
 
 	
 	@Override
@@ -48,6 +48,7 @@ public class CustomersServiceImpl implements ICustomerService {
 		Optional<Customers> c = dao.findById(customerId);
 		if (c.isPresent()) {
 			Customers customer = c.get();
+			detachedPOJO.setCcityId(cityDao.getOne(detachedPOJO.getCcityId().getCityId()));
 			customer.setCcityId(detachedPOJO.getCcityId());
 			customer.setFirstName(detachedPOJO.getFirstName());
 			customer.setLastName(detachedPOJO.getLastName());
@@ -119,8 +120,31 @@ public class CustomersServiceImpl implements ICustomerService {
 			transientpojo.setCcityId(cityDao.getOne(cityid));
 			dao.save(transientpojo);
 			System.out.println(transientpojo);
+			notificationService.sendEmail(transientpojo.getEmail());
 			return ResponseEntity.ok("Account Created");
 		}
 	}
+
+	//@Override
+	/*public ResponseEntity<?> sendCustomerEmail(int customerId) {
+		Optional<Customers> c = dao.findById(customerId);
+		if (c.isPresent()) {
+			
+			try {
+				notificationService.sendEmail(c);
+			} catch (MailException mailException) {
+				System.out.println(mailException);
+			}
+			return "Congratulations! Your mail has been send to the user.";
+		}
+		
+		 * Optional<Customers> c = dao.findById(customerId); if (c.isPresent()) {
+		 * System.out.println(c); return ResponseEntity.ok(new CustomerDTO(c.get())); }
+		 * else return
+		 * ResponseEntity.badRequest().body("Cannot find the specified Customer");
+		 * 
+		 * return null;
+		 
+	}*/
 
 }
