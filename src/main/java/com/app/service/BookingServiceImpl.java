@@ -9,35 +9,44 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.IBookingDao;
+import com.app.dao.ICitiesDao;
+import com.app.dao.ICustomerDao;
 import com.app.pojos.Bookings;
 import com.app.pojos.Customers;
+
 @Service
 @Transactional
 public class BookingServiceImpl implements IBookingService {
 
 	@Autowired
 	private IBookingDao dao;
-		
+
+	@Autowired
+	private ICustomerDao cusDao;
+
 	@Override
 	public List<Bookings> getAllBookings() {
 		return dao.findAll();
 	}
-	
+
 	@Override
 	public Bookings getBooking(int id) {
-			return 	dao.findById(id).get();
+		return dao.findById(id).get();
 	}
-	
-	
+
 	@Override
 	public ResponseEntity<?> addBookingDetails(Bookings b) {
-		Optional<Bookings> c = dao.findById(b.getBookingId());
-		if (c.isPresent()) {
-			return ResponseEntity.badRequest().body("The Booking is already Present, Fail to create");
-		} else {
+		try {
+			b.setCustomerId(cusDao.getOne(b.getCustomerId().getCustomerId()));
 			dao.save(b);
 			return ResponseEntity.ok("Booking Created Successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		return ResponseEntity.badRequest().body("The Booking is already Present, Fail to create");
+
 	}
 
 	@Override
@@ -52,11 +61,11 @@ public class BookingServiceImpl implements IBookingService {
 			booking.setCustomerId(detachedPOJO.getCustomerId());
 			booking.setDateOfBooking(detachedPOJO.getDateOfBooking());
 			booking.setTotalAmount(detachedPOJO.getTotalAmount());
-			 return  ResponseEntity.accepted().body("Booking updated successfully"); 
-		}
-		else return ResponseEntity.badRequest().body("Cannot find the Booking specified");
+			return ResponseEntity.accepted().body("Booking updated successfully");
+		} else
+			return ResponseEntity.badRequest().body("Cannot find the Booking specified");
 	}
-	
+
 	@Override
 	public ResponseEntity<?> deleteBookingById(int id) {
 		Optional<Bookings> c = dao.findById(id);
@@ -67,6 +76,5 @@ public class BookingServiceImpl implements IBookingService {
 			return ResponseEntity.badRequest().body("Cannot find the specified Booking");
 		}
 
-	
 	}
 }

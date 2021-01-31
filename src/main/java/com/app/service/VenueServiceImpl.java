@@ -36,7 +36,6 @@ public class VenueServiceImpl implements IVenueService {
 
 	@Override
 	public ResponseEntity<?> addVenueDetails(Venues v) {
-	
 		dao.save(v);
 		return ResponseEntity.ok("Venue Created Successfully");
 	}
@@ -69,6 +68,7 @@ public class VenueServiceImpl implements IVenueService {
 			dao.deleteById(id);
 			return ResponseEntity.ok().body("Successfully deleted the specified Venue");
 		} else {
+			
 			return ResponseEntity.badRequest().body("Cannot find the specified Venue");
 		}
 

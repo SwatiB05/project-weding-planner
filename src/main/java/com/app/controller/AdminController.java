@@ -375,11 +375,6 @@ public class AdminController {
 		return ResponseEntity.ok(AllBookings);
 	}
 
-	// for testing
-	@PostMapping("/bookings/create")
-	public ResponseEntity<?> addBookingDetails(@RequestBody Bookings v) {
-		return bookingService.addBookingDetails(v);
-	}
 
 	// for testing
 	@PutMapping("/bookings/{bookingId}")

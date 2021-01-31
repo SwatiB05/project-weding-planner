@@ -134,6 +134,12 @@ public class CustomerController {
 		}
 		return ResponseEntity.badRequest().body("Cannot find the specified Booking");
 	}
+	// for testing
+	@PostMapping("/bookings/create")
+	public ResponseEntity<?> addBookingDetails(@RequestBody Bookings v) {
+		return bookingService.addBookingDetails(v);
+	}
+
 
 	@DeleteMapping("/bookings/{bookingId}")
 	public ResponseEntity<?> deleteBooking(@PathVariable("bookingId") int id) {
